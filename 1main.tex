@@ -1,0 +1,61 @@
+%% ----------------------------------------------------------------
+%% Thesis.tex
+%% ---------------------------------------------------------------- 
+\documentclass[sotoncolour]{uosthesis}      % Use the Thesis Style with custom link colour
+\graphicspath{{Figures/}}   % Location of your graphics files
+\usepackage[numbers]{natbib}            % Use Natbib style for the refs.
+\usepackage{bibentry}          % Use bibentry for prepublished works
+\nobibliography*               % Use bibentry for prepublished works
+\usepackage{attrib}            % Use the attrib package for quotations
+\hypersetup{colorlinks=true}   % Set to false for black/white printing
+
+%% ----------------------------------------------------------------
+%% --------------------THESIS/DOC INFORMATION ---------------------
+\department  {School of Electronics and Computer Science}
+\DEPARTMENT  {\MakeUppercase{\deptname}}
+\faculty     {Faculty of Engineering and Physical Science}
+\FACULTY     {\MakeUppercase{\facname}}
+\title      {Understanding the Energy Implications of Proof-Of-Stake Blockchains: A Modelling Approach}
+
+\authors    {Gavin Aren} 
+\supervisor {Dr Age Chapman}
+\addresses  {\groupname\\\deptname\\\univname}
+\date       {May 2023}
+ 
+\begin{document}
+%% ------------------ FRONT MATTER ORGANISATION -------------------
+\pagenumbering{gobble} % removes page number
+\copyrightDeclaration{} % !!! Comment this line when printing the hardcopy !!!
+\raggedright                  %% Set the style to Left justification
+% ________________________________
+% Edited statement of originality
+
+\frontmatter
+\maketitle
+
+% ____________________________________________________________
+% \pagenumbering{gobble}
+\include{Abstract}
+\include{statement}
+
+\pagenumbering{arabic}
+\tableofcontents
+% Main Contents________________________________________________
+
+\setcounter{chapter}{1}
+\include{Introduction}
+\setcounter{chapter}{2}
+\include{LiteratureReview}
+\setcounter{chapter}{3}
+\include{Methodology}
+\setcounter{chapter}{4}
+\include{ModellingTechnicalSection}
+\setcounter{chapter}{5}
+\include{DrugSupplyChain}
+% __________________________________________________________________
+
+\bibliographystyle{IEEEtranN}
+\bibliography{references}
+
+% ____________________________________________________________
+\end{document}
