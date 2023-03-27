@@ -247,7 +247,7 @@
         ORCiD: \href{http://orcid.org/\orcid}{\orcid}}
 
         \vfill
-    {\large \textit{A Part III thesis for the degree of} \par}
+    {\large \textit{A Part III project report for the award of} \par}
       {\large \textit{MEng Computer Science} \par}
         \bigskip
         \bigskip
@@ -303,6 +303,7 @@
   \cleardoublepage
 }
 \usepackage[nottoc]{tocbibind}         % Put the Lists, Glossary, Biblog and Idx in the contents
+
 \addtocounter{secnumdepth}{1}
 \setcounter{tocdepth}{6}
 \newcounter{dummy}

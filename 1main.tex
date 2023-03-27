@@ -30,7 +30,13 @@
 % ________________________________
 % Edited statement of originality
 
-\frontmatter
+\tableofcontents
+\listoffigures
+\listoftables
+
+\acknowledgements{Thanks to no one.}
+
+\mainmatter %-\frontmatter
 \maketitle
 
 % ____________________________________________________________
@@ -39,7 +45,6 @@
 \include{statement}
 
 \pagenumbering{arabic}
-\tableofcontents
 % Main Contents________________________________________________
 
 \setcounter{chapter}{1}
@@ -53,7 +58,7 @@
 \setcounter{chapter}{5}
 \include{DrugSupplyChain}
 % __________________________________________________________________
-
+\listoftables 
 \bibliographystyle{IEEEtranN}
 \bibliography{references}
 

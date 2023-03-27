@@ -1,9 +1,16 @@
 \chapter{Modelling The Energy Usage And Carbon Emissions Of Ethereum}
+
+% ____________________________________________________________________________
 \section{Chapter Summary}
-\section {Key Factors And Limitations}
 
 
-\paragraph
+% ____________________________________________________________________________
+\section{Parametric Modelling with Prior Domain Knowledge}
+
+% ____________________________________________________________________________
+\subsection {Key Factors And Limitations}
+
+
 Energy usage of the defined hardware specification mentioned is denoted by:
 \begin{equation*}
     \boldsymbol{\mathrm{E}}
@@ -43,31 +50,115 @@ The total share of the network occupied by ${n}$ tested combinations of consensu
     \boldsymbol{\displaystyle\sum\limits_{i=1}^{n}{\phi_{i}}}
 \end{equation*}
 
-\textit{Model 1}
+\paragraph{First Iteration of the Model}
+
 \begin{equation}
 \boldsymbol{\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{E}}_{ID} + \mathrm{\overline{E}}_{CL} + \mathrm{\overline{E}}_{EL}\right)} * {\phi_{i}} \right)}}
  {\pi}}
 \end{equation}
 
+\paragraph{ Simple Linear Regression Model}
+A simple logical model for estimating the energy consumption of Ethereum 2.0's energy consumption logically would be using simple regression. y = mx + c and if we wanted to say that energy is dependent on trasnactions, then we can say y is the energy per node, m is the slope we need to find, x is the number of trasactions/sec, c is the base energy an idle node requires. Then we multiply this whole thing by the number of validators on the network to gte the overall network energy consumption.
 
 
 
-
-\section {Modelling }
+% ____________________________________________________________________________
+\subsection {Modelling }
+% ____________________________________________________________________________
 \subsection{Ethereum's Total Network Energy Consumption}
+
+% ____________________________________________________________________________
 \subsection {Modelling Energy Consumption Per Transaction}
-\subsection {Modelling Ethereum's Carbon Emissions}
+
+% ____________________________________________________________________________
 \subsection{Assumptions}
-\section{Results Of Application Of Model And Discussion}
+
+% _____________________________________________________________________________
+\section{ Data-Driven Model}
+\subsection{Data Gathering}
+
+
+
+
+
+
+% ______________________________________________________________________
+\section {Modelling Ethereum's Carbon Emissions}
+https://ethernodes.org/countries
+
+% ____________________________________________________________________________
+\section{Discussion and Evaluation Of Models}
+% ____________________________________________________________________________
 \subsection{Results}
+% ____________________________________________________________________________
 \subsection{Interpretation}
+
+
+% ____________________________________________________________________________
 \subsection{Validation and Evaluation}
 
+
+Execution Clients - Using the Blockprint API calling \url{'https://api.blockprint.sigp.io/blocks_per_client/96000/97000'}
+{"Uncertain": 0, "Lighthouse": 7369, "Lodestar": 0, "Nimbus": 288, "Other": 0, "Prysm": 20606, "Teku": 3368}
+
+\tref{Table:tabsubex} illustrates the results of some arbitrary example work.
+
+\begin{table}[!htb]
+    \centering
+  \subcaptionbox{The left caption}{
+      \begin{tabular}{|c|c|}
+\textbf{Consensus Clients} \\
+\hline
+ Lighthouse & 7369 \\
+\hline
+ Prysm & 20606  \\
+\hline 
+ Teku & 3368 \\
+\hline
+ Lodestar & 0 \\
+\hline
+ Nimbus & 288 \\
+\hline
+ Other & 0 \\
+\hline
+  \end{tabular}
+    \label{Table:tabsubex:left}
+  }
+  \subcaptionbox{The right caption}{
+        \begin{tabular}{|c|c|}
+\textbf{Consensus Clients} \\
+\hline
+ Lighthouse & 7369 \\
+\hline
+ Prysm & 20606  \\
+\hline 
+ Teku & 3368 \\
+\hline
+ Lodestar & 0 \\
+\hline
+ Nimbus & 288 \\
+\hline
+ Other & 0 \\
+\hline
+  \end{tabular}
+    \label{Table:tabsubex:right}
+  }
+    \caption{A doubly colourful picture.}
+  \label{Table:tabsubex}
+\end{table}
+\quad
+
+% ____________________________________________________________________________
 \subsection{Discussion}
 *So I did it this way, could've been done another way. Due to my method, could've affected results
 * self reflection -> smaller factors not considered, maybe if I used a differet group of numbers/users some other result would have been achieved, loopholes
 
 
 Couldn't use API - may have affected accuracy of data, couldv'e been live data, more precise data
+
+% __________________________________________________________________________
+
+
+
 \section{Future Work}
 \section{Key Points Covered}
