@@ -58,7 +58,7 @@ The total share of the network occupied by ${n}$ tested combinations of consensu
 \end{equation}
 
 \paragraph{ Simple Linear Regression Model}
-A simple logical model for estimating the energy consumption of Ethereum 2.0's energy consumption logically would be using simple regression. y = mx + c and if we wanted to say that energy is dependent on trasnactions, then we can say y is the energy per node, m is the slope we need to find, x is the number of trasactions/sec, c is the base energy an idle node requires. Then we multiply this whole thing by the number of validators on the network to gte the overall network energy consumption.
+A simple logical model for estimating the energy consumption of Ethereum 2.0's energy consumption logically would be using simple regression. y = mx + c, and if we wanted to say that energy is dependent on transactions, then we can say y is the energy per node, m is the slope we need to find, x is the number of transactions/sec, c is the base energy an idle node requires. Then we multiply this whole thing by the number of validators on the network to get the overall network energy consumption.
 
 
 
@@ -98,55 +98,52 @@ https://ethernodes.org/countries
 \subsection{Validation and Evaluation}
 
 
-Execution Clients - Using the Blockprint API calling \url{'https://api.blockprint.sigp.io/blocks_per_client/96000/97000'}
-{"Uncertain": 0, "Lighthouse": 7369, "Lodestar": 0, "Nimbus": 288, "Other": 0, "Prysm": 20606, "Teku": 3368}
-
-\tref{Table:tabsubex} illustrates the results of some arbitrary example work.
+\tref{Table:tabsubex} shows updates values recorded by CCRI in their report \cite{CCRI:Network} for model \_\_\_\_. %ADD HEREE_________
 
 \begin{table}[!htb]
     \centering
-  \subcaptionbox{The left caption}{
-      \begin{tabular}{|c|c|}
-\textbf{Consensus Clients} \\
-\hline
- Lighthouse & 7369 \\
-\hline
- Prysm & 20606  \\
-\hline 
- Teku & 3368 \\
-\hline
- Lodestar & 0 \\
-\hline
- Nimbus & 288 \\
-\hline
- Other & 0 \\
-\hline
+
+  \subcaptionbox{\textbf{Consensus Clients} \cite{Sigp/blockprint:Metrics}}{
+      \begin{tabular}{|l|c|}
+            \hline
+             Prysm & 65.15 \%  \\
+            \hline
+             Lighthouse & 29.30 \% \\
+            \hline 
+             Teku & 10.65 \% \\
+            \hline
+             Nimbus & 0.91 \% \\
+            \hline
+             Lodestar & 0.0 \% \\
+            \hline
+             Other & 0.0 \%  \\
+            \hline
   \end{tabular}
     \label{Table:tabsubex:left}
   }
-  \subcaptionbox{The right caption}{
-        \begin{tabular}{|c|c|}
-\textbf{Consensus Clients} \\
-\hline
- Lighthouse & 7369 \\
-\hline
- Prysm & 20606  \\
-\hline 
- Teku & 3368 \\
-\hline
- Lodestar & 0 \\
-\hline
- Nimbus & 288 \\
-\hline
- Other & 0 \\
-\hline
+  \subcaptionbox{\textbf{Execution Clients}  \cite{ClientsExplorer}}{
+        \begin{tabular}{|l|c|}
+            \hline
+             Geth & 69.22 \% \\
+            \hline
+             Nethermind & 14.16 \%  \\
+            \hline 
+             Erigon & 10.65 \% \\
+            \hline
+             Besu & 5.78 \% \\
+            \hline
+             OpenEthereum & 0.00 \% \\
+            \hline
+             Other & 0.20 \% \\
+            \hline
   \end{tabular}
     \label{Table:tabsubex:right}
   }
-    \caption{A doubly colourful picture.}
+    \caption{An updated table of client diversity within Ethereum Mainnet network, data recorded on 27-Mar 23. Updates the table from report \cite{CCRI:Network} }
   \label{Table:tabsubex}
 \end{table}
-\quad
+
+Note that the OpenEthereum Execution client has been deprecated and is no longer being maintained. Thus, it is no longer included in the table.
 
 % ____________________________________________________________________________
 \subsection{Discussion}
