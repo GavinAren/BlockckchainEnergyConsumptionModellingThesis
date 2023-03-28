@@ -1,4 +1,5 @@
 \chapter{Modelling The Energy Usage And Carbon Emissions Of Ethereum}
+\label{Modelling}
 
 % ____________________________________________________________________________
 \section{Chapter Summary}
@@ -6,6 +7,18 @@
 
 % ____________________________________________________________________________
 \section{Parametric Modelling with Prior Domain Knowledge}
+
+\textbf{Light Nodes}
+Light nodes require much less computational power to run compared to a full node, yet, they still work in a trust-minimised way. This is due to their cryptographically proven way of using block headers of the blockchain to verify the information they are receiving from a full 
+node themselves. 
+
+Light clients send out a lot of requests, a lot more than full nodes. For example, they might need to check the balance of certain accounts to verify the information they are receiving cryptographically. This large number of simple requests ends up requiring more network bandwidth than full nodes \cite{WhatTechnologies}. We also know that light clients are designed to be run on minimal devices such as mobile and IoT devices. The amount of computational and storage resources required by a light node is orders of magnitude lower than a full node. It requires only about 100MB of storage \cite{WhatTechnologies}. This fact can be used to model this. These devices also sync with the latest blocks using checkpoints in seconds instead of hours like a full node.
+
+
+\textbf{Data Used}
+
+
+
 
 % ____________________________________________________________________________
 \subsection {Key Factors And Limitations}
@@ -57,9 +70,6 @@ The total share of the network occupied by ${n}$ tested combinations of consensu
  {\pi}}
 \end{equation}
 
-\paragraph{ Simple Linear Regression Model}
-A simple logical model for estimating the energy consumption of Ethereum 2.0's energy consumption logically would be using simple regression. y = mx + c, and if we wanted to say that energy is dependent on transactions, then we can say y is the energy per node, m is the slope we need to find, x is the number of transactions/sec, c is the base energy an idle node requires. Then we multiply this whole thing by the number of validators on the network to get the overall network energy consumption.
-
 
 
 % ____________________________________________________________________________
@@ -73,6 +83,12 @@ A simple logical model for estimating the energy consumption of Ethereum 2.0's e
 % ____________________________________________________________________________
 \subsection{Assumptions}
 
+\begin{itemize}
+    \item They have taken the syncing on nodes into account into their model whereas for general modelling, it would be  abetter estimate to ignore this initial set up energy and get an avergae form then on. That is what this paper has done, taking averages of the Raspberry Pi rather than including the syncing energy.
+    \item ding ding
+\end{itemize}
+
+
 % _____________________________________________________________________________
 \section{ Data-Driven Model}
 \subsection{Data Gathering}
@@ -84,7 +100,10 @@ A simple logical model for estimating the energy consumption of Ethereum 2.0's e
 
 % ______________________________________________________________________
 \section {Modelling Ethereum's Carbon Emissions}
-https://ethernodes.org/countries
+\url{https://ethernodes.org/countries}
+
+\paragraph{ Simple Linear Regression Model}
+A simple logical model for estimating the energy consumption of Ethereum 2.0's energy consumption logically would be using simple regression. y = mx + c, and if we wanted to say that energy is dependent on transactions, then we can say y is the energy per node, m is the slope we need to find, x is the number of transactions/sec, c is the base energy an idle node requires. Then we multiply this whole thing by the number of validators on the network to get the overall network energy consumption.
 
 % ____________________________________________________________________________
 \section{Discussion and Evaluation Of Models}
@@ -151,7 +170,7 @@ Note that the OpenEthereum Execution client has been deprecated and is no longer
 * self reflection -> smaller factors not considered, maybe if I used a differet group of numbers/users some other result would have been achieved, loopholes
 
 
-Couldn't use API - may have affected accuracy of data, couldv'e been live data, more precise data
+Couldn't use API - may have affected the accuracy of data, could've been live data, more precise data
 
 % __________________________________________________________________________
 

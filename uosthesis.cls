@@ -362,7 +362,7 @@
     \cleardoublepage
 }\end{spacing}
 }
-\newcommand\listsymbolname{Definitions and Abbreviations}
+\newcommand\listsymbolname{Abbreviations and Symbols}
 \usepackage{longtable}
 \newcommand\listofsymbols[2]{
 \btypeout{\listsymbolname}

@@ -61,6 +61,90 @@
 
 % -_____________________________________________________________________________
 
+\section{Ethereum Basics}
+
+
+% -_____________________________________________________________________________
+
+\subsection{Pre-Merge Ethereum}
+
+% -_____________________________________________________________________________
+\subsection{Post-Merge Ethereum - "The Merge"}
+
+Staking makes the core of 'The Merge', switching from the older Proof of Work to the Proof-of-Stake consensus protocol. Coined as 'The Merge' as the Beacon Chain (a test network) is being merged with the original Ethereum blockchain. Both will operate simultaneously in layers. The older Ethereum chain is now known as the 'execution' layer, and Ethereum is now secured by the Proof-Of-Stake 'consensus' layer (the Beacon Chain). 
+
+This merging of the original chain with the Beacon Chain makes the need for miners redundant. \textbf{Validator nodes} now secure the Ethereum network. 
+
+To participate in the validation of transactions on the Ethereum network, a node must put 32 ETH (equivalent to £45000 currently) at stake. These validator nodes will be responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. These are also called Full Nodes later in this paper.
+
+\paragraph{Staking ETH :}
+This can be done in many different ways as not everyone has access to 32 ETH to stake. To get past this high barrier of entry, validator nodes can be operated by solo staking, staking-as-a-service, pooled staking or centralised exchanges.
+
+There are some risks involved with staking. Here are a few:
+
+\textbf{Slashing :}
+This is when the algorithm destroys a portion of a validator's stake for behaving maliciously/ against the best interests of the network, introduced as a security feature. These penalties range from 0.5 ETH to the Entire 32 ETH, making it prohibitively expensive to attack Ethereum. 
+
+\textbf{Offline Penalty :}
+If a validator goes offline for a number of days, they incur losses roughly equivalent to what they would have gained had they remained online. This is not the same as slashing; instead, the node loses out on the ETH they would have gained during that time.
+
+\textbf{Liquid ETH: }
+People operating validator nodes must be prepared to lock up 32 ETH for an indefinite period. There are ways around this, however, through using 3rd parties. 
+ 
+On the other hand, there are many incentives to run validator nodes. There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEthereum.org}. Following this altruistic mantra, running a node allows a user to interact with the Ethereum Network in a trustless and self-sufficient manner. Everything can be checked and verified with your own validator, removing the need to trust information from any other nodes in the network. An \textbf{epoch} is a unit of time in Ethereum, usually around 6 minutes. Every epoch, the algorithm judges the validator's actions and dishes out penalties and rewards. These include:
+
+\textbf{Block Proposer Reward :}
+This is for those validator nodes chosen randomly to validate the next round of transactions on the blockchain. Hence, they are responsible for proposing the next block. When their block is finalised, they are awarded a substantial amount of ETH.
+
+
+'The Merge' has substituted Ethereum's security model's reliance on computational power to \textbf{economic power}, which are comparable in many ways. Malicious attackers will not need 51\% of the economic power of the entire Ethereum network instead of 51\% of the mining power. This helps with keeping the network decentralised in a secure manner while massively reducing the energy consumption of the network. 
+
+\url{https://twitter.com/VitalikButerin/status/1260314647980322824}
+
+
+
+% -_____________________________________________________________________________
+\subsection{Ethereum Key Concepts}
+
+\textbf{Full Nodes/Validator Nodes :}
+As explained before, these nodes must stake 32 ETH in order to participate in securing the Ethereum network and earn rewards for adding blocks to the blockchain.
+
+It is periodically pruned so that it doesn't hold the entire history of the blockchain back to the genesis block. Apart from validating transactions and proposing blocks, it also provides data on request, for example, to light clients.
+
+Apart from users looking to earn ETH or altruistic users wanting to secure the Ethereum network, not many users have the incentive to invest the time and resources to run a full node. This is why most users end up using centralised 3rd party hosted nodes. Client wallets like MetaMask and MyEtherWallet connect to a remote node in a non-cryptographically proven matter. 
+
+As a result, new lighter nodes were introduced to help make Ethereum accessible to more users, which in turn also makes the network more secure.
+
+\textbf{Light Nodes :}
+These are nodes that don't stake Ethereum. Instead, they are just used for accessing the network along with storing and processing the validation of the blocks within the network. These rely on full nodes as intermediaries to receive up-to-date information about the state of the blockchain. In essence, they are spectator nodes that constantly monitor the network and are witnesses that all activity complies with the rules.
+
+Because they are up-to-date nodes, they are allowed to interact with the Ethereum blockchain.  All they require is a simple installation of an ETH 2.0 node and a connection to the internet. This means the minimum requirements for the hardware required to run a light node is minimal and can be run on mobile devices.
+
+By design, they don't need to store or process the same amount of information that full nodes do. PoW light nodes only used download the headers of each block and were able to trace back. PoS light nodes also has to keep track of validators and their balances to stay on the chain with the most stake. This small amount of information allows light nodes to operate in a trust-minimised manner.
+
+\textbf{Archive Nodes:}
+Maintain an exact and complete copy of the entire blockchain from the genesis block. 
+
+In the context of a blockchain, a client is software that connects to other clients in a peer-to-peer manner. Due to this cross-communication, these clients form a network where each client acts as a node. 
+
+\textbf{Execution Clients: }
+Previously known as 'Eth 1' clients. These are community-maintained open-source execution layer clients. The goal is to ideally have a diverse share of clients being used to make the network stronger and reduce single points of failure.
+
+Some popular execution layer clients include Geth, Nethermind, Besu and Erigon, written in languages such as Java, Go, and C\# \cite{EthereumEthereum.org}. 
+
+\textbf{Consensus Clients: }
+Following 'The Merge', many consensus clients, also known as 'Eth 2' clients, running the Beacon Chain provide the security layer to the Ethereum network. This is the layer responsible for running the PoS consensus mechanism.
+
+Some popular consensus layer clients include Prysm, Lighthouse, Teku, Nimbus and Lodestar, written in languages 
+ such as Rust, Nim, Typescript and Go \cite{EthereumEthereum.org}. 
+
+The latest shares these consensus and execution layer clients take up on the network are shown in \tref{Table:tabsubex} in the Model Evaluation section \ref{Modelling} of this report.
+
+
+% -_____________________________________________________________________________
+
+
+
 \section{Energy Consumption And Carbon Emissions of Blockchain Systems}
 
 
@@ -86,54 +170,22 @@
 \subsubsection{Mathematical Papers}
 
 
-% -_____________________________________________________________________________
-
-\section{Ethereum Basics}
 
 
-% -_____________________________________________________________________________
+\textbf{The CCRI Merge Paper } \cite{CCRI:Network}
 
-\subsection{Pre-Merge Ethereum}
-
-% -_____________________________________________________________________________
-\subsection{Post-Merge Ethereum - "The Merge"}
-
-Staking makes the core of 'The Merge', switching from the older Proof of Work to the Proof-of-Stake consensus protocol. Coined as 'The Merge' as the Beacon Chain (a test network) is being merged with the original Ethereum blockchain. Both will operate simultaneously in layers. The older Ethereum chain is now known as the 'execution' layer, and Ethereum is now secured by the Proof-Of-Stake 'consensus' layer (the Beacon Chain). 
-
-This merging of the original chain with the Beacon Chain makes the need for miners redundant. \textbf{Validator nodes} now secure the Ethereum network. 
-
-To participate in the validation of transactions on the Ethereum network, a node must put 32 ETH (equivalent to £45000 currently) at stake. These validator nodes will be responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. 
-
-\paragraph{Staking ETH :}
-This can be done in many different ways as not everyone has access to 32 ETH to stake. To get past this high barrier of entry, validator nodes can be operated by solo staking, staking-as-a-service, pooled staking or centralised exchanges.
-
-There are some risks involved with staking. Here are a few:
-
-\textbf{Slashing :}
-This is when the algorithm destroys a portion of a validator's stake for behaving maliciously/ against the best interests of the network, introduced as a security feature. These penalties range from 0.5 ETH to the Entire 32 ETH, making it prohibitively expensive to attack Ethereum. 
-
-\textbf{Offline Penalty :}
-If a validator goes offline for a number of days, they incur losses roughly equivalent to what they would have gained had they remained online. This is not the same as slashing; instead, the node loses out on the ETH they would have gained during that time.
-
-\textbf{Liquid ETH: }
-People operating validator nodes must be prepared to lock up 32 ETH for an indefinite period. There are ways around this, however, through using 3rd parties. 
- 
-On the other hand, there are many incentives to run validator nodes. An \textbf{Epoch} is a unit of time in Ethereum, usually around 6 minutes. Every epoch, the algorithm judges the validator's actions and dishes out penalties and rewards. These include:
-
-\textbf{Block Proposer Reward :}
-This is for those validator nodes chosen randomly to validate the next round of transactions on the blockchain, hence, they are responsible for proposing the next block. When their block is finalised, they are awarded a substantial amount of ETH.
-
-'The Merge' has substituted Ethereum's security model's reliance on computational power to \textbf{economic power}, which are comparable in many ways. Malicious attackers will not need 51\% of the economic power of the entire Ethereum network instead of 51\% of the mining power. This helps with keeping the network decentralised in a secure manner while massively reducing the energy consumption of the network. 
-
-\url{https://twitter.com/VitalikButerin/status/1260314647980322824}
-
-
+Assumptions this paper makes:
+\begin{itemize}
+    \item Assumes the syncing energy of each node will skew energy averages, so ignores node bootstrapping energy usage during the sync phase.
+    
+    \item They run many full nodes with different combinations of execution and consensus layer clients. However, they did not then proceed further and run a validator node due to the high economic barrier of entry (staking 32 ETH). They claim the energy usage of turning it into a validator would be negligible.
+    
+    \item Did not consider light nodes and archive nodes, presumably because of the assumption that their energy usage will be negligible as well as the lack of support of light nodes at the time.
+\end{itemize}
 
 % -_____________________________________________________________________________
-\subsection{Ethereum Key Concepts}
 
 
 
-% -_____________________________________________________________________________
 
 \section{Key Points Covered}
