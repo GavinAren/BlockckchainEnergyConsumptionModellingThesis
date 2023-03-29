@@ -14,8 +14,33 @@ node themselves.
 
 Light clients send out a lot of requests, a lot more than full nodes. For example, they might need to check the balance of certain accounts to verify the information they are receiving cryptographically. This large number of simple requests ends up requiring more network bandwidth than full nodes \cite{WhatTechnologies}. We also know that light clients are designed to be run on minimal devices such as mobile and IoT devices. The amount of computational and storage resources required by a light node is orders of magnitude lower than a full node. It requires only about 100MB of storage \cite{WhatTechnologies}. This fact can be used to model this. These devices also sync with the latest blocks using checkpoints in seconds instead of hours like a full node.
 
+\url{https://www.reddit.com/r/ethstaker/comments/x8v3rc/energy_is_expensive_so_how_much_kilowatts_does_a/}
+
 
 \textbf{Data Used}
+From the research,it seems like power usage is usually not the limiting factor but rather the storage space needed to run validators.
+
+The recommended hardware for a validator one is shown in table \_\_ of the appendix as well as in the table below. \_\_
+
+So according to this hardware recommendation, we could estimate the power usage depending on statistics provided by manufacturers. Let's assume the same configuration of hardware as in the \cite{CCRI:Network} (They don't mention type of power supply and mainboard).  According to data from the manufacturers, the power consumption for this configuration comes out to the following: 
+
+\begin{itemize}
+    \item Processor TDP - 105W
+    
+    \item An SSD uses 5W while Active
+    
+    \item Every 8GB of memory uses 3W, so 16GB of memory will use 6W
+    
+    \item For a solo validator set-up (non-specialised hardware), miscellaneous components are likely to use another 30W
+    
+    \item As 92\% efficiency is common, the machine will likely peak at 178W of AC power drawn from the wall
+    
+    \item The machine will run at idle power consumption 50-90\% of time, so on average it would use around 50-100W
+    
+\end{itemize}
+
+
+
 
 
 
