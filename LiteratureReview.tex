@@ -79,11 +79,16 @@ This merging of the original chain with the Beacon Chain makes the need for mine
 
 To participate in the validation of transactions on the Ethereum network, a node must put 32 ETH (equivalent to £45000 currently) at stake. These validator nodes will be responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. These are also called Full Nodes later in this paper.
 
+
+ ****explain why client diversity is important
+ **** once you have a node running, its not automatically a validator node
+****reasons its good for the network if more poeple run a node, with which come energy consumption
+ 
 \paragraph{Staking ETH :}
 This can be done in many different ways as not everyone has access to 32 ETH to stake. To get past this high barrier of entry, validator nodes can be operated by solo staking, staking-as-a-service, pooled staking or centralised exchanges.
 
 There are some risks involved with staking. Here are a few:
-
+ ***shorten this section, kee relevant bits
 \textbf{Slashing :}
 This is when the algorithm destroys a portion of a validator's stake for behaving maliciously/ against the best interests of the network, introduced as a security feature. These penalties range from 0.5 ETH to the Entire 32 ETH, making it prohibitively expensive to attack Ethereum. 
 
@@ -96,6 +101,7 @@ People operating validator nodes must be prepared to lock up 32 ETH for an indef
 On the other hand, there are many incentives to run validator nodes. There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEthereum.org}. Following this altruistic mantra, running a node allows a user to interact with the Ethereum Network in a trustless and self-sufficient manner. Everything can be checked and verified with your own validator, removing the need to trust information from any other nodes in the network. An \textbf{epoch} is a unit of time in Ethereum, usually around 6 minutes. Every epoch, the algorithm judges the validator's actions and dishes out penalties and rewards. These include:
 
 \textbf{Block Proposer Reward :}
+****Cover the other type of reward, make it shorter
 This is for those validator nodes chosen randomly to validate the next round of transactions on the blockchain. Hence, they are responsible for proposing the next block. When their block is finalised, they are awarded a substantial amount of ETH.
 
 
@@ -141,6 +147,19 @@ Some popular consensus layer clients include Prysm, Lighthouse, Teku, Nimbus and
  such as Rust, Nim, Typescript and Go \cite{EthereumEthereum.org}. 
 
 The latest shares these consensus and execution layer clients take up on the network are shown in \tref{Table:tabsubex} in the Model Evaluation section \ref{Modelling} of this report.
+
+\textbf{Syncing Methods:} \newline 
+Synchronisation refers to a new node catching up with the rest of the Ethereum network and get the most up-to-date information. This is done by requesting, storing and verifying data from peers, cryptographically verifying their integrity and building a local copy of the blockchain.
+
+PoS Ethereum relies on the consensus layer to handle the consensus logic and, more importantly, block propagation. So the synchronisation process is shared between both the EL and CL client. In order for the EL client to start verifying and syncing a local copy of the blockchain, the CL client has to download the block header. Only when the CL client provides the EL client with a header to use as a synching target can it cryptographically verify the chain of blocks they are syncing is valid. After this is complete, the blocks' information is downloaded \cite{2022DeveloperGo-ethereum}.
+
+\textbf{Execution Layer Syncing Modes: } 
+
+Many syncing modes exist, such as full, snap, fast and light mode. The most commonly used modes are explained as follows: 
+
+\textbf{Full Sync } independently verifies the block provenance by re-executing the transactions starting all the way form the genesis block. However, only the latest 128 blocks are actually stored in the full node along with a few checkpoints representing the older blocks. 
+
+\textbf{Snap Sync}is an innovative approach developed by Geth developers(the prevailing EL client). It works like a full sync except it starts are a much more recent checkpoint to start its verification upto the head of the chain. It also stores the most recent 128 blocks, with a few checkpoints for the blocks before that \cite{2022DeveloperGo-ethereum}.
 
 
 % -_____________________________________________________________________________
@@ -190,6 +209,10 @@ Assumptions this paper makes:
 % -_____________________________________________________________________________
 
 
+% Quick intro on AVX operations, what is TDP and why that is the upper limit of CPU power consumption
+AVX instructions enable the processor to perform multiple floating-point operations at the same time, resulting in faster computation and improved performance. \cite{Schuchart2016TheScale}
+
+% ______________________________________________________________________________
 
 
 \section{Key Points Covered}

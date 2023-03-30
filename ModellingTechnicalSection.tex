@@ -6,7 +6,7 @@
 
 
 % ____________________________________________________________________________
-\section{Parametric Modelling with Prior Domain Knowledge}
+\section{Model B: Parametric Modelling with Prior Domain Knowledge}
 
 \textbf{Light Nodes}
 Light nodes require much less computational power to run compared to a full node, yet, they still work in a trust-minimised way. This is due to their cryptographically proven way of using block headers of the blockchain to verify the information they are receiving from a full 
@@ -14,9 +14,32 @@ node themselves.
 
 Light clients send out a lot of requests, a lot more than full nodes. For example, they might need to check the balance of certain accounts to verify the information they are receiving cryptographically. This large number of simple requests ends up requiring more network bandwidth than full nodes \cite{WhatTechnologies}. We also know that light clients are designed to be run on minimal devices such as mobile and IoT devices. The amount of computational and storage resources required by a light node is orders of magnitude lower than a full node. It requires only about 100MB of storage \cite{WhatTechnologies}. This fact can be used to model this. These devices also sync with the latest blocks using checkpoints in seconds instead of hours like a full node.
 
-\url{https://www.reddit.com/r/ethstaker/comments/x8v3rc/energy_is_expensive_so_how_much_kilowatts_does_a/}
+% _____________________---stage 1
+\textbf{Stage 1: Adding the Synchronisation Energy} 
+
+ The equation for the 'weighted  electricity  consumption  of  an  average  node for each combination of one consensus and one execution client' is shown below (section \ref{CCRIEquation}). This equation ignores the energy expended during the bootstrapping stage of running a node - the synchronisation process. Geth is the most dominant (\tref{Table:tabsubex}) and long-standing Ethereum EL client. Geth's snap sync mode is the most commonly used sync mode as it strikes a great balance between independent verification and sync speed.
+% DIAGRAM FOR SNAP SYNC
+ All types of syncing modes are very energy intensive and snap-sync is no exception. It works by downloading the headers of chunks of blocks at a time and verifies these. In parallel to this it starts downloading the state-trie for each block and cryptographically verifying this by regenerating it locally. These computationally intensive processes utilise the CPU to its maximum capacity.
+
+ As it is verifying these blocks, it also begins storing this information locally to create a local copy of the chain. This process is often so fast that hard drives cannot keep up. This is why Solid State drives with DRAM are required by the recommended specs shown in the \tref{Table:RecommendedHardware}. These are much faster than traditional hard drives but also expend more energy.
+
+ I propose the following equation:
+  % keeping Intel i5-1135G7 in mind
+This paper \cite{Schuchart2016TheScale} found that for computationally intense applications, the processor cannot operate at maximum capacity continuously and instead reduces it's frequency, maintaining operations within the thermal power limitation, the TDP. Hence the TDP can be used as an accurate measurement of the energy consumption of a processor under sustained load.
+
+The TDP (Thermal Design Power) of the CPU being used by the node is denoted by:
+\begin{equation*}
+    \boldsymbol{\mathrm{P}_{TDP}}
+\end{equation*}+
 
 
+From this table, we can investigate the 
+
+
+
+
+
+% __________________________________
 \textbf{Data Used}
 From the research,it seems like power usage is usually not the limiting factor but rather the storage space needed to run validators.
 
@@ -50,6 +73,7 @@ So according to this hardware recommendation, we could estimate the power usage 
 
 
 Energy usage of the defined hardware specification mentioned is denoted by:
+\label{CCRIEquation}
 \begin{equation*}
     \boldsymbol{\mathrm{E}}
 \end{equation*} 
@@ -96,9 +120,32 @@ The total share of the network occupied by ${n}$ tested combinations of consensu
 \end{equation}
 
 
+% ___________________________________________________________________MODELS DONE< NOW 
 
-% ____________________________________________________________________________
-\subsection {Modelling }
+% MODEL BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+\section{Model B Results}
+
+\textbf{Data Gathering}
+The recommended hardware configuration for a Geth client is shown in \tref{Table:RecommendedHardware}.
+
+\begin{table}[]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Solo Validator Nodes        & \begin{tabular}[c]{@{}l@{}}Quad Core Processor, \\ 2TB SSD , 16GB memory\end{tabular}                            \\ \hline
+Archive Nodes               & \begin{tabular}[c]{@{}l@{}}Quad Core or Dual Core Hyperthreaded \\ Processor, 12TB SSD, 16GB memory\end{tabular} \\ \hline
+Minimum for Validator nodes & \begin{tabular}[c]{@{}l@{}}Dual Core Hyperthreaded, \\ 1TB SSD, 4GB memory\end{tabular}                          \\ \hline
+\end{tabular}
+\caption{Recommended hardware configurations for running various nodes by Geth \cite{2022DeveloperGo-ethereum}}
+\label{Table:RecommendedHardware}
+\end{table}
+
+A combination of hardware that closely matches the recommendation by Geth developers must be chosen. The following specification was chosen:
+Intel i5-1135G7
+Because it is a recent CPU, made to be in laptops. This is aligned with the aim of running PoS Ethereum nodes on commodity hardware. It is also a configuration with actual data in the report by \cite{CCRI:Network} and hence will draw fair comparisons when the models are compared.
+
+
+
 % ____________________________________________________________________________
 \subsection{Ethereum's Total Network Energy Consumption}
 
@@ -147,26 +194,8 @@ A simple logical model for estimating the energy consumption of Ethereum 2.0's e
 \begin{table}[!htb]
     \centering
 
-  \subcaptionbox{\textbf{Consensus Clients} \cite{Sigp/blockprint:Metrics}}{
+  \subcaptionbox{\textbf{Execution Clients} \cite{Sigp/blockprint:Metrics}}{
       \begin{tabular}{|l|c|}
-            \hline
-             Prysm & 65.15 \%  \\
-            \hline
-             Lighthouse & 29.30 \% \\
-            \hline 
-             Teku & 10.65 \% \\
-            \hline
-             Nimbus & 0.91 \% \\
-            \hline
-             Lodestar & 0.0 \% \\
-            \hline
-             Other & 0.0 \%  \\
-            \hline
-  \end{tabular}
-    \label{Table:tabsubex:left}
-  }
-  \subcaptionbox{\textbf{Execution Clients}  \cite{ClientsExplorer}}{
-        \begin{tabular}{|l|c|}
             \hline
              Geth & 69.22 \% \\
             \hline
@@ -180,6 +209,25 @@ A simple logical model for estimating the energy consumption of Ethereum 2.0's e
             \hline
              Other & 0.20 \% \\
             \hline
+  \end{tabular}
+    \label{Table:tabsubex:left}
+  }
+  \subcaptionbox{\textbf{Consensus Clients}  \cite{ClientsExplorer}}{
+        \begin{tabular}{|l|c|}
+                    \hline
+             Prysm & 65.15 \%  \\
+            \hline
+             Lighthouse & 29.30 \% \\
+            \hline 
+             Teku & 10.65 \% \\
+            \hline
+             Nimbus & 0.91 \% \\
+            \hline
+             Lodestar & 0.0 \% \\
+            \hline
+             Other & 0.0 \%  \\
+            \hline
+            
   \end{tabular}
     \label{Table:tabsubex:right}
   }
