@@ -103,13 +103,13 @@ The model for calculating the energy consumption of a CPU introduced by this pap
 
 Where $\boldsymbol{\mathrm{P}_{Total}}$ is the total energy consumption of the CPU, $\boldsymbol{\mathrm{P}_{idle}}$ and $\boldsymbol{\mathrm{P}_{max}}$ denote the power consumption of the CPU in an idle state and under maximum load. $\boldsymbol{\mathrm{U}}$ denotes the percentage of CPU usage under load.
 
-In our case, we want to capture only the energy consumption of the syncing process. Thus we will assume the $\boldsymbol{\mathrm{U}}$ to be 100\%, or $\boldsymbol{1}$. This negates the need for $\boldsymbol{\mathrm{P}_{idle}}$ in the equation, resulting in:
+In our case, we want to capture only the energy consumption of the syncing process. For the sake of simplicity, we will assume the $\boldsymbol{\mathrm{U}}$ to be 100\%, or $\boldsymbol{1}$. This negates the need for $\boldsymbol{\mathrm{P}_{idle}}$ to be included in the equation:
 
 \begin{equation*}
     \boldsymbol{\mathrm{P}_{Total} = {\mathrm{P}_{max}}}
 \end{equation*}
 
-This paper \cite{Schuchart2016TheScale} shows that the processor cannot operate at maximum capacity continuously for computationally intense applications. To cope, it reduces it's frequency, maintaining operations within the thermal power limitation, the TDP. Hence the TDP can be used as an accurate measurement of the energy consumption of a processor under a high sustained load. Hence:
+This paper \cite{Schuchart2016TheScale} shows that the processor cannot continuously operate at maximum capacity for computationally intense applications. To cope, it reduces it's frequency, maintaining operations within the thermal power limitation, the TDP. Hence the TDP can be used as an accurate measurement of the energy consumption of a CPU under a high sustained load. We can infer:
 
 \begin{equation*}
     \boldsymbol{\mathrm{P}_{max} = {\mathrm{P}_{TDP}}}
@@ -117,14 +117,14 @@ This paper \cite{Schuchart2016TheScale} shows that the processor cannot operate 
 
 Where the TDP (Thermal Design Power) of the CPU being used by the node is denoted by $\boldsymbol{\mathrm{P}_{TDP}}$, measured in Watts. This can easily be found on the CPU manufacturer's website.
 
- As the node is verifying the blocks using the CPU at maximum capacity, it also begins storing this information locally to assemble a local copy of the chain. This storage process requires speeds that hard drives cannot keep up. This is why Solid State drives with DRAM are required by the recommended specs shown in the \tref{Table:RecommendedHardware}. These are much faster than traditional hard drives but also expend more energy. 
+ While the CPU is being utilised at maximum capacity, the node also begins storing this information locally to assemble a local copy of the chain in parallel. This storage process requires speeds that hard drives cannot keep up with. This is reinforced by the recommended specs shown in the \tref{Table:RecommendedHardware} which requires an Solid State Drive with DRAM. These are much faster than traditional hard drives and expend more energy as a consequence. 
 
- The energy estimation of SSD actively in use, in Watts, is denoted by:
+ The average energy estimation of an SSD actively in use, in Watts, is denoted by:
  \begin{equation*}
     \boldsymbol{\mathrm{P}_{SSD}} 
 \end{equation*}
 
-The time it takes to complete the synchronisation process, in hours, is denoted by:
+Often, it takes days to complete a full sync. The time it takes to complete the synchronisation process, in hours, is denoted by:
 \begin{equation*}
     \boldsymbol{\mathrm{T}_{SNC}}
 \end{equation*}
@@ -134,16 +134,17 @@ Thus the total power expended during the synchronisation process $\boldsymbol{\m
     \boldsymbol{\mathrm{P}_{SNC} = \mathrm{T}_{SNC} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right)} \label{eqn:Sync}
 \end{equation}
 
-As this is a bootstrapping process, integrating equation \ref{eqn:Sync} into the CCRI equation \ref{eqn:CCRI} would result in the following:
+As this is a bootstrapping process, integrating equation \ref{eqn:Sync} into the CCRI equation \ref{eqn:CCRI} results in the following:
 
 \begin{equation*}
     \boldsymbol{\mathrm{P}_{SNC} +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
  {\pi}} } 
 \end{equation*}
+
 Which simplifies to:
 
 \begin{equation}
-     \boldsymbol{\mathrm{T}_{SNC} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+     \boldsymbol{\left({\mathrm{T}_{SNC} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right)}\right) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
 {\pi}} } \label{eqn:CCRISync}
 \end{equation}
 

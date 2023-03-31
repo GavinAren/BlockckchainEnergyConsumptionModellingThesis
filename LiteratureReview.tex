@@ -97,8 +97,11 @@ If a validator goes offline for a number of days, they incur losses roughly equi
 
 \textbf{Liquid ETH: }
 People operating validator nodes must be prepared to lock up 32 ETH for an indefinite period. There are ways around this, however, through using 3rd parties. 
- 
-On the other hand, there are many incentives to run validator nodes. There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEthereum.org}. Following this altruistic mantra, running a node allows a user to interact with the Ethereum Network in a trustless and self-sufficient manner. Everything can be checked and verified with your own validator, removing the need to trust information from any other nodes in the network. An \textbf{epoch} is a unit of time in Ethereum, usually around 6 minutes. Every epoch, the algorithm judges the validator's actions and dishes out penalties and rewards. These include:
+ % -------
+\newline \newline
+On the other hand, there are many incentives to run validator nodes. There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEthereum.org}. Following this altruistic mantra, running a node allows a user to interact with the Ethereum Network in a trustless and self-sufficient manner. Everything can be checked and verified with your own validator, removing the need to trust information from any other nodes in the network. 
+
+Blocks are 'forged' by validators at a fixed tempo in PoS Ethereum. Every 12-second time slot, a randomly selected validator forges a block and sends it out to the network. 32 slots make up an \textbf{epoch}, usually around 6 minutes. For every slot, a random committee of nodes is also selected, whose votes determine whether the proposed block is valid or not. The algorithm judges the validator's actions and dishes out penalties and rewards at the end of each epoch. These include:
 
 \textbf{Block Proposer Reward :}
 ****Cover the other type of reward, make it shorter
@@ -153,7 +156,7 @@ Synchronisation refers to a new node catching up with the rest of the Ethereum n
 
 PoS Ethereum relies on the consensus layer to handle the consensus logic and, more importantly, block propagation. So the synchronisation process is shared between both the EL and CL client. In order for the EL client to start verifying and syncing a local copy of the blockchain, the CL client has to download the block header. Only when the CL client provides the EL client with a header to use as a synching target can it cryptographically verify the chain of blocks they are syncing is valid. After this is complete, the blocks' information is downloaded \cite{2022DeveloperGo-ethereum}.
 
-\textbf{Execution Layer Syncing Modes: } 
+\textbf{Execution Layer Syncing: } 
 
 Many syncing modes exist, such as full, snap, fast and light mode. The most commonly used modes are explained as follows: 
 
