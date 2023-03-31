@@ -6,41 +6,9 @@
 
 
 % ____________________________________________________________________________
-\section{Model B: Parametric Modelling with Prior Domain Knowledge}
 
-\textbf{Light Nodes}
-Light nodes require much less computational power to run compared to a full node, yet, they still work in a trust-minimised way. This is due to their cryptographically proven way of using block headers of the blockchain to verify the information they are receiving from a full 
-node themselves. 
-
-Light clients send out a lot of requests, a lot more than full nodes. For example, they might need to check the balance of certain accounts to verify the information they are receiving cryptographically. This large number of simple requests ends up requiring more network bandwidth than full nodes \cite{WhatTechnologies}. We also know that light clients are designed to be run on minimal devices such as mobile and IoT devices. The amount of computational and storage resources required by a light node is orders of magnitude lower than a full node. It requires only about 100MB of storage \cite{WhatTechnologies}. This fact can be used to model this. These devices also sync with the latest blocks using checkpoints in seconds instead of hours like a full node.
-
-% _____________________---stage 1
-\textbf{Stage 1: Adding the Synchronisation Energy} 
-
- The equation for the 'weighted  electricity  consumption  of  an  average  node for each combination of one consensus and one execution client' is shown below (section \ref{CCRIEquation}). This equation ignores the energy expended during the bootstrapping stage of running a node - the synchronisation process. Geth is the most dominant (\tref{Table:tabsubex}) and long-standing Ethereum EL client. Geth's snap sync mode is the most commonly used sync mode as it strikes a great balance between independent verification and sync speed.
-% DIAGRAM FOR SNAP SYNC
- All types of syncing modes are very energy intensive and snap-sync is no exception. It works by downloading the headers of chunks of blocks at a time and verifies these. In parallel to this it starts downloading the state-trie for each block and cryptographically verifying this by regenerating it locally. These computationally intensive processes utilise the CPU to its maximum capacity.
-
- As it is verifying these blocks, it also begins storing this information locally to create a local copy of the chain. This process is often so fast that hard drives cannot keep up. This is why Solid State drives with DRAM are required by the recommended specs shown in the \tref{Table:RecommendedHardware}. These are much faster than traditional hard drives but also expend more energy.
-
- I propose the following equation:
-  % keeping Intel i5-1135G7 in mind
-This paper \cite{Schuchart2016TheScale} found that for computationally intense applications, the processor cannot operate at maximum capacity continuously and instead reduces it's frequency, maintaining operations within the thermal power limitation, the TDP. Hence the TDP can be used as an accurate measurement of the energy consumption of a processor under sustained load.
-
-The TDP (Thermal Design Power) of the CPU being used by the node is denoted by:
-\begin{equation*}
-    \boldsymbol{\mathrm{P}_{TDP}}
-\end{equation*}+
-
-
-From this table, we can investigate the 
-
-
-
-
-
-% __________________________________
-\textbf{Data Used}
+%  MODEL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+\subsection{Model A}
 From the research,it seems like power usage is usually not the limiting factor but rather the storage space needed to run validators.
 
 The recommended hardware for a validator one is shown in table \_\_ of the appendix as well as in the table below. \_\_
@@ -62,39 +30,37 @@ So according to this hardware recommendation, we could estimate the power usage 
     
 \end{itemize}
 
+% _____________________________________________________________________________
+%  MODEL BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+\section{Model B: Parametric Modelling with Prior Domain Knowledge}
 
+% \textbf{Light Nodes}
+% Light nodes require much less computational power to run compared to a full node, yet, they still work in a trust-minimised way. This is due to their cryptographically proven way of using block headers of the blockchain to verify the information they are receiving from a full 
+% node themselves. 
 
+% Light clients send out a lot of requests, a lot more than full nodes. For example, they might need to check the balance of certain accounts to verify the information they are receiving cryptographically. This large number of simple requests ends up requiring more network bandwidth than full nodes \cite{WhatTechnologies}. We also know that light clients are designed to be run on minimal devices such as mobile and IoT devices. The amount of computational and storage resources required by a light node is orders of magnitude lower than a full node. It requires only about 100MB of storage \cite{WhatTechnologies}. This fact can be used to model this. These devices also sync with the latest blocks using checkpoints in seconds instead of hours like a full node.
 
+% _____________________---stage 1
+\textbf{The CRRI Equation Adapted}
+This section introduces the CCRI (\cite{TheNetwork}) equation for the 'weighted  electricity  consumption  of  an  average  node for each combination of one consensus and one execution client'\cite{TheNetwork} with symbols adapted for this paper.
 
-
-
-% ____________________________________________________________________________
-\subsection {Key Factors And Limitations}
-
-
-Energy usage of the defined hardware specification mentioned is denoted by:
-\label{CCRIEquation}
+A Consensus Layer Client's power usage is denoted by subscript:
 \begin{equation*}
-    \boldsymbol{\mathrm{E}}
-\end{equation*} 
-
-A Consensus Layer Client's energy usage is denoted by subscript:
-\begin{equation*}
-    \boldsymbol{\mathrm{E}_{CL}}
+    \boldsymbol{\mathrm{P}_{CL}}
 \end{equation*}
 
 An Execution Layer Client's energy usage is denoted by subscript:
 \begin{equation*}
-    \boldsymbol{\mathrm{E}_{EL}}
+    \boldsymbol{\mathrm{P}_{EL}}
 \end{equation*}
  
  An Idle client's energy usage is denoted by: \begin{equation*}
-    \boldsymbol{\mathrm{E}_{ID}}
+    \boldsymbol{\mathrm{P}_{ID}}
 \end{equation*} 
 
 Mean Energy usage for each of the 3 client types are denoted by the following respectively: 
 \begin{equation*}
-  \boldsymbol{\mathrm{{\overline{E}}_{CL}}}\quad      \boldsymbol{\mathrm{{\overline{E}}_{EL}}}\quad  \boldsymbol{\mathrm{{\overline{E}}_{ID}}}   
+  \boldsymbol{\mathrm{{\overline{P}}_{CL}}}\quad      \boldsymbol{\mathrm{{\overline{P}}_{EL}}}\quad  \boldsymbol{\mathrm{{\overline{P}}_{ID}}}   
 \end{equation*}
 
 The number of machines ran with different combinations of consensus and execution layer clients is denoted by:
@@ -104,19 +70,81 @@ The number of machines ran with different combinations of consensus and executio
 
 The known share of the network that uses a specific combination of Consensus and Execution layer client is denoted by:
 \begin{equation*}
-    \boldsymbol{\phi}_{i} \text{ where } {i} \text{ represents a specific CL and EL client combination.}
+    \boldsymbol{\phi}_{EL,CL} \text{ where } {i} \text{ represents a specific CL and EL client combination.}
 \end{equation*}
 
 The total share of the network occupied by ${n}$ tested combinations of consensus and execution layer clients is denoted by:
 \begin{equation*}
-    \boldsymbol{\displaystyle\sum\limits_{i=1}^{n}{\phi_{i}}}
+    \boldsymbol{{\pi} = \displaystyle\sum\limits_{i=1}^{n}{\phi_{EL,CL}}}
 \end{equation*}
 
-\paragraph{First Iteration of the Model}
+The final equation: 
 
 \begin{equation}
-\boldsymbol{\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{E}}_{ID} + \mathrm{\overline{E}}_{CL} + \mathrm{\overline{E}}_{EL}\right)} * {\phi_{i}} \right)}}
- {\pi}}
+\boldsymbol{\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+ {\pi}}\label{eqn:CCRI}
+\end{equation}
+
+
+
+% ____________________stage 1
+\textbf{Stage 1: Adding the Synchronisation Energy} 
+
+ The equation \ref{eqn:CCRI} ignores the energy expended during the bootstrapping stage of running a node - the synchronisation process. Geth is the most dominant (\tref{Table:tabsubex}) and long-standing Ethereum EL client. Geth's snap sync mode is the most commonly used sync mode as it strikes a great balance between independent verification and sync speed.
+% DIAGRAM FOR SNAP SYNC
+ All types of syncing modes are very energy-intensive and snap-sync is no exception. It works by downloading the headers of chunks of blocks at a time and verifies these. In parallel to this it starts downloading the state-trie for each block and cryptographically verifying this by regenerating it locally. These computationally intensive processes utilise the CPU to its maximum capacity.
+
+  % keeping Intel i5-1135G7 in mind
+The model for calculating the energy consumption of a CPU introduced by this paper \cite{SaingreUnderstandingContracts} is shown below:
+
+\begin{equation*}
+    \boldsymbol{\mathrm{P}_{Total} = \mathrm{P}_{idle} + \left({\mathrm{P}_{max} - \mathrm{P}_{idle}}\right) * \mathrm{U}}
+\end{equation*}
+
+Where $\boldsymbol{\mathrm{P}_{Total}}$ is the total energy consumption of the CPU, $\boldsymbol{\mathrm{P}_{idle}}$ and $\boldsymbol{\mathrm{P}_{max}}$ denote the power consumption of the CPU in an idle state and under maximum load. $\boldsymbol{\mathrm{U}}$ denotes the percentage of CPU usage under load.
+
+In our case, we want to capture only the energy consumption of the syncing process. Thus we will assume the $\boldsymbol{\mathrm{U}}$ to be 100\%, or $\boldsymbol{1}$. This negates the need for $\boldsymbol{\mathrm{P}_{idle}}$ in the equation, resulting in:
+
+\begin{equation*}
+    \boldsymbol{\mathrm{P}_{Total} = {\mathrm{P}_{max}}}
+\end{equation*}
+
+This paper \cite{Schuchart2016TheScale} shows that the processor cannot operate at maximum capacity continuously for computationally intense applications. To cope, it reduces it's frequency, maintaining operations within the thermal power limitation, the TDP. Hence the TDP can be used as an accurate measurement of the energy consumption of a processor under a high sustained load. Hence:
+
+\begin{equation*}
+    \boldsymbol{\mathrm{P}_{max} = {\mathrm{P}_{TDP}}}
+\end{equation*}
+
+Where the TDP (Thermal Design Power) of the CPU being used by the node is denoted by $\boldsymbol{\mathrm{P}_{TDP}}$, measured in Watts. This can easily be found on the CPU manufacturer's website.
+
+ As the node is verifying the blocks using the CPU at maximum capacity, it also begins storing this information locally to assemble a local copy of the chain. This storage process requires speeds that hard drives cannot keep up. This is why Solid State drives with DRAM are required by the recommended specs shown in the \tref{Table:RecommendedHardware}. These are much faster than traditional hard drives but also expend more energy. 
+
+ The energy estimation of SSD actively in use, in Watts, is denoted by:
+ \begin{equation*}
+    \boldsymbol{\mathrm{P}_{SSD}} 
+\end{equation*}
+
+The time it takes to complete the synchronisation process, in hours, is denoted by:
+\begin{equation*}
+    \boldsymbol{\mathrm{T}_{SNC}}
+\end{equation*}
+
+Thus the total power expended during the synchronisation process $\boldsymbol{\mathrm{P}_{SNC}}$ can be represented as:
+\begin{equation}
+    \boldsymbol{\mathrm{P}_{SNC} = \mathrm{T}_{SNC} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right)} \label{eqn:Sync}
+\end{equation}
+
+As this is a bootstrapping process, integrating equation \ref{eqn:Sync} into the CCRI equation \ref{eqn:CCRI} would result in the following:
+
+\begin{equation*}
+    \boldsymbol{\mathrm{P}_{SNC} +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+ {\pi}} } 
+\end{equation*}
+Which simplifies to:
+
+\begin{equation}
+     \boldsymbol{\mathrm{T}_{SNC} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+{\pi}} } \label{eqn:CCRISync}
 \end{equation}
 
 
