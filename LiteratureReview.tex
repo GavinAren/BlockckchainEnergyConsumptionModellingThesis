@@ -63,17 +63,39 @@
 
 \section{Ethereum Basics}
 
+***explain the whole of ethereum from an all inclusive perspective, inclusing like why gas exists, what it is, very simply. And teh Dapp ecosysm, and how eth is just a the bottom layer, why Eth exists basically.
+
+***introduce what a blockchain is, basics
+
+Many nodes that communicate over a network following the 'ETH' protocol, forming the Ethereum network. The nodes all contribute to maintaing and securing a globally agreed state of the Ethereum Virtual Machine (EVM). The security of the network comes from a majority of nodes agreeing on the new change to the state of this EVM. In other words, agreeing on the next blocks to be permanently added to the blockchain. They are paid in \textbf{ether (ETH)}, Ethereum's native cryptocurrency, to run this validator software to validate new blocks received over the peer-to-peer netowork.
+
+***Introduce the need for consensus protocols
+
+When a user wants to enter a transaction into the blockchain, they specify the transaction amount, the secure it with their private key and also specify the tip they are willing to pay on top of the base transaction fees (both in 'gas') to incentivise a validator to include their transaction in an upcoming block. The JSON RCP API takes this request to the ETH Execution Client. This client verifies the transaction request by checking things like whether the user has the enough money to complete this transaction and if they used the correct private key. \cite{EthereumEthereum.org} 
+
+This is then broadcasted to every other validator over the execution layer 'gossip network'. Every validator adds this transaction to their local \textbf{mempool}. This is a collection of unverified transaction that are waiting to be processed and added to a block.
+
+A validator is selected per slot pseudo-randomly. The validator chooses transactions out of its mempool to include in its block. It executes these transactions locally, causing a state change. Once it completes enough transaction to fill up a block (there is a gas limit per block), it proposes this signed 'beacon' block to all other validators over the consensus layer. This block is also wrapped in other information such as rewards, slashings, attestations, that enable the network to come to agree on the sequence of blocks at the head of the chain.
+
+When other nodes receive this proposed block, they pass it to their execution layer client where they verify the data inside it. This includes ensuring it corresponds to the correct slot, correct parent etc. but most importantly, the transaction in the block are re-executed to check that the state change being proposed is valid. If the prosposed block passes these checks, the node adds it to its own 'canonical?' chain.  \cite{EthereumEthereum.org} 
+
+
+\textbf{Sharding}
+One solution to increasing the number of transactions throughput on the network is sharding. It refers to splitting the entire Ethereum network into 64 portions called \textbf{shards} cite ** ** **\url{https://github.com/ethereum/annotated-spec/blob/master/phase0/beacon-chain.md#attestationdata}. Each shard would contain its own independent state. It is an attempt at breaking up the blockchain into smaller parts no nodes are not responsible for processing or re-executing every single transaction broadcasted on the Ethereum network. Each shard is still connected to the main Ethereum chain cryptographically through merkle trees. \cite{EthereumEthereum.org} 
+
+
+\textbf{Attestations}
+Validators are expected to create, sign and then propagate their attestation to the rest of the network, every epoch.
+Its purpose to vote for a specific slot of an epoch. The focus of this voting to retrieve each validator's view of the blockchain after each epoch. Meaning, their attestation in favour of their first and last block of the epoch are most important. This information is combined to help the network reach consensus about which block-chain to follow.
+
+
 
 % -_____________________________________________________________________________
-
-\subsection{Pre-Merge Ethereum}
-
-% -_____________________________________________________________________________
-\subsection{Post-Merge Ethereum - "The Merge"}
+\subsection{Post-Merge Ethereum - "The Merge"/ "London Upgrade"/"Paris" idk}
 
 \url{https://blog.ethereum.org/2021/05/18/country-power-no-more}
 
-Staking makes the core of 'The Merge', switching from the older Proof of Work to the Proof-of-Stake consensus protocol. Coined as 'The Merge' as the Beacon Chain (a test network) is being merged with the original Ethereum blockchain. Both will operate simultaneously in layers. The older Ethereum chain is now known as the 'execution' layer, and Ethereum is now secured by the Proof-Of-Stake 'consensus' layer (the Beacon Chain). 
+"The Merge" or "London Upgrade" happened in September 2022. The Ethereum Blockchain switched from the older Proof of Work to the Proof-of-Stake consensus protocol. The Beacon Chain (a test network) is being merged with the original Ethereum blockchain. Both will operate simultaneously in layers. The older Ethereum chain is now known as the 'execution' layer, and Ethereum is now secured by the Proof-Of-Stake 'consensus' layer (the Beacon Chain). 
 
 This merging of the original chain with the Beacon Chain makes the need for miners redundant. \textbf{Validator nodes} now secure the Ethereum network. 
 
@@ -101,10 +123,13 @@ People operating validator nodes must be prepared to lock up 32 ETH for an indef
 \newline \newline
 On the other hand, there are many incentives to run validator nodes. There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEthereum.org}. Following this altruistic mantra, running a node allows a user to interact with the Ethereum Network in a trustless and self-sufficient manner. Everything can be checked and verified with your own validator, removing the need to trust information from any other nodes in the network. 
 
-Blocks are 'forged' by validators at a fixed tempo in PoS Ethereum. Every 12-second time slot, a randomly selected validator forges a block and sends it out to the network. 32 slots make up an \textbf{epoch}, usually around 6 minutes. For every slot, a random committee of nodes is also selected, whose votes determine whether the proposed block is valid or not. The algorithm judges the validator's actions and dishes out penalties and rewards at the end of each epoch. These include:
+Blocks are 'forged' by validators at a fixed tempo in PoS Ethereum. Every 12-second time \textbf{slot}, a randomly selected validator forges a block and sends it out to the network. 32 slots make up an \textbf{epoch}, usually around 6 minutes. For every slot, a random committee of nodes is also selected, whose votes determine whether the proposed block is valid or not. The algorithm judges each validator's actions and dishes out rewards and penalties at the end of each epoch accordindly. 
+
+
+These include:
 
 \textbf{Block Proposer Reward :}
-****Cover the other type of reward, make it shorter
+****Cover the other type of reward. Make it shorter
 This is for those validator nodes chosen randomly to validate the next round of transactions on the blockchain. Hence, they are responsible for proposing the next block. When their block is finalised, they are awarded a substantial amount of ETH.
 
 
@@ -118,6 +143,11 @@ This is for those validator nodes chosen randomly to validate the next round of 
 \subsection{Ethereum Key Concepts}
 
 \textbf{Full Nodes/Validator Nodes :}
+Each validator node is responsible for one of the two:
+\begin{enumerate}
+    \item Propose a new block by executing pending transactions from the mempool when randomly chosen as a block proposer for a slot
+    \item Check blocks other validator nodes are proposing and attest to them by checking their validity and voting 
+\end{enumerate}
 As explained before, these nodes must stake 32 ETH in order to participate in securing the Ethereum network and earn rewards for adding blocks to the blockchain.
 
 It is periodically pruned so that it doesn't hold the entire history of the blockchain back to the genesis block. Apart from validating transactions and proposing blocks, it also provides data on request, for example, to light clients.
