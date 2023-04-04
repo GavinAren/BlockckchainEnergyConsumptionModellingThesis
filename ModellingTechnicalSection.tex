@@ -42,7 +42,6 @@ So according to this hardware recommendation, we could estimate the power usage 
 
 % _____________________---stage 1
 \textbf{The CRRI Equation Adapted}
-
 This section introduces the CCRI equation for the 'weighted  electricity  consumption  of  an  average  node for each combination of one consensus and one execution client'\cite{CryptoCarbonRatingsInstitute2022TheNetwork} with symbols adapted for this paper. Power and electricity are synonymous below.
 
 A Consensus Layer Client's power usage is denoted by subscript:
@@ -80,7 +79,7 @@ The total share of the network occupied by ${n}$ tested combinations of consensu
 \end{equation*}
 
 The final equation: 
-
+\label{CCRIBaseEqnSection}
 \begin{equation}
 \boldsymbol{\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
  {\pi}}\label{eqn:CCRI}
@@ -176,11 +175,11 @@ We tried to replicate this behaviour using logarithmic functions and exponential
     \boldsymbol{\mathrm{E(\mathrm{x})} = \mathrm{A} (1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) + \mathrm{C}}
 \end{equation}
 
-The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the energy measurement obtained for running a single validator client on a specific hardware configuration of a node. As seen in \ref{Figure:validatorIncrease}, the CPU approaches its maximum capacity as the number of validators approaches 64, after which it levels off, but the SSD is not working to its maximum capacity. Hence, the asymptotic upper limit of the graph $\boldsymbol{\mathrm{A}}$, can be set to $\boldsymbol{\mathrm{P}_{TDP}}$ assumed to be due to the aforementioned reasoning (section \ref{TDPReasoning}). The equation already has its lower limit set to running a single validator, and this equation will only be employed for cases where there are multiple validator clients being run on a single node. Thus, $\boldsymbol{\mathrm{x}}$ denotes the number of additional validator clients run on a node and can only take values from the set of all positive integers.  $\boldsymbol{\mathrm{k}}$, the growth rate constant determines how quickly the energy consumption increases as the validators increase and can be calculated for each node on a case-by-case basis. However, to simplify the equation, we can remove the $\boldsymbol{ + \mathrm{C}}$ as it simply acts as a transition upwards to the graph output by this equation. This modification leaves an equation that outputs the extra electricity consumed by $\boldsymbol{\mathrm{x}}$ additional validators:
+The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the energy measurement obtained for running a single validator client on a specific hardware configuration of a node, denoted by $\boldsymbol{\mathrm{V_{1}}}$. As seen in \ref{Figure:validatorIncrease}, the CPU approaches its maximum capacity as the number of validators approaches 64, after which it levels off, but the SSD is not working to its maximum capacity. Hence, the asymptotic upper limit of the graph $\boldsymbol{\mathrm{A}}$, can be set to $\boldsymbol{\mathrm{P}_{TDP}}$ due to the aforementioned reasoning (section \ref{TDPReasoning}). The equation already has its lower limit set to running a single validator, and this equation will only be employed for cases where there are multiple validator clients being run on a single node. Thus, $\boldsymbol{\mathrm{x}}$ denotes the number of additional validator clients run on a node and can only take values from the set of all positive integers.  $\boldsymbol{\mathrm{k}}$, the growth rate constant determines how quickly the energy consumption increases as the validators increase and can be calculated for each node on a case-by-case basis. However, to simplify the equation, we can remove the $\boldsymbol{ + \mathrm{C}}$ as it simply acts as a transition upwards to the graph output by this equation. Removing this transition means we have to subtract $\boldsymbol{ \mathrm{C}}$ from our asymptote $\boldsymbol{\mathrm{P}_{TDP}}$. This modification leaves an equation that outputs the extra electricity consumed by $\boldsymbol{\mathrm{x}}$ additional validators:
 
 \begin{equation}
     \label{eqn:ExpDecay}
-    \boldsymbol{\mathrm{E(\mathrm{x})} = \left(\mathrm{P}_{TDP} - \mathrm{C} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}
+    \boldsymbol{\mathrm{V(\mathrm{x})} = \left(\mathrm{P}_{TDP} -\mathrm{V_{1}} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}
 \end{equation}
 
 
@@ -208,45 +207,57 @@ Which solves to:
     \boldsymbol{\mathrm{k} = \mathrm{{2.435} * {10}^{-2}}}
 \end{equation*}
 
+Figure \ref{Figure:MultipleValidators} graphs the example introduced above.
+
+% MultipleValidators graph_________
 \begin{figure}[htb!]
     \centering
     \includegraphics[ width=14cm,center]{Figures/AsymptoteMultipleValidators.png}
-    \caption{A plot of equation \ref{eqn:ExpDecay} showing its asymptotic behavior. The asymptote at $\boldsymbol{\mathrm{A = 129.80}}$W is highlighted y the horizontal dotted black line. A dashed vertical purple line also highlights the value of the curve to be $\boldsymbol{\mathrm{101.8}}$W at $\boldsymbol{\mathrm{x = 63}}$}
+    \caption{A plot of equation \ref{eqn:ExpDecay} showing its inverse exponential decay behaviour for configuration 6 from figure \ref{Figure:CCRIhardwareConfig}. The asymptote at $\boldsymbol{\mathrm{A = 129.80}}$W is highlighted y the horizontal dotted black line. A dashed vertical purple line also highlights the value of the curve to be $\boldsymbol{\mathrm{101.8}}$W at $\boldsymbol{\mathrm{x = 63}}$ which is the 64$^\mathrm{th}$ validator on that node.}
     \label{Figure:MultipleValidators}
 \end{figure}
 
 Equation \ref{eqn:ExpDecay} is case specific and can be applied independently to estimate the electricity usage of a node with a specific combination of EL and CL clients as well as a specific hardware combination. To integrate this equation into the one proposed earlier, equation \ref{eqn:CCRISync}, it will need to be generalised, keeping all combinations of hardware and clients in mind.
 
+$\boldsymbol{\mathrm{V_{1}}}$ captures the electricity consumed by a node on average across all hardware configurations and clients that we have data for. 
 
+\begin{equation*}
+    \boldsymbol{\mathrm{V_{1}} = {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+{\pi}} }
+\end{equation*}
 
+Following this, equation \ref{eqn:CCRISync} introduced earlier can be re-written as:
 
+\begin{equation*}
+     \boldsymbol{\mathrm{P}_{SNC} +  \mathrm{V_{1} }} 
+\end{equation*}
 
+When modified to account for $\boldsymbol{\mathrm{x }}$ additional validator clients being run on the same node: 
 
+\begin{equation*}
+     \boldsymbol{\mathrm{P}_{SNC} +  \mathrm{V_{1}} + \mathrm{V(\mathrm{x})}} 
+\end{equation*}
 
+Which can be expanded to:
+\begin{equation}
+    \label{eqn:FinalEqnShort}
+     \boldsymbol{\mathrm{P}_{SNC} +  \mathrm{V_{1}} + {\left(\mathrm{P}_{TDP} -\mathrm{V_{1}} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}} 
+\end{equation}
 
-
-% -------------------------------------------------------------------------------
-\textbf{Assumptions:}
-
-\begin{itemize}
-    \item The TDP + SSD power usage can be used as an upper limit for the electricity consumption of any hardware set-up
-    \item That growth for more than one validator can be modelled by an exponential decay (increasing form)
-    \item This exponential growth has an upper limit of TDP + SSD power usage and using the single validator energy consumption as the lower limit
-    \item Equation from CCRI gives an accurate estimation and is a good base for my equation
-    \item The EL and CL layer clients are not changed; just additional Validator clients are run on the same set up
-    \item 10\% lower then the TDP power should be reached by the time the 64$^\mathrm{{th}}$ validator is run.
-\end{itemize}
-
-
-
-
-
-
-
-
-
-
-
+Expanding all terms results in this final equation:
+\begin{equation}
+\label{eqn:FinalEqnLong}
+\begin{gathered}
+\centering
+     &\boldsymbol{({\mathrm{T}_{SNC} * ({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD})}) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+{\pi}}} \\
+     
+     &\boldsymbol{+ {(\mathrm{\overline{P}}_{TDP} - {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+{\pi}}} ) (1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})})}\\ 
+     
+     &\boldsymbol{\qquad \forall \text{ } x \in \mathbb{Z}^+} 
+\end{gathered}
+\end{equation}
 
 
 
@@ -254,6 +265,21 @@ Equation \ref{eqn:ExpDecay} is case specific and can be applied independently to
 
 % MODEL BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 \section{Model B Results}
+
+\textbf{Implementing CCRI model with Updated Data }
+The base model proposed by CCRI \cite{CryptoCarbonRatingsInstitute2022TheNetwork} found in equation \ref{eqn:CCRI} in section \ref{CCRIBaseEqnSection} had the old shares of 
+
+
+
+
+
+
+
+
+
+
+
+
 
 \textbf{Data Gathering}
 The recommended hardware configuration for a Geth client is shown in \tref{Table:RecommendedHardware}.
@@ -292,7 +318,12 @@ Because it is a recent CPU, made to be in laptops. This is aligned with the aim 
 
 \begin{itemize}
     \item They have taken the syncing on nodes into account into their model whereas for general modelling, it would be  abetter estimate to ignore this initial set up energy and get an avergae form then on. That is what this paper has done, taking averages of the Raspberry Pi rather than including the syncing energy.
-    \item ding ding
+    \item The TDP + SSD power usage can be used as an upper limit for the electricity consumption of any hardware set-up
+    \item That growth for more than one validator can be modelled by an exponential decay (increasing form)
+    \item This exponential growth has an upper limit of TDP + SSD power usage and using the single validator energy consumption as the lower limit
+    \item Equation from CCRI gives an accurate estimation and is a good base for my equation
+    \item The EL and CL layer clients are not changed; just additional Validator clients are run on the same set up
+    \item 10\% lower then the TDP power should be reached by the time the 64$^\mathrm{{th}}$ validator is run.
 \end{itemize}
 
 
