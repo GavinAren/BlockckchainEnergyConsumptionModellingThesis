@@ -80,8 +80,10 @@ A validator is selected per slot pseudo-randomly. The validator chooses transact
 When other nodes receive this proposed block, they pass it to their execution layer client where they verify the data inside it. This includes ensuring it corresponds to the correct slot, correct parent etc. but most importantly, the transaction in the block are re-executed to check that the state change being proposed is valid. If the prosposed block passes these checks, the node adds it to its own 'canonical?' chain.  \cite{EthereumEthereum.org} 
 
 
-\textbf{Sharding}
-One solution to increasing the number of transactions throughput on the network is sharding. It refers to splitting the entire Ethereum network into 64 portions called \textbf{shards} cite ** ** **\url{https://github.com/ethereum/annotated-spec/blob/master/phase0/beacon-chain.md#attestationdata}. Each shard would contain its own independent state. It is an attempt at breaking up the blockchain into smaller parts no nodes are not responsible for processing or re-executing every single transaction broadcasted on the Ethereum network. Each shard is still connected to the main Ethereum chain cryptographically through merkle trees. \cite{EthereumEthereum.org} 
+***Instead of sharding, explain attestations here, include a diagram \url{https://kb.beaconcha.in/attestation}
+
+\textbf{Sharding} \label{Sharding}
+One solution to increasing the number of transactions throughput on the network is sharding. It refers to splitting the entire Ethereum network into 64 portions called \textbf{shards} \cite{Buterin2020Annotated-spec/beacon-chain.mdEthereum/annotated-spec}. Each shard would contain its own independent state. It is an attempt at breaking up the blockchain into smaller parts no nodes are not responsible for processing or re-executing every single transaction broadcasted on the Ethereum network. Each shard is still connected to the main Ethereum chain cryptographically through merkle trees. \cite{EthereumEthereum.org} 
 
 
 \textbf{Attestations}
@@ -226,7 +228,7 @@ Many syncing modes exist, such as full, snap, fast and light mode. The most comm
 
 
 
-\textbf{The CCRI Merge Paper } \cite{CCRI:Network}
+\textbf{The CCRI Merge Paper } \cite{CryptoCarbonRatingsInstitute2022TheNetwork}
 
 Assumptions this paper makes:
 \begin{itemize}
