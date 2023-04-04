@@ -169,7 +169,7 @@ This finding can be explained by understanding Sharding and attestations(section
 
 Nodes that are not running validators will only subscribe to the gossip topics that push out aggregated votes. But with each validator that you run, they will first need to subscribe to gossip channels with aggregated attestations but occasionally also to gossip topics with unaggregated attestations if they're selected to aggregate the votes for that slot. Hence, up to 64 validators, validators are subscribing and processing more and more gossip messages but past this, there are no new gossip topics to subscribe to and the CPU usage and gossip messages per second level off, as shown in \fref{Figure:validatorIncrease}.
 
-We tried to replicate this behaviour using logarithmic functions and exponential decay functions. Through extended experimentation and applying prior knowledge, we found that the exponential decay function (increasing form) \ref{eqn: ExpDecayGeneral} most accurately matches the characteristics we are looking for because it increases at a slower rate at the beginning and then levels off as more validator clients are added to the node. This is consistent with \ref{Figure:validatorIncrease} that grows almost linearly until 64 validators, after which it levels off. The general equation is:
+We tried to replicate this behaviour using logarithmic functions and exponential decay functions. Through extended experimentation and applying prior knowledge, we found that the exponential decay function (increasing form), equat{eqn: ExpDecayGeneral} ref{eqn: ExpDecayGeneral}, most accurately matches the characteristics we are looking for because it increases at a slower rate at the beginning and then levels off as more validator clients are added to the node. This is consistent with \ref{Figure:validatorIncrease} that grows almost linearly until 64 validators, after which it levels off. The general equation is:
 
 \begin{equation}
     \label{eqn: ExpDecayGeneral}
@@ -179,7 +179,7 @@ We tried to replicate this behaviour using logarithmic functions and exponential
 The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the energy measurement obtained for running a single validator client on a specific hardware configuration of a node. As seen in \ref{Figure:validatorIncrease}, the CPU approaches its maximum capacity as the number of validators approaches 64, after which it levels off, but the SSD is not working to its maximum capacity. Hence, the asymptotic upper limit of the graph $\boldsymbol{\mathrm{A}}$, can be set to $\boldsymbol{\mathrm{P}_{TDP}}$ assumed to be due to the aforementioned reasoning (section \ref{TDPReasoning}). The equation already has its lower limit set to running a single validator, and this equation will only be employed for cases where there are multiple validator clients being run on a single node. Thus, $\boldsymbol{\mathrm{x}}$ denotes the number of additional validator clients run on a node and can only take values from the set of all positive integers.  $\boldsymbol{\mathrm{k}}$, the growth rate constant determines how quickly the energy consumption increases as the validators increase and can be calculated for each node on a case-by-case basis. However, to simplify the equation, we can remove the $\boldsymbol{ + \mathrm{C}}$ as it simply acts as a transition upwards to the graph output by this equation. This modification leaves an equation that outputs the extra electricity consumed by $\boldsymbol{\mathrm{x}}$ additional validators:
 
 \begin{equation}
-    \label{eqn: ExpDecay}
+    \label{eqn:ExpDecay}
     \boldsymbol{\mathrm{E(\mathrm{x})} = \left(\mathrm{P}_{TDP} - \mathrm{C} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}
 \end{equation}
 
@@ -197,10 +197,10 @@ $\boldsymbol{\mathrm{C}} = \boldsymbol{\mathrm{150.20}} $ Watts, assuming the no
 
 $\boldsymbol{\mathrm{A}} = $ TDP rating for AMD 3970X, $\boldsymbol{\mathrm{280}} $ Watts \cite{AMDDatabase} subtracted by the $\boldsymbol{\mathrm{C}}$ value which results in $\boldsymbol{\mathrm{129.80}}$ W.
 
-We can set $\boldsymbol{\mathrm{x}} $ can be set to $\boldsymbol{\mathrm{63}} $, as the graph starts at 1 validator running already, totalling 64 validators. We then assume that the CPU is operating at just 10\% below its maximum capacity (TDP rating) at the 64$^\mathrm{{th}}$ validator and equate the left side of the equation to $\boldsymbol{\mathrm{0.9 * TDP}} = 252$ W.
+We can set $\boldsymbol{\mathrm{x}} $ can be set to $\boldsymbol{\mathrm{63}} $, as the graph starts at 1 validator running already, totalling 64 validators. We assume that the CPU is operating at just 10\% below its maximum capacity (TDP rating) at the 64$^\mathrm{{th}}$ total validator and equate the left side of the equation to $\boldsymbol{\mathrm{0.9 * TDP}} = 252$ W. This needs to be subtracted by $\boldsymbol{\mathrm{C}}$ to account for translating the graph upwards earlier, resulting in $\boldsymbol{\mathrm{252-150.20 = 101.8}}$W. 
 
 \begin{equation*}
-    \boldsymbol{\mathrm{129.8} * (1-\mathrm{e}^{-\mathrm{k}(\mathrm{63})}) + \mathrm{150.20} = \mathrm{252}}
+    \boldsymbol{\mathrm{129.8} * (1-\mathrm{e}^{-\mathrm{k}(\mathrm{63})}) = \mathrm{101.80}}
 \end{equation*}
 
 Which solves to:
@@ -208,6 +208,14 @@ Which solves to:
     \boldsymbol{\mathrm{k} = \mathrm{{2.435} * {10}^{-2}}}
 \end{equation*}
 
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[ width=14cm,center]{Figures/AsymptoteMultipleValidators.png}
+    \caption{A plot of equation \ref{eqn:ExpDecay} showing its asymptotic behavior. The asymptote at $\boldsymbol{\mathrm{A = 129.80}}$W is highlighted y the horizontal dotted black line. A dashed vertical purple line also highlights the value of the curve to be $\boldsymbol{\mathrm{101.8}}$W at $\boldsymbol{\mathrm{x = 63}}$}
+    \label{Figure:MultipleValidators}
+\end{figure}
+
+Equation \ref{eqn:ExpDecay} is case specific and can be applied independently to estimate the electricity usage of a node with a specific combination of EL and CL clients as well as a specific hardware combination. To integrate this equation into the one proposed earlier, equation \ref{eqn:CCRISync}, it will need to be generalised, keeping all combinations of hardware and clients in mind.
 
 
 
@@ -217,8 +225,7 @@ Which solves to:
 
 
 
-
-
+% -------------------------------------------------------------------------------
 \textbf{Assumptions:}
 
 \begin{itemize}
@@ -267,7 +274,7 @@ A combination of hardware that closely matches the recommendation by Geth develo
 Intel i5-1135G7
 
 config 5 
-65(1-e^(-63k))  + 37.61= 58.5
+$65(1-e^(-63k))  + 37.61= 58.5$
 
 
 Because it is a recent CPU, made to be in laptops. This is aligned with the aim of running PoS Ethereum nodes on commodity hardware. It is also a configuration with actual data in the report by \cite{CryptoCarbonRatingsInstitute2022TheNetwork} and hence will draw fair comparisons when the models are compared.
