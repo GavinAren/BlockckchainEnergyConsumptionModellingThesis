@@ -185,8 +185,8 @@ The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the ene
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=15cm,center]{Figures/CCRIhardwareConfig.png}
-    \caption{Table showing hardware configurations of low-tier, mid-tier and high-tier nodes relative to the hardware recommended to run a validator node shown in table \ref{Table:RecommendedHardware}. Source: CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, table 6.}
+    \includegraphics[width=10cm,center]{Figures/CCRIhardwareConfigEdit.png}
+    \caption{Table with hardware configurations of a low-tier, mid-tier and high-tier node relative to the hardware recommendation to run a validator node shown in table \ref{Table:RecommendedHardware}. Source: CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, table 6. Configurations 1,2, and 3 were omitted due to being unable to run the client software.}
     \label{Figure:CCRIhardwareConfig}
 \end{figure}
 
@@ -219,62 +219,137 @@ Figure \ref{Figure:MultipleValidators} graphs the example introduced above.
 
 Equation \ref{eqn:ExpDecay} is case specific and can be applied independently to estimate the electricity usage of a node with a specific combination of EL and CL clients as well as a specific hardware combination. To integrate this equation into the one proposed earlier, equation \ref{eqn:CCRISync}, it will need to be generalised, keeping all combinations of hardware and clients in mind.
 
-$\boldsymbol{\mathrm{V_{1}}}$ captures the electricity consumed by a node on average across all hardware configurations and clients that we have data for. 
+$\boldsymbol{\mathrm{\overline{V}_{1}}}$ captures the electricity consumed by a node on average across all hardware configurations and clients that we have data for. 
 
 \begin{equation*}
-    \boldsymbol{\mathrm{V_{1}} = {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+    \boldsymbol{\mathrm{\overline{V}_{1}} = {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
 {\pi}} }
 \end{equation*}
 
 Following this, equation \ref{eqn:CCRISync} introduced earlier can be re-written as:
 
 \begin{equation*}
-     \boldsymbol{\mathrm{P}_{SNC} +  \mathrm{V_{1} }} 
+     \boldsymbol{\overline{\mathrm{P}}_{SNC} +  \overline{\mathrm{V}}_{1} 
+} 
 \end{equation*}
 
 When modified to account for $\boldsymbol{\mathrm{x }}$ additional validator clients being run on the same node: 
 
 \begin{equation*}
-     \boldsymbol{\mathrm{P}_{SNC} +  \mathrm{V_{1}} + \mathrm{V(\mathrm{x})}} 
+     \boldsymbol{\mathrm{P}_{SNC} +  \overline{\mathrm{V}}_{1} + \mathrm{\overline{V}(\mathrm{x})}} 
 \end{equation*}
 
 Which can be expanded to:
 \begin{equation}
     \label{eqn:FinalEqnShort}
-     \boldsymbol{\mathrm{P}_{SNC} +  \mathrm{V_{1}} + {\left(\mathrm{P}_{TDP} -\mathrm{V_{1}} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}} 
+     \boldsymbol{\mathrm{P}_{SNC} +  \overline{\mathrm{V}}_{1} + {\left(\mathrm{\overline{P}}_{TDP} -\overline{\mathrm{V}}_{1} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}} 
 \end{equation}
 
 Expanding all terms results in this final equation:
-\begin{equation}
+\begin{align}
 \label{eqn:FinalEqnLong}
-\begin{gathered}
-\centering
      &\boldsymbol{({\mathrm{T}_{SNC} * ({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD})}) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
-{\pi}}} \\
-     
-     &\boldsymbol{+ {(\mathrm{\overline{P}}_{TDP} - {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
-{\pi}}} ) (1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})})}\\ 
-     
-     &\boldsymbol{\qquad \forall \text{ } x \in \mathbb{Z}^+} 
-\end{gathered}
-\end{equation}
+{\pi}}}\nonumber \\  \nonumber\\  
+     &\boldsymbol{+ {(\mathrm{P}_{TDP} - {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+{\pi}}} ) (1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})})}\\ \nonumber \\    
+     &\boldsymbol{\qquad \qquad \qquad \qquad \qquad \qquad \forall \text{ } x \in \mathbb{Z}^+}\nonumber 
+\end{align}
 
-
+Note that hardware configuration-specific terms, such as TDP and SSD power usage, must be weighted according to the estimated usage of that hardware by all users across the network to generalise the network's cumulative electricity consumption. 
 
 % ___________________________________________________________________MODELS DONE< NOW 
 
 % MODEL BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-\section{Model B Results}
+\section{My Model: Implementation}
+
+
+
 
 \textbf{Implementing CCRI model with Updated Data }
-The base model proposed by CCRI \cite{CryptoCarbonRatingsInstitute2022TheNetwork} found in equation \ref{eqn:CCRI} in section \ref{CCRIBaseEqnSection} had the old shares of 
+The base model proposed by CCRI \cite{CryptoCarbonRatingsInstitute2022TheNetwork} found in equation \ref{eqn:CCRI} in section \ref{CCRIBaseEqnSection} had the EL and CL client shares on the network. Table \ref{Table:ClientShares} below has updated values for these. 
 
+\begin{table}[!htb]
+    \centering
 
+  \subcaptionbox{\textbf{Execution Clients} \cite{Sigp/blockprint:Metrics}}{
+      \begin{tabular}{|l|c|}
+            \hline
+             Geth & 69.22 \% \\
+            \hline
+             Nethermind & 14.16 \%  \\
+            \hline 
+             Erigon & 10.65 \% \\
+            \hline
+             Besu & 5.78 \% \\
+            \hline
+             OpenEthereum & 0.00 \% \\
+            \hline
+             Other & 0.20 \% \\
+            \hline
+  \end{tabular}
+    \label{Table:ClientShares:left}
+  }
+  \subcaptionbox{\textbf{Consensus Clients}  \cite{ClientsExplorer}}{
+        \begin{tabular}{|l|c|}
+                    \hline
+             Prysm & 65.15 \%  \\
+            \hline
+             Lighthouse & 29.30 \% \\
+            \hline 
+             Teku & 10.65 \% \\
+            \hline
+             Nimbus & 0.91 \% \\
+            \hline
+             Lodestar & 0.0 \% \\
+            \hline
+             Other & 0.0 \%  \\
+            \hline
+            
+  \end{tabular}
+    \label{Table:ClientShares:right}
+  }
+    \caption{An updated table of client diversity within Ethereum Mainnet network, data recorded on 27-Mar 23. Updates table 5 from report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} }
+  \label{Table:ClientShares}
+\end{table}
 
+OpenEthereum has been deprecated and Lodestar no longer holds a sizeable share of the network and they are not be included in the calculations. The Nethermind client which now holds a sizeable share of the network has no recorded electricity consumption data, hence an average value per configuration between the other 3 EL clients was used. 
 
+Next, data on mean values recorded for all 3 configurations running all clients was extracted and collected in \tref{Table:ConsumptionValues}. Using the same assumptions made in the CCRI report, this \tref{Table:EstimatesPerNode} has been recalculated with updated values. 
 
+% -----------------------------------------
+\begin{table}[htb!]
+\begin{tabular}{|ll|l|l|l|}
+\hline
+\multicolumn{2}{|l|}{\textbf{Client Combination}} &
+  \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Estimate\\ {[}W{]}\end{tabular}}} &
+  \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Annualised Estimate\\ {[}kWh/year{]}\end{tabular}}} &
+  \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Client Combination\\ Share {[}\%{]}\end{tabular}}} \\ \cline{1-2}
+\multicolumn{1}{|l|}{\textbf{CL Client}} & \textbf{EL Client} &       &        &       \\ \hline
+\multicolumn{1}{|l|}{Prysm}              & Geth               & 60.96 & 533.97 & 45.10 \\ \cline{1-2}
+\multicolumn{1}{|l|}{Prysm}              & Erigon             & 65.97 & 577.91 & 6.94  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Prysm}              & Besu               & 83.21 & 728.88 & 3.77  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Prysm}              & Nethermind         & 70.05 & 613.62 & 9.23  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Lighthouse}         & Geth               & 59.53 & 521.47 & 20.28 \\ \cline{1-2}
+\multicolumn{1}{|l|}{Lighthouse}         & Erigon             & 64.54 & 565.41 & 3.12  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Lighthouse}         & Besu               & 81.78 & 716.38 & 1.69  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Lighthouse}         & Nethermind         & 68.62 & 601.11 & 4.15  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Teku}               & Geth               & 62.01 & 543.24 & 7.37  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Teku}               & Erigon             & 67.03 & 587.18 & 1.13  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Teku}               & Besu               & 84.26 & 738.15 & 0.62  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Teku}               & Nethermind         & 71.11 & 622.88 & 1.51  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Nimbus}             & Geth               & 58.29 & 510.66 & 0.63  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Nimbus}             & Erigon             & 63.31 & 554.59 & 0.10  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Nimbus}             & Besu               & 80.54 & 705.57 & 0.05  \\ \cline{1-2}
+\multicolumn{1}{|l|}{Nimbus}             & Nethermind         & 67.39 & 590.31 & 0.13  \\ \hline
+\end{tabular}
+\caption{Electricity consumption estimates per node for all possible client combinations along with their network share. Individual client shares found in \tref{Table:ClientShares}  }
+\label{Table:EstimatesPerNode}
+\end{table}
 
-
+% -----------------------------------
+$(60.96*45.1) + 65.97*6.94 + 83.21*3.77 + 70.05*9.23 + 59.53*20.28 + 64.54*3.12 + 81.78*1.69 + 68.62*4.15 + 62.01 * 7.37 + 67.03*1.13 + 84.26*0.62 + 71.11 * 1.51 + 58.29*0.63 + 63.31*0.1 + 80.54*0.05 + 67.39*0.13 / 105.82$
+Best guess for an individual node [W]: 63.7613088
+Annualised value for an individual node assuming 8760h in a year[kWh/year]: 558.549065318kWh/year
 
 
 
@@ -322,8 +397,11 @@ Because it is a recent CPU, made to be in laptops. This is aligned with the aim 
     \item That growth for more than one validator can be modelled by an exponential decay (increasing form)
     \item This exponential growth has an upper limit of TDP + SSD power usage and using the single validator energy consumption as the lower limit
     \item Equation from CCRI gives an accurate estimation and is a good base for my equation
-    \item The EL and CL layer clients are not changed; just additional Validator clients are run on the same set up
-    \item 10\% lower then the TDP power should be reached by the time the 64$^\mathrm{{th}}$ validator is run.
+    \item The EL and CL clients are not changed; just additional Validator clients are run on the same set up
+    \item 10\% lower than the TDP power should be reached by the time the 64$^\mathrm{{th}}$ validator is run.
+    \item Took averages of other EL layer clients per confirguration for NetherMind. not good.
+    \item All these numbers are for running a full node, not validators which sdmieler,2020 said is basically negligible
+    \item high, mid low tiers dont have a fair distribution of hardware but does help achieve more accurate results hopefully
 \end{itemize}
 
 
@@ -355,59 +433,16 @@ A simple logical model for estimating the energy consumption of Ethereum 2.0's e
 \subsection{Validation and Evaluation}
 
 
-\tref{Table:tabsubex} shows updates values recorded by CCRI in their report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} for model \_\_\_\_. %ADD HEREE_________
 
-\begin{table}[!htb]
-    \centering
-
-  \subcaptionbox{\textbf{Execution Clients} \cite{Sigp/blockprint:Metrics}}{
-      \begin{tabular}{|l|c|}
-            \hline
-             Geth & 69.22 \% \\
-            \hline
-             Nethermind & 14.16 \%  \\
-            \hline 
-             Erigon & 10.65 \% \\
-            \hline
-             Besu & 5.78 \% \\
-            \hline
-             OpenEthereum & 0.00 \% \\
-            \hline
-             Other & 0.20 \% \\
-            \hline
-  \end{tabular}
-    \label{Table:tabsubex:left}
-  }
-  \subcaptionbox{\textbf{Consensus Clients}  \cite{ClientsExplorer}}{
-        \begin{tabular}{|l|c|}
-                    \hline
-             Prysm & 65.15 \%  \\
-            \hline
-             Lighthouse & 29.30 \% \\
-            \hline 
-             Teku & 10.65 \% \\
-            \hline
-             Nimbus & 0.91 \% \\
-            \hline
-             Lodestar & 0.0 \% \\
-            \hline
-             Other & 0.0 \%  \\
-            \hline
-            
-  \end{tabular}
-    \label{Table:tabsubex:right}
-  }
-    \caption{An updated table of client diversity within Ethereum Mainnet network, data recorded on 27-Mar 23. Updates the table from report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} }
-  \label{Table:tabsubex}
-\end{table}
-
-Note that the OpenEthereum Execution client has been deprecated and is no longer being maintained. Thus, it is no longer included in the table.
 
 % ____________________________________________________________________________
 \subsection{Discussion}
 *So I did it this way, could've been done another way. My method could've affected the results
 * self-reflection -> smaller factors not considered, maybe if I used a different group of numbers/users some other result would have been achieved, loopholes
 
+All data comes from CCRI, couldn't have done such as accurate experiment myself.
+
+Also all electricity values are from software within the computers. Hence are not 'at-wall' values which would really show how much electricity is being drawn from the national grid. Perhaps someone well versed in electrical engineering may be able to add some factor to the overall equation that adjusts for the dissipated energy and gets a more accurate estimation 'At-wall'.
 
 Couldn't use API - may have affected the accuracy of data, could've been live data, more precise data
 
