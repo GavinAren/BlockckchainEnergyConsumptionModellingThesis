@@ -42,19 +42,19 @@ So according to this hardware recommendation, we could estimate the power usage 
 
 % _____________________---stage 1
 \textbf{The CRRI Equation Adapted}
-This section introduces the CCRI equation for the 'weighted  electricity  consumption  of  an  average  node for each combination of one consensus and one execution client'\cite{CryptoCarbonRatingsInstitute2022TheNetwork} with symbols adapted for this paper. Power and electricity are synonymous below.
+This section introduces the CCRI equation for the 'weighted  electricity  consumption  of  an  average  node for each combination of one consensus and one execution client'\cite{CryptoCarbonRatingsInstitute2022TheNetwork} with symbols adapted for this paper. Power and electricity have been synonymously used. 
 
-A Consensus Layer Client's power usage is denoted by subscript:
+A Consensus Layer Client's power usage [in Wh] is denoted by subscript:
 \begin{equation*}
     \boldsymbol{\mathrm{P}_{CL}}
 \end{equation*}
 
-An Execution Layer Client's power usage is denoted by subscript:
+An Execution Layer Client's power usage [in Wh] is denoted by subscript:
 \begin{equation*}
     \boldsymbol{\mathrm{P}_{EL}}
 \end{equation*}
  
- An Idle client's power usage is denoted by: \begin{equation*}
+ An Idle client's power usage [in Wh] is denoted by: \begin{equation*}
     \boldsymbol{\mathrm{P}_{ID}}
 \end{equation*} 
 
@@ -68,7 +68,7 @@ The number of machines ran with different combinations of consensus and executio
     \boldsymbol{n}
 \end{equation*}
 
-The known share of the network that uses a specific combination of Consensus and Execution layer client is denoted by:
+The known share [in \%] of the network that uses a specific combination of Consensus and Execution layer client is denoted by:
 \begin{equation*}
     \boldsymbol{\phi}_{EL,CL} \text{ where } {i} \text{ represents a specific CL and EL client combination.}
 \end{equation*}
@@ -119,19 +119,19 @@ Where the TDP (Thermal Design Power) of the CPU being used by the node is denote
 
 While the CPU is being utilised at maximum capacity, the node also begins storing this information locally to assemble a local copy of the chain in parallel. This storage process requires speeds that hard drives cannot keep up with. This is reinforced by the recommended specs shown in the \tref{Table:RecommendedHardware} which requires an Solid State Drive with DRAM. These are much faster than traditional hard drives and expend more energy as a consequence. 
 
- The average energy estimation of an SSD actively in use, in Watts, is denoted by:
+ The average energy estimation of an SSD actively in use [in Wh], is denoted by:
  \begin{equation*}
-    \boldsymbol{\mathrm{P}_{SSD}} 
+    \boldsymbol{\mathrm{P}_{SSD} } 
 \end{equation*}
 
-Often, it takes days to complete a full sync. The time it takes to complete the synchronisation process, in hours, is denoted by:
+Often, it takes days to complete a full sync. It is clear that the EL client takes most of the synchronisation time while the CL client consumes a tiny fraction \cite{Ethereum/go-ethereum:Protocol}. Hence, we assume the time it takes to complete the synchronisation process can be solely attributed to the EL client [in hours], which is denoted by:
 \begin{equation*}
-    \boldsymbol{\mathrm{T}_{SNC}}
+    \boldsymbol{\mathrm{T}_{EL}}
 \end{equation*}
 
 Thus the total power expended during the synchronisation process $\boldsymbol{\mathrm{P}_{SNC}}$ can be represented as:
 \begin{equation}
-    \boldsymbol{\mathrm{P}_{SNC} = \mathrm{T}_{SNC} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right)} \label{eqn:Sync}
+    \boldsymbol{\mathrm{P}_{SNC} = \mathrm{T}_{EL} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right)} \label{eqn:Sync}
 \end{equation}
 
 As this is a bootstrapping process, integrating equation \ref{eqn:Sync} into the CCRI equation \ref{eqn:CCRI} results in the following:
@@ -144,7 +144,7 @@ As this is a bootstrapping process, integrating equation \ref{eqn:Sync} into the
 Which simplifies to:
 
 \begin{equation}
-     \boldsymbol{\left({\mathrm{T}_{SNC} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right)}\right) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+     \boldsymbol{\left({\mathrm{T}_{EL} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right)}\right) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
 {\pi}} } \label{eqn:CCRISync}
 \end{equation}
 
@@ -175,11 +175,11 @@ We tried to replicate this behaviour using logarithmic functions and exponential
     \boldsymbol{\mathrm{E(\mathrm{x})} = \mathrm{A} (1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) + \mathrm{C}}
 \end{equation}
 
-The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the energy measurement obtained for running a single validator client on a specific hardware configuration of a node, denoted by $\boldsymbol{\mathrm{V_{1}}}$. As seen in \ref{Figure:validatorIncrease}, the CPU approaches its maximum capacity as the number of validators approaches 64, after which it levels off, but the SSD is not working to its maximum capacity. Hence, the asymptotic upper limit of the graph $\boldsymbol{\mathrm{A}}$, can be set to $\boldsymbol{\mathrm{P}_{TDP}}$ due to the aforementioned reasoning (section \ref{TDPReasoning}). The equation already has its lower limit set to running a single validator, and this equation will only be employed for cases where there are multiple validator clients being run on a single node. Thus, $\boldsymbol{\mathrm{x}}$ denotes the number of additional validator clients run on a node and can only take values from the set of all positive integers.  $\boldsymbol{\mathrm{k}}$, the growth rate constant determines how quickly the energy consumption increases as the validators increase and can be calculated for each node on a case-by-case basis. However, to simplify the equation, we can remove the $\boldsymbol{ + \mathrm{C}}$ as it simply acts as a transition upwards to the graph output by this equation. Removing this transition means we have to subtract $\boldsymbol{ \mathrm{C}}$ from our asymptote $\boldsymbol{\mathrm{P}_{TDP}}$. This modification leaves an equation that outputs the extra electricity consumed by $\boldsymbol{\mathrm{x}}$ additional validators:
+The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the energy measurement obtained for running a single validator client on a specific hardware configuration of a node, denoted by $\boldsymbol{\mathrm{V_{1}}}$. As seen in \fref{Figure:validatorIncrease}, the CPU approaches its maximum capacity as the number of validators approaches 64, after which it levels off. Meanwhile, the SSD is not operating at its maximum capacity. Hence, the asymptotic upper limit of the graph $\boldsymbol{\mathrm{A}}$, can be set to $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ due to the aforementioned reasoning (section \ref{TDPReasoning}). The equation already has its lower limit set to running a single validator, and this equation will only be employed for cases where there are multiple validator clients being run on a single node. Thus, $\boldsymbol{\mathrm{x}}$ denotes the number of additional validator clients run on a node and can only take values from the set of all positive integers.  $\boldsymbol{\mathrm{k}}$, the growth rate constant determines how quickly the energy consumption increases as the validators increase and can be calculated for each node on a case-by-case basis. However, to simplify the equation, we can remove the $\boldsymbol{ + \mathrm{C}}$ as it simply acts as a transition upwards to the graph output by this equation. Removing this transition means we have to subtract $\boldsymbol{ \mathrm{C}}$ from our asymptote $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$. This modification leaves an equation that outputs the extra electricity consumed by $\boldsymbol{\mathrm{x}}$ additional validators:
 
 \begin{equation}
     \label{eqn:ExpDecay}
-    \boldsymbol{\mathrm{V(\mathrm{x})} = \left(\mathrm{P}_{TDP} -\mathrm{V_{1}} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}
+    \boldsymbol{\mathrm{\overline{V}(\mathrm{x})} = \left(\mathrm{\overline{P}}_{TDP} -\mathrm{\overline{V}_{1}} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}
 \end{equation}
 
 
@@ -248,9 +248,9 @@ Which can be expanded to:
 Expanding all terms results in this final equation:
 \begin{align}
 \label{eqn:FinalEqnLong}
-     &\boldsymbol{({\mathrm{T}_{SNC} * ({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD})}) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+     &\boldsymbol{({\mathrm{T}_{EL} * ({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD})}) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
 {\pi}}}\nonumber \\  \nonumber\\  
-     &\boldsymbol{+ {(\mathrm{P}_{TDP} - {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
+     &\boldsymbol{+ {(\mathrm{\overline{P}}_{TDP} - {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
 {\pi}}} ) (1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})})}\\ \nonumber \\    
      &\boldsymbol{\qquad \qquad \qquad \qquad \qquad \qquad \forall \text{ } x \in \mathbb{Z}^+}\nonumber 
 \end{align}
@@ -261,6 +261,83 @@ Note that hardware configuration-specific terms, such as TDP and SSD power usage
 
 % MODEL BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 \section{My Model: Implementation}
+
+\textbf{Average Sync Energy of a node}
+
+First, 3 hardware configurations must be chosen, including a low, medium and high tier for running validator nodes. The recommended hardware configuration for a Geth client ($\sim$ 70\% network share) is shown in \tref{Table:RecommendedHardware}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Solo Validator Nodes        & \begin{tabular}[c]{@{}l@{}}Quad Core Processor, \\ 2TB SSD , 16GB memory\end{tabular}                            \\ \hline
+Archive Nodes               & \begin{tabular}[c]{@{}l@{}}Quad Core or Dual Core Hyperthreaded \\ Processor, 12TB SSD, 16GB memory\end{tabular} \\ \hline
+Minimum for Validator nodes & \begin{tabular}[c]{@{}l@{}}Dual Core Hyperthreaded, \\ 1TB SSD, 4GB memory\end{tabular}                          \\ \hline
+\end{tabular}
+\caption{Recommended hardware configurations for running various nodes by Geth \cite{2022DeveloperGo-ethereum}}
+\label{Table:RecommendedHardware}
+\end{table}
+
+A combination of hardware that closely matches the recommendation by Geth developers must be chosen to fulfil the aim of PoS Ethereum nodes being run on commodity hardware. Performing such data collection is out of the scope of this report. Due to the limited availability of empirical data on hardware running Ethereum after 'the Merge', the hardware configurations 4,5 and 6 in \fref{Figure:CCRIhardwareConfig} from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} are used. Using this data also helps draw fairer comparisons when evaluating our model later on. 
+
+Synchronising energy: 
+For the first part of equation \ref{eqn:FinalEqnShort} denoted by $\boldsymbol{\mathrm{P}_{SNC}}$, no empirical data was available in the CCRI report about this synchronisation stage. Non-scientific data for synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$ for users employing varying combinations of hardware and EL clients can be found in \tref{Table:ELRunTime} of the appendix. This limited data is insufficient to differentiate between the sync times for all 4 clients but allows us to roughly estimate the average sync time on varying hardware configurations (relative to \fref{Figure:CCRIhardwareConfig})  in \tref{Table:SyncEnergy}. Geth was given a higher weighting in this estimation as used by  $\sim$ 70\% of the network. 
+
+Varying user needs affect their decision in choosing hardware, ranging from different profit structures to low-budget devices and future-proof hardware. There is an immeasurable amount of hardware configurations that users could opt for. Thus, we model this distribution of users between the 3 categories of hardware using a continuous distribution, particularly - the CDF (Cumulative distribution function) of the standard normal distribution. The distribution was divided into 3 parts, 25\% of the network assumed to opt for the low-tier hardware (configuration 4), 50\% for the mid-tier (configuration 5) and 25\% for the high-tier( configuration 6). 
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+\textbf{Tier} & \textbf{$\boldsymbol{\mathrm{T}_{EL}}$ {[}h{]}} & \textbf{$\boldsymbol{\mathrm{P}_{TDP}}$ {[}Wh{]}} & \textbf{$\boldsymbol{\mathrm{P}_{SSD}}$ {[}Wh{]}} & \textbf{Share of the network {[}\%{]}} \\ \hline
+Low    & 36 & 28  & 3.5 & 25 \\ \hline
+Medium & 24 & 65  & 8.5 & 50 \\ \hline
+High   & 12 & 280 & 10  & 25 \\ \hline
+\end{tabular}
+\caption{The estimated synchronisation times for varying tiers of hardware configurations relative to \fref{Figure:CCRIhardwareConfig} and their estimated share of the network. Sources for $\boldsymbol{\mathrm{P}_{TDP}}$ : \cite{IntelFAQs}, \cite{AMDDatabase}. Source for $\boldsymbol{\mathrm{P}_{SSD}}$: \cite{RachanaKhamamkar2020AnalyzingDrives}}
+\label{Table:SyncEnergy}
+\end{table}
+
+The split of the share of the network estimated for each hardware tier in \tref{Table:SyncEnergy} is similar to the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} to allow for fair comparisons later on. 
+
+Given this data, the $\boldsymbol{\mathrm{P}_{SNC}}$ for an average node can be calculated by the following: \newline
+$ \boldsymbol{
+0.25*(36*(28 + 3.5)) + 0.5*(24*(65+8.5)) + 0.25*(12*(280+10))
+} $ which results in $\boldsymbol{{\mathrm{P}_{SNC}} = 2035.5}$ Wh.
+
+
+% ________________________________________--
+
+% _---------------------------------------
+\textbf{Average electricity consumption of a node after synchronisation}
+
+
+Due to the limited availability of empirical data on hardware
+running Ethereum after ’the Merge’, the hardware configurations Figure 5.2 and their
+respective electricity consumption data in Table 5.2 were extracted from the CCRI
+report [2]. 
+\begin{table}[htb!]
+\centering
+\begin{tabular}{|l|lll|}
+\hline
+\textbf{Client Name} & \multicolumn{3}{l|}{\textbf{Node Configuration}}                               \\ \hline
+\textbf{}            & \multicolumn{1}{l|}{\textbf{4}} & \multicolumn{1}{l|}{\textbf{5}} & \textbf{6} \\ \hline
+Idle Node                & \multicolumn{1}{l|}{3.66}       & \multicolumn{1}{l|}{25.04}      & 78.17      \\ \cline{1-1}
+Geth (EL)            & \multicolumn{1}{l|}{11.23}      & \multicolumn{1}{l|}{9.70}       & 47.70      \\ \cline{1-1}
+Erigon (EL)          & \multicolumn{1}{l|}{18.60}      & \multicolumn{1}{l|}{17.59}      & 44.62      \\ \cline{1-1}
+Besu (EL)            & \multicolumn{1}{l|}{30.25}      & \multicolumn{1}{l|}{31.02}      & 75.04      \\ \cline{1-1}
+Nethermind(EL)[Averaged] & \multicolumn{1}{l|}{20.03}       & \multicolumn{1}{l|}{19.44}       & 55.79      \\ \cline{1-1}
+Prysm (CL)           & \multicolumn{1}{l|}{3.51}       & \multicolumn{1}{l|}{2.87}       & 24.33      \\ \cline{1-1}
+Lighthouse (CL)      & \multicolumn{1}{l|}{2.75}       & \multicolumn{1}{l|}{3.14}       & 18.84      \\ \cline{1-1}
+Teku (CL)            & \multicolumn{1}{l|}{3.71}       & \multicolumn{1}{l|}{3.32}       & 27.46      \\ \cline{1-1}
+Nimbus (CL)          & \multicolumn{1}{l|}{1.67}       & \multicolumn{1}{l|}{2.08}       & 17.11      \\ \cline{1-1}
+Lodestar(CL)         & \multicolumn{1}{l|}{3.14}       & \multicolumn{1}{l|}{3.89}       & 33.55      \\ \hline
+
+\end{tabular}
+\caption{Mean electricity consumption values in Watts, measured in the report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} for nodes with configurations 4-6 mentioned in  \fref{Figure:CCRIhardwareConfig} running various clients.  }
+\label{Table:ConsumptionValues}
+\end{table}
+
 
 
 
@@ -312,7 +389,7 @@ The base model proposed by CCRI \cite{CryptoCarbonRatingsInstitute2022TheNetwork
   \label{Table:ClientShares}
 \end{table}
 
-OpenEthereum has been deprecated and Lodestar no longer holds a sizeable share of the network and they are not be included in the calculations. The Nethermind client which now holds a sizeable share of the network has no recorded electricity consumption data, hence an average value per configuration between the other 3 EL clients was used. 
+OpenEthereum has been deprecated and Lodestar no longer holds a sizeable share of the network and they are not be included in the calculations. The Nethermind client which now holds a sizeable share of the network has no empirical electricity consumption data available. Hence, an average value per configuration between the other 3 EL clients was used as an estimate for it in \tref{Table:ConsumptionValues}. 
 
 Next, data on mean values recorded for all 3 configurations running all clients was extracted and collected in \tref{Table:ConsumptionValues}. Using the same assumptions made in the CCRI report, this \tref{Table:EstimatesPerNode} has been recalculated with updated values. 
 
@@ -348,41 +425,20 @@ Next, data on mean values recorded for all 3 configurations running all clients 
 
 % -----------------------------------
 $(60.96*45.1) + 65.97*6.94 + 83.21*3.77 + 70.05*9.23 + 59.53*20.28 + 64.54*3.12 + 81.78*1.69 + 68.62*4.15 + 62.01 * 7.37 + 67.03*1.13 + 84.26*0.62 + 71.11 * 1.51 + 58.29*0.63 + 63.31*0.1 + 80.54*0.05 + 67.39*0.13 / 105.82$
-Best guess for an individual node [W]: 63.7613088
+Best guess for an individual node [Wh]: 63.7613088
 Annualised value for an individual node assuming 8760h in a year[kWh/year]: 558.549065318kWh/year
 
 
-Synchronising energy: 
+
+
+
+
 
 
 
 
 
 \textbf{Data Gathering}
-The recommended hardware configuration for a Geth client is shown in \tref{Table:RecommendedHardware}.
-
-\begin{table}[h]
-\centering
-\begin{tabular}{|l|l|}
-\hline
-Solo Validator Nodes        & \begin{tabular}[c]{@{}l@{}}Quad Core Processor, \\ 2TB SSD , 16GB memory\end{tabular}                            \\ \hline
-Archive Nodes               & \begin{tabular}[c]{@{}l@{}}Quad Core or Dual Core Hyperthreaded \\ Processor, 12TB SSD, 16GB memory\end{tabular} \\ \hline
-Minimum for Validator nodes & \begin{tabular}[c]{@{}l@{}}Dual Core Hyperthreaded, \\ 1TB SSD, 4GB memory\end{tabular}                          \\ \hline
-\end{tabular}
-\caption{Recommended hardware configurations for running various nodes by Geth \cite{2022DeveloperGo-ethereum}}
-\label{Table:RecommendedHardware}
-\end{table}
-
-A combination of hardware that closely matches the recommendation by Geth developers must be chosen. The following specification was chosen:
-Intel i5-1135G7
-
-config 5 
-$65(1-e^(-63k))  + 37.61= 58.5$
-
-
-Because it is a recent CPU, made to be in laptops. This is aligned with the aim of running PoS Ethereum nodes on commodity hardware. It is also a configuration with actual data in the report by \cite{CryptoCarbonRatingsInstitute2022TheNetwork} and hence will draw fair comparisons when the models are compared.
-
-
 
 % ____________________________________________________________________________
 \subsection{Ethereum's Total Network Energy Consumption}
@@ -404,6 +460,7 @@ Because it is a recent CPU, made to be in laptops. This is aligned with the aim 
     \item Took averages of other EL layer clients per confirguration for NetherMind. not good.
     \item All these numbers are for running a full node, not validators which sdmieler,2020 said is basically negligible
     \item high, mid low tiers dont have a fair distribution of hardware but does help achieve more accurate results hopefully
+    \item for table \_\_ gave higher importance to Geth to estimate sync time as it has a much larger share of the network than the other EL clients
 \end{itemize}
 
 
