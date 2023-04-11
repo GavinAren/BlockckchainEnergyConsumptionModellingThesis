@@ -283,7 +283,7 @@ A combination of hardware that closely matches the recommendation by Geth develo
 Synchronising energy: 
 For the first part of equation \ref{eqn:FinalEqnShort} denoted by $\boldsymbol{\mathrm{P}_{SNC}}$, no empirical data was available in the CCRI report about this synchronisation stage. Non-scientific data for synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$ for users employing varying combinations of hardware and EL clients can be found in \tref{Table:ELRunTime} of the appendix. This limited data is insufficient to differentiate between the sync times for all 4 clients but allows us to roughly estimate the average sync time on varying hardware configurations (relative to \fref{Figure:CCRIhardwareConfig})  in \tref{Table:SyncEnergy}. Geth was given a higher weighting in this estimation as used by  $\sim$ 70\% of the network. 
 
-Varying user needs affect their decision in choosing hardware, ranging from different profit structures to low-budget devices and future-proof hardware. There is an immeasurable amount of hardware configurations that users could opt for. Thus, we model this distribution of users between the 3 categories of hardware using a continuous distribution, particularly - the CDF (Cumulative distribution function) of the standard normal distribution. The distribution was divided into 3 parts, 25\% of the network assumed to opt for the low-tier hardware (configuration 4), 50\% for the mid-tier (configuration 5) and 25\% for the high-tier( configuration 6). 
+Varying user needs affect their decision in choosing hardware, ranging from different profit structures to low-budget devices and future-proof hardware. There is an immeasurable amount of hardware configurations that users could opt for. Thus, we model this distribution of users between the 3 categories of hardware using a continuous distribution, particularly - the CDF (Cumulative distribution function) of the standard normal distribution. The distribution was divided into 3 parts, 25\% of the network assumed to opt for the low-tier hardware (configuration 4), 50\% for the mid-tier (configuration 5) and 25\% for the high-tier (configuration 6). 
 
 \begin{table}[h]
 \centering
@@ -300,7 +300,7 @@ High   & 12 & 280 & 10  & 25 \\ \hline
 
 The split of the share of the network estimated for each hardware tier in \tref{Table:SyncEnergy} is similar to the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} to allow for fair comparisons later on. 
 
-Given this data, the $\boldsymbol{\mathrm{P}_{SNC}}$ for an average node can be calculated by the following: \newline
+Given this data, the $\boldsymbol{\mathrm{P}_{SNC}}$ for an average node can be calculated by following its formula with each hardware tier multiplied by its network share: \newline
 $ \boldsymbol{
 0.25*(36*(28 + 3.5)) + 0.5*(24*(65+8.5)) + 0.25*(12*(280+10))
 } $ which results in $\boldsymbol{{\mathrm{P}_{SNC}} = 2035.5}$ Wh.
@@ -311,41 +311,10 @@ $ \boldsymbol{
 % _---------------------------------------
 \textbf{Average electricity consumption of a node after synchronisation}
 
+For the next part of equation \ref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}_{1}}}$ needs to be calculated. First, the \tref{Table:ClientShares} shows the updated values for EL and CL clients' shares of the Ethereum network that will be used to calculate $\boldsymbol{\phi_{EL,CL}}$.  
 
-Due to the limited availability of empirical data on hardware
-running Ethereum after ’the Merge’, the hardware configurations Figure 5.2 and their
-respective electricity consumption data in Table 5.2 were extracted from the CCRI
-report [2]. 
-\begin{table}[htb!]
-\centering
-\begin{tabular}{|l|lll|}
-\hline
-\textbf{Client Name} & \multicolumn{3}{l|}{\textbf{Node Configuration}}                               \\ \hline
-\textbf{}            & \multicolumn{1}{l|}{\textbf{4}} & \multicolumn{1}{l|}{\textbf{5}} & \textbf{6} \\ \hline
-Idle Node                & \multicolumn{1}{l|}{3.66}       & \multicolumn{1}{l|}{25.04}      & 78.17      \\ \cline{1-1}
-Geth (EL)            & \multicolumn{1}{l|}{11.23}      & \multicolumn{1}{l|}{9.70}       & 47.70      \\ \cline{1-1}
-Erigon (EL)          & \multicolumn{1}{l|}{18.60}      & \multicolumn{1}{l|}{17.59}      & 44.62      \\ \cline{1-1}
-Besu (EL)            & \multicolumn{1}{l|}{30.25}      & \multicolumn{1}{l|}{31.02}      & 75.04      \\ \cline{1-1}
-Nethermind(EL)[Averaged] & \multicolumn{1}{l|}{20.03}       & \multicolumn{1}{l|}{19.44}       & 55.79      \\ \cline{1-1}
-Prysm (CL)           & \multicolumn{1}{l|}{3.51}       & \multicolumn{1}{l|}{2.87}       & 24.33      \\ \cline{1-1}
-Lighthouse (CL)      & \multicolumn{1}{l|}{2.75}       & \multicolumn{1}{l|}{3.14}       & 18.84      \\ \cline{1-1}
-Teku (CL)            & \multicolumn{1}{l|}{3.71}       & \multicolumn{1}{l|}{3.32}       & 27.46      \\ \cline{1-1}
-Nimbus (CL)          & \multicolumn{1}{l|}{1.67}       & \multicolumn{1}{l|}{2.08}       & 17.11      \\ \cline{1-1}
-Lodestar(CL)         & \multicolumn{1}{l|}{3.14}       & \multicolumn{1}{l|}{3.89}       & 33.55      \\ \hline
-
-\end{tabular}
-\caption{Mean electricity consumption values in Watts, measured in the report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} for nodes with configurations 4-6 mentioned in  \fref{Figure:CCRIhardwareConfig} running various clients.  }
-\label{Table:ConsumptionValues}
-\end{table}
-
-
-
-
-
-\textbf{Implementing CCRI model with Updated Data }
-The base model proposed by CCRI \cite{CryptoCarbonRatingsInstitute2022TheNetwork} found in equation \ref{eqn:CCRI} in section \ref{CCRIBaseEqnSection} had the EL and CL client shares on the network. Table \ref{Table:ClientShares} below has updated values for these. 
-
-\begin{table}[!htb]
+% --------------------------------------
+\begin{table}[h]
     \centering
 
   \subcaptionbox{\textbf{Execution Clients} \cite{Sigp/blockprint:Metrics}}{
@@ -389,16 +358,45 @@ The base model proposed by CCRI \cite{CryptoCarbonRatingsInstitute2022TheNetwork
   \label{Table:ClientShares}
 \end{table}
 
-OpenEthereum has been deprecated and Lodestar no longer holds a sizeable share of the network and they are not be included in the calculations. The Nethermind client which now holds a sizeable share of the network has no empirical electricity consumption data available. Hence, an average value per configuration between the other 3 EL clients was used as an estimate for it in \tref{Table:ConsumptionValues}. 
+% --------------------------------------------
 
-Next, data on mean values recorded for all 3 configurations running all clients was extracted and collected in \tref{Table:ConsumptionValues}. Using the same assumptions made in the CCRI report, this \tref{Table:EstimatesPerNode} has been recalculated with updated values. 
+Ever since the CCRI report, OpenEthereum has been deprecated, and Lodestar no longer holds a sizeable share of the network, and they were not included in calculations.  
 
+Empirical data on the mean consumption values recorded for all 3 hardware configurations running all clients were collected in \tref{Table:ConsumptionValues}, taken from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. The Nethermind client which now holds a sizeable share of the network, has no empirical electricity consumption data available. To estimate this, the other 3 EL clients' values were averaged for each configuration.
+
+% ----------------------
+\begin{table}[htb!]
+\centering
+\begin{tabular}{|l|lll|}
+\hline
+\textbf{Client Name} & \multicolumn{3}{l|}{\textbf{Node Configuration}}                               \\ \hline
+\textbf{}            & \multicolumn{1}{l|}{\textbf{4}} & \multicolumn{1}{l|}{\textbf{5}} & \textbf{6} \\ \hline
+Idle Node                & \multicolumn{1}{l|}{3.66}       & \multicolumn{1}{l|}{25.04}      & 78.17      \\ \cline{1-1}
+Geth (EL)            & \multicolumn{1}{l|}{11.23}      & \multicolumn{1}{l|}{9.70}       & 47.70      \\ \cline{1-1}
+Erigon (EL)          & \multicolumn{1}{l|}{18.60}      & \multicolumn{1}{l|}{17.59}      & 44.62      \\ \cline{1-1}
+Besu (EL)            & \multicolumn{1}{l|}{30.25}      & \multicolumn{1}{l|}{31.02}      & 75.04      \\ \cline{1-1}
+Nethermind(EL)[Averaged] & \multicolumn{1}{l|}{20.03}       & \multicolumn{1}{l|}{19.44}       & 55.79      \\ \cline{1-1}
+Prysm (CL)           & \multicolumn{1}{l|}{3.51}       & \multicolumn{1}{l|}{2.87}       & 24.33      \\ \cline{1-1}
+Lighthouse (CL)      & \multicolumn{1}{l|}{2.75}       & \multicolumn{1}{l|}{3.14}       & 18.84      \\ \cline{1-1}
+Teku (CL)            & \multicolumn{1}{l|}{3.71}       & \multicolumn{1}{l|}{3.32}       & 27.46      \\ \cline{1-1}
+Nimbus (CL)          & \multicolumn{1}{l|}{1.67}       & \multicolumn{1}{l|}{2.08}       & 17.11      \\ \cline{1-1}
+Lodestar(CL)         & \multicolumn{1}{l|}{3.14}       & \multicolumn{1}{l|}{3.89}       & 33.55      \\ \hline
+
+\end{tabular}
+\caption{Mean electricity consumption values in Watts, measured in the report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} for nodes with configurations 4-6 mentioned in  \fref{Figure:CCRIhardwareConfig} running various clients.  }
+\label{Table:ConsumptionValues}
+\end{table}
+
+Given this data, we are able to calculate the \ref{Table:EstimatesPerNode}. As an example, the first row (Prysm,Geth) was calculated by adding each electricity usage when idle, running Pyrsm, and running Geth multiplied by the share of the hardware tier, for each configuration.
+
+$\boldsymbol{0.25*(3.66 + 11.23 + 3.51) + 0.50 * (25.04 + 9.70 + 2.87) + 0.25 * (78.17 + 47.70 + 24.33)}$ which equates to $\boldsymbol {69.955}$ Wh
 % -----------------------------------------
 \begin{table}[htb!]
+\centering
 \begin{tabular}{|ll|l|l|l|}
 \hline
 \multicolumn{2}{|l|}{\textbf{Client Combination}} &
-  \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Estimate\\ {[}W{]}\end{tabular}}} &
+  \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Estimate\\ {[}Wh{]}\end{tabular}}} &
   \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Annualised Estimate\\ {[}kWh/year{]}\end{tabular}}} &
   \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Client Combination\\ Share {[}\%{]}\end{tabular}}} \\ \cline{1-2}
 \multicolumn{1}{|l|}{\textbf{CL Client}} & \textbf{EL Client} &       &        &       \\ \hline
@@ -419,7 +417,7 @@ Next, data on mean values recorded for all 3 configurations running all clients 
 \multicolumn{1}{|l|}{Nimbus}             & Besu               & 80.54 & 705.57 & 0.05  \\ \cline{1-2}
 \multicolumn{1}{|l|}{Nimbus}             & Nethermind         & 67.39 & 590.31 & 0.13  \\ \hline
 \end{tabular}
-\caption{Electricity consumption estimates per node for all possible client combinations along with their network share. Individual client shares found in \tref{Table:ClientShares}  }
+\caption{Electricity consumption estimates per node for all possible client combinations along with corresponding annualised values and each client combination's network share. Individual client shares found in \tref{Table:ClientShares}  }
 \label{Table:EstimatesPerNode}
 \end{table}
 
@@ -428,7 +426,9 @@ $(60.96*45.1) + 65.97*6.94 + 83.21*3.77 + 70.05*9.23 + 59.53*20.28 + 64.54*3.12 
 Best guess for an individual node [Wh]: 63.7613088
 Annualised value for an individual node assuming 8760h in a year[kWh/year]: 558.549065318kWh/year
 
+Thus, according to our model, the annual total consumption of an average node running a single validator $ \boldsymbol{ \mathrm{\overline{V}_{1}} + \mathrm{P}_{SNC}}$ assuming the node needs to perform a fresh synchronisation once a year $ \boldsymbol{ = 560.584565318}$ kWh/year.
 
+As of 10 April 23, there are 12242 full nodes connected to the Ethereum mainnet. There are also 1074596 transactions a day.
 
 
 
