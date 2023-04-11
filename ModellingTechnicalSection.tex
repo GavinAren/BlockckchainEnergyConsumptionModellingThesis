@@ -147,7 +147,7 @@ Which simplifies to:
      \boldsymbol{\left({\mathrm{T}_{EL} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right)}\right) +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
 {\pi}} } \label{eqn:CCRISync}
 \end{equation}
-
+\label{AdditonalNodesReasoning}
 \textbf{ Stage 2: Running multiple validators per client}
 As the data suggests, there are roughly always 11-15000 nodes online at any given moment \cite{NodewatchAnalytics}, meanwhile, there are 561,472 validator instances running \cite{EthereumEthereum.orgc}, as of 28 Mar 2023. It is known that most solo-stakers run 1-1000 validator instances per physical node. With more specialised hardware, 2500-7000 validators can be run on a single node \cite{Kaushal2022ValidatingConference}. 
 
@@ -190,6 +190,7 @@ The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the ene
     \label{Figure:CCRIhardwareConfig}
 \end{figure}
 
+\label{DetermineK}
 Here is an example calculation to determine constant $\boldsymbol{\mathrm{k}}$ for an average node, configuration 6, shown in figure \ref{Figure:CCRIhardwareConfig}. 
 
 $\boldsymbol{\mathrm{C}} = \boldsymbol{\mathrm{150.20}} $ Watts, assuming the node runs the most common CL and EL client combination, Prysm and Geth. Mean values are taken from  \cite{CryptoCarbonRatingsInstitute2022TheNetwork}.
@@ -301,16 +302,17 @@ High   & 12 & 280 & 10  & 25 \\ \hline
 The split of the share of the network estimated for each hardware tier in \tref{Table:SyncEnergy} is similar to the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} to allow for fair comparisons later on. 
 
 Given this data, the $\boldsymbol{\mathrm{P}_{SNC}}$ for an average node can be calculated by following its formula with each hardware tier multiplied by its network share: \newline
-$ \boldsymbol{
-0.25*(36*(28 + 3.5)) + 0.5*(24*(65+8.5)) + 0.25*(12*(280+10))
-} $ which results in $\boldsymbol{{\mathrm{P}_{SNC}} = 2035.5}$ Wh.
+\begin{align}
+    &\boldsymbol{0.25*(36*(28 + 3.5)) + 0.5*(24*(65+8.5)) + 0.25*(12*(280+10))} \nonumber\\ \nonumber \\
+    &\boldsymbol{{\mathrm{P}_{SNC}} = 2035.5} \text{ Wh} \nonumber
+\end{align}
 
 
 % ________________________________________--
 
 % _---------------------------------------
 \textbf{Average electricity consumption of a node after synchronisation}
-
+\label{postSyncEnergyImplementation}
 For the next part of equation \ref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}_{1}}}$ needs to be calculated. First, the \tref{Table:ClientShares} shows the updated values for EL and CL clients' shares of the Ethereum network that will be used to calculate $\boldsymbol{\phi_{EL,CL}}$.  
 
 % --------------------------------------
@@ -387,9 +389,12 @@ Lodestar(CL)         & \multicolumn{1}{l|}{3.14}       & \multicolumn{1}{l|}{3.8
 \label{Table:ConsumptionValues}
 \end{table}
 
-Given this data, we are able to calculate the \ref{Table:EstimatesPerNode}. As an example, the first row (Prysm,Geth) was calculated by adding each electricity usage when idle, running Pyrsm, and running Geth multiplied by the share of the hardware tier, for each configuration.
+Given this data, we are able to calculate the values in \tref{Table:EstimatesPerNode}. As an example, the first row (Prysm,Geth) was calculated by adding each electricity usage when idle, running Pyrsm, and running Geth multiplied by the share of the hardware tier, for each configuration.
+\begin{align}
+    &\boldsymbol{0.25*(3.66 + 11.23 + 3.51) + 0.50 * (25.04 + 9.70 + 2.87) + 0.25} \nonumber\\
+    &\boldsymbol{* (78.17 + 47.70 + 24.33) = 69.96}\text{Wh} \nonumber
+\end{align}
 
-$\boldsymbol{0.25*(3.66 + 11.23 + 3.51) + 0.50 * (25.04 + 9.70 + 2.87) + 0.25 * (78.17 + 47.70 + 24.33)}$ which equates to $\boldsymbol {69.955}$ Wh
 % -----------------------------------------
 \begin{table}[htb!]
 \centering
@@ -423,16 +428,68 @@ $\boldsymbol{0.25*(3.66 + 11.23 + 3.51) + 0.50 * (25.04 + 9.70 + 2.87) + 0.25 * 
 
 % -----------------------------------
 $(60.96*45.1) + 65.97*6.94 + 83.21*3.77 + 70.05*9.23 + 59.53*20.28 + 64.54*3.12 + 81.78*1.69 + 68.62*4.15 + 62.01 * 7.37 + 67.03*1.13 + 84.26*0.62 + 71.11 * 1.51 + 58.29*0.63 + 63.31*0.1 + 80.54*0.05 + 67.39*0.13 / 105.82$
-Best guess for an individual node [Wh]: 63.7613088
-Annualised value for an individual node assuming 8760h in a year[kWh/year]: 558.549065318kWh/year
+Best guess for an individual node: \textbf{63.7613088 Wh}
+Annualised value for an individual node assuming 8760h in a year: \textbf{558.549065318 kWh/year}
 
-Thus, according to our model, the annual total consumption of an average node running a single validator $ \boldsymbol{ \mathrm{\overline{V}_{1}} + \mathrm{P}_{SNC}}$ assuming the node needs to perform a fresh synchronisation once a year $ \boldsymbol{ = 560.584565318}$ kWh/year.
+Assuming the node needs to perform a fresh synchronisation once a year, the annual total consumption of an average node (running 1 validator each) $ \boldsymbol{ \mathrm{\overline{V}_{1}} + \mathrm{P}_{SNC} =}$ \textbf{560.584565318 kWh/year} or \textbf{63.99 Wh}.
 
-As of 10 April 23, there are 12242 full nodes connected to the Ethereum mainnet. There are also 1074596 transactions a day.
+Data as of 10$\mathrm{^{th}}$ April 23: \\
+Number of nodes connected to Ethereum mainnet: \textbf{12242 nodes} \cite{NodewatchAnalytics} \\
+Number of transactions completed each day: \textbf{1074596 tx/day}  \cite{EthereumBlockchair} \\
+Number of validators on the network: \textbf{562729 validators} \cite{EthereumEthereum.orgc}
 
 
+My model: \\
+Hourly electricity consumption of the network (running 1 validator each): \textbf{783.37 kWh} \\
+Annual electricity consumption of the network (running 1 validator each): \textbf{6.86 GWh} \\
+Annual electricity consumption of a single node (running 1 validator each) per transaction: \textbf{0.001429 Wh/tx} \\
+Annual electricity consumption of the network (running 1 validator each) per transaction: \textbf{17.50 Wh/tx} \\
 
+CCRI model: \\
+Annual electricity consumption of the network (running 1 validator each): \textbf{6.84 GWh} \\
+Annual electricity consumption of a single node (running 1 validator each) per transaction: \textbf{0.001424 Wh/tx} \\
+Annual electricity consumption of the network (running 1 validator each) per transaction: \textbf{17.43 Wh/tx} \\
 
+% --------------------------------------------------
+% STAGE 3 of implementation with multiple validators
+% --------------------------------------------------
+\textbf{Additional consumption from some nodes running multiple validators}
+
+To include the fact that some nodes are running multiple validators, we implement the final part of equation \ref{eqn:FinalEqnShort}, calculating the $\boldsymbol{\mathrm{\overline{V}(\mathrm{x})}}$. 
+
+We know from section \ref{AdditonalNodesReasoning} that mid-tier nodes can run upto 1000 nodes while high-tier nodes can run 2500+ nodes \cite{2021HardwareEthstaker} \cite{Kaushal2022ValidatingConference}. To use the exponential decrease in electricity consumption to their advantage, when users run additional validator nodes, they often run a minimum of 1000+. Since there are 561,472 validators, we assume that 1000+ additional validators are run by $\sim$562 nodes, using mid to high-tier hardware.   
+
+$\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ can be calculated from \tref{Table:SyncEnergy}: \textbf{205 Wh} \\
+$\boldsymbol{ \overline{\mathrm{V}}_{1}}$ calculated in section \ref{postSyncEnergyImplementation} : \textbf{63.99 Wh} 
+
+$\boldsymbol{\mathrm{k}}$ can be calculated by the method shown in section \ref{DetermineK}:
+
+\begin{equation*}
+    \boldsymbol{\mathrm{141.01} * (1-\mathrm{e}^{-\mathrm{k}(\mathrm{63})}) = \mathrm{120.51}}
+\end{equation*}
+
+Which solves to:
+\begin{equation*}
+    \boldsymbol{\mathrm{k} = \mathrm{{3.06096} * {10}^{-2}}}
+\end{equation*}
+
+Finally, $\boldsymbol{\mathrm{x}}$ can be set to \textbf{1000} additional validators for 562 of the total nodes on the network while the rest run no additional nodes.
+
+Following the formula, we get $\boldsymbol{\mathrm{\overline{V}(\mathrm{1000})}} =$ \textbf{141.1 Wh}
+
+The hourly consumption of the network will rise by $141.1 * 562 = $ \textbf{79.298 kWh}
+
+The new hourly consumption of the entire network: \textbf{862.66378 kWh} 
+The new hourly electricity consumption of a single node can be derived: \textbf{70.47} Wh
+Annual electricity consumption of a single node: 617.30 kWh 
+Annual electricity consumption of the network: 7.5569 GWh
+Annual electricity consumption of a single node per transaction: 0.0015738 Wh/tx
+Annual electricity consumption of the network per transaction: 19.27 Wh/tx
+
+% \begin{equation}
+%     \label{eqn:FinalEqnShort}
+%      \boldsymbol{\mathrm{P}_{SNC} +  \overline{\mathrm{V}}_{1} + {\left(\mathrm{\overline{P}}_{TDP} -\overline{\mathrm{V}}_{1} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}} 
+% \end{equation}
 
 
 
