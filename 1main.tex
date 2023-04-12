@@ -13,6 +13,17 @@
 \usepackage{lscape}
 \usepackage{tabularx}
 \usepackage{multirow}
+% \documentclass[a4paper,png]{standalone}
+\usepackage{array}
+% For thicker table lines-------
+\makeatletter
+\newcommand{\thickhline}{%
+    \noalign {\ifnum 0=`}\fi \hrule height 1pt
+    \futurelet \reserved@a \@xhline
+}
+\newcolumntype{"}{@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}}
+\makeatother
+
 %% ----------------------------------------------------------------
 %% --------------------THESIS/DOC INFORMATION ---------------------
 \department  {School of Electronics and Computer Science}

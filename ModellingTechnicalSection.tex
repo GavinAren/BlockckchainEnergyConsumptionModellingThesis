@@ -492,7 +492,7 @@ Annual electricity consumption of the network per transaction: 19.27 Wh/tx
 % \end{equation}
 
 
-
+\checkmark
 
 
 \textbf{Data Gathering}
@@ -541,6 +541,76 @@ A simple logical model for estimating the energy consumption of Ethereum 2.0's e
 \section{Discussion and Evaluation Of Models}
 % ____________________________________________________________________________
 \subsection{Results}
+
+
+
+
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[h]
+\begin{tabular}{ll"ll"l"l|}
+\cline{3-6}
+ &
+   &
+  \multicolumn{2}{l"}{\textbf{My Model}} &
+  \textbf{CCRI \cite{CryptoCarbonRatingsInstitute2022TheNetwork}} &
+  \textbf{UCL \cite{IbanezTheExpansion}} \\ \thickhline
+\multicolumn{1}{|l|}{\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Accounts \\ For:\end{tabular}}}} &
+  \textbf{Synchronisation Energy} &
+  \multicolumn{1}{l|}{Yes} &
+  Yes &
+  No &
+  No \\ \cline{2-6} 
+\multicolumn{1}{|l|}{} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Additional Validators \\ Per Node\end{tabular}} &
+  \multicolumn{1}{l|}{No} &
+  Yes &
+  No &
+  No \\ \hline
+\multicolumn{1}{|l|}{\multirow{2}{*}{\textbf{Hourly}}} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Per Node \\ {[}Wh{]}\end{tabular}} &
+  \multicolumn{1}{l|}{63.99} &
+  70.47 &
+  63.76 &
+  85.03 \\ \cline{2-6} 
+\multicolumn{1}{|l|}{} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Entire Network \\ {[}kWh{]}\end{tabular}} &
+  \multicolumn{1}{l|}{783.37} &
+  862.66 &
+  780.57 &
+  1040.09 \\ \hline
+\multicolumn{1}{|l|}{\multirow{4}{*}{\textbf{Annual}}} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Per Node \\ {[}kWh{]}\end{tabular}} &
+  \multicolumn{1}{l|}{560.58} &
+  617.30 &
+  558.55 &
+  744.86 \\ \cline{2-6} 
+\multicolumn{1}{|l|}{} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Entire Network \\ {[}GWh{]}\end{tabular}} &
+  \multicolumn{1}{l|}{6.86} &
+  7.56 &
+  6.84 &
+  9.12 \\ \cline{2-6} 
+\multicolumn{1}{|l|}{} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Per Node / Transaction \\ {[}mWh/tx{]}\end{tabular}} &
+  \multicolumn{1}{l|}{1.43} &
+  1.57 &
+  1.42 &
+  1.90 \\ \cline{2-6} 
+\multicolumn{1}{|l|}{} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Entire Network / Transaction \\ {[}Wh/tx{]}\end{tabular}} &
+  \multicolumn{1}{l|}{17.50} &
+  19.27 &
+  17.43 &
+  23.25 \\ \hline
+\end{tabular}
+\caption{The results (best guess values) obtained from implementing the model proposed in this paper, as well as 2 other models, all using the same data in section \ref{postSyncEnergyImplementation}.}
+\label{Table:FinalResults}
+\end{table}
+
 % ____________________________________________________________________________
 \subsection{Interpretation}
 
