@@ -27,7 +27,35 @@ Also need to add the syncing energy into the equation as it is not a short proce
 * Advice was to make the model, logcally make the equations, justify each assumption etc, then gather some data for it, apply the data see what output you get. Then implement other's models using this data. Finally compare results, say why your model was/was not accurate.
 
 \section {Implementing The Model}
-\section {Validating The Model}
+
+% ------------------------------------------------------------------
+% --------------------------------------------------------------------
+\section {Model Evaluation}
+
+ It would be a near-impossible task to successfully simulate the model proposed in this paper using a computer program without losing the main characteristics that are leveraged to build upon the existing CCRI model, such as the non-linear increase in electricity consumption when running additional validators on a single node. The model can be evaluated using some of the model verification techniques mentioned in a chapter \cite{Al-Aomar2015ModelTechniques} from the book 'Process Simulations'.
+
+\textbf{1. Thorough Examination of Model Inputs :}
+
+During the construction of the model, this will be done by solely relying on actual data rather than theories to ensure the credibility of this model. When verifying the model, input values for each part of the model will be obtained only from scientific sources where possible. Otherwise, anecdotal data from multiple sources must be averaged in order to be used in verifying the model. Validation of model inputs is done by making sure that they are:
+\begin{enumerate}
+    \item Correct
+    \item Relevant to the real-world system being modelled
+    \item Being used in the model similar to the way they would be used by the real-world system being modelled
+\end{enumerate}  
+
+
+\textbf{2. Detailed Documentation of Model Logic :}
+Thorough documentation on every design decision made during the construction of the model must be stated. Every decision made in this paper will be intuitively reinforced by domain-specific knowledge or data that was collected in a scientific manner. This is critical to the credibility of this model and helps any future work that may be undertaken on the model.
+
+
+
+\textbf{3. Thorough Examination of Model Outputs :}
+
+The model outputs must be checked for 'reasonableness under a variety of input parameters' \cite{Al-Aomar2015ModelTechniques}. This paper will implement 2 existing models (CCRI and UCL model) with updated metrics and check if the model proposed outputs reasonably close values. Any discrepancies between these model outputs must be justified in the discussion section.   
+
+
+
+
 \section {Contextualising The Model In A Use Case}
 
 \section {Project Management}

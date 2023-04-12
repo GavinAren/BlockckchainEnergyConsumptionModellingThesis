@@ -2,7 +2,7 @@
 % -_____________________________________________________________________________
 
 \section{Goals And Methodology}
-
+This project aims to find the
 
 % -_____________________________________________________________________________
 
@@ -15,6 +15,18 @@
 
 \subsection{How it works}
 
+Similar to a linked list, a blockchain is a series of 'blocks' containing some information, with each block linked to the block before, using deterministic cryptographic hashes. This forms an immutable chain of blocks holding hashed information that cannot be altered, known as the ledger, shown in \fref{Figure:BasicBlockchain}. Altering the information held in any block in this ledger invalidates the hashes of all the blocks after it. This is what makes blockchains resistant to data modification. Each participant in the network will be referred to as a node in this paper. Each node holds its personal copy of the transactions and hashed blocks and is responsible for spreading any new transaction information to the whole network.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=13cm,center]{Figures/BlockchainStructure.png}
+    \caption{The data structure underlying blockchain \cite{ADocumentation}}
+    \label{Figure:BasicBlockchain}
+\end{figure}
+
+Blockchains remove the need for an intermediary between 2 parties involved in a transaction, such as a bank that controls the whole process. External authorities are not required to validate the authenticity and integrity of data. It is a decentralised form of immutable storage that serves as the single source of truth to all nodes on the network creating trust between anonymous actors.
+
+There is a consensus protocol that varies from blockchain to blockchain. It describes how nodes validate and agree on adding new transactions to the ledger. These consensus mechanisms defend against a plethora of attacks that malicious nodes could attempt.
 
 
 
@@ -67,60 +79,68 @@
 
 ***introduce what a blockchain is, basics
 
-Many nodes that communicate over a network following the 'ETH' protocol, forming the Ethereum network. The nodes all contribute to maintaing and securing a globally agreed state of the Ethereum Virtual Machine (EVM). The security of the network comes from a majority of nodes agreeing on the new change to the state of this EVM. In other words, agreeing on the next blocks to be permanently added to the blockchain. They are paid in \textbf{ether (ETH)}, Ethereum's native cryptocurrency, to run this validator software to validate new blocks received over the peer-to-peer netowork.
+Many nodes that communicate over a network following the 'ETH' protocol form the Ethereum network also called the Ethereum 'mainnet'. All these nodes contribute to maintaining and securing a globally agreed state of the Ethereum Virtual Machine (EVM). ***expand
+The security of this network comes from a majority of nodes agreeing on the new change to the state of this EVM. In other words, agreeing on the next few blocks to be permanently added to the blockchain ledger. Such nodes are paid in Ethereum's native cryptocurrency, \textbf{Ether (ETH)}, to run validator software that validates new blocks received over the peer-to-peer network.
 
 ***Introduce the need for consensus protocols
 
-When a user wants to enter a transaction into the blockchain, they specify the transaction amount, the secure it with their private key and also specify the tip they are willing to pay on top of the base transaction fees (both in 'gas') to incentivise a validator to include their transaction in an upcoming block. The JSON RCP API takes this request to the ETH Execution Client. This client verifies the transaction request by checking things like whether the user has the enough money to complete this transaction and if they used the correct private key. \cite{EthereumEthereum.org} 
+When a user wants to complete a transaction with another user across the network, they:
+\begin{enumerate}
+    \item Need to specify the transaction amount
+    \item Secure the transaction with their own private key
+    \item Specify the tip they are willing to pay on top of the base transaction fees (both in 'gas' units) to incentivise a validator to validate and include their transaction in an upcoming block
+\end{enumerate}
 
-This is then broadcasted to every other validator over the execution layer 'gossip network'. Every validator adds this transaction to their local \textbf{mempool}. This is a collection of unverified transaction that are waiting to be processed and added to a block.
+The software application used to do this uses the JSON RPC(Remote Procedure Call) API, which enables it to interact with the Ethereum blockchain. The ETH Execution client verifies the transaction request by checking things like whether the user has enough ETH to complete the transaction and if they have used the correct private key etc. \cite{EthereumEthereum.org}. 
 
-A validator is selected per slot pseudo-randomly. The validator chooses transactions out of its mempool to include in its block. It executes these transactions locally, causing a state change. Once it completes enough transaction to fill up a block (there is a gas limit per block), it proposes this signed 'beacon' block to all other validators over the consensus layer. This block is also wrapped in other information such as rewards, slashings, attestations, that enable the network to come to agree on the sequence of blocks at the head of the chain.
+This transaction request is then broadcasted to every other validator node over the execution layer 'gossip network'. Every validator adds this transaction to their local \textbf{'mempool'}. This is a collection of unverified transactions that are waiting to be processed and added to a new block.
 
-When other nodes receive this proposed block, they pass it to their execution layer client where they verify the data inside it. This includes ensuring it corresponds to the correct slot, correct parent etc. but most importantly, the transaction in the block are re-executed to check that the state change being proposed is valid. If the prosposed block passes these checks, the node adds it to its own 'canonical?' chain.  \cite{EthereumEthereum.org} 
+In 'Pre-Merge' PoW Ethereum, miners would have to compete with other miners in a race to guess the correct number in a brute-force manner, expending as much computational power as they could. Guessing this number correctly would make them the block proposer for a block and hence receive the rewards that come with it.
+
+% -_____________________________________________________________________________
+\subsection{"The Merge" - PoS Ethereum}
+
+\url{https://blog.ethereum.org/2021/05/18/country-power-no-more}
+
+"The Merge", also known as the "Paris Upgrade", happened in September 2022. The Ethereum Blockchain switched from the older Proof of Work to the Proof-of-Stake consensus protocol. It is called the 'Merge' as the Beacon Chain (a test network) was merged with the original Ethereum network. Both now operate simultaneously in layers. The older Ethereum chain is now known as the 'execution' layer (EL), now secured by the PoS 'consensus' layer (CL), formerly known as the Beacon Chain. 
+
+The merge of the original chain with the Beacon Chain makes the need for miners redundant. \textbf{Validator nodes} now secure the Ethereum network. 
+
+Full Nodes are nodes running both an EL and CL client. To participate in the validation of transactions on the Ethereum network, a Full Node must run an additional validator client and put 32 ETH (currently equivalent to £45000) at stake as collateral. Validator nodes are responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. 
+
+Blocks are 'forged' by validators at a fixed tempo in PoS Ethereum. Every 12-second time \textbf{slot}, a pseudo-randomly selected validator forges a new block and broadcasts it to the rest of the network. Validators choose which transactions out of their mempool they want to include in their next block. Validator software executes these transactions locally, proposing a state change (such as a change in account balances). Once it completes enough transactions to fill up a block (there is a gas limit per block), it proposes this signed 'beacon' block to all other validators over the consensus layer (CL) network. This block is also wrapped in other information such as rewards, slashings, and attestations, which are discussed later.
+
+When other nodes receive this proposed block, they pass it on to their Execution Layer Client (EL), where they verify the data inside it. This includes ensuring the block corresponds to the correct slot, correct parent etc. Most importantly, the transactions in the block are re-executed to check that the proposed state changes are valid \cite{EthereumEthereum.org}. If the new block passes these checks, the nodes add it to their own local version of the blockchain. The one they believe to be the single source of truth. 
 
 
 ***Instead of sharding, explain attestations here, include a diagram \url{https://kb.beaconcha.in/attestation}
 
-\textbf{Sharding} \label{Sharding}
-One solution to increasing the number of transactions throughput on the network is sharding. It refers to splitting the entire Ethereum network into 64 portions called \textbf{shards} \cite{Buterin2020Annotated-spec/beacon-chain.mdEthereum/annotated-spec}. Each shard would contain its own independent state. It is an attempt at breaking up the blockchain into smaller parts no nodes are not responsible for processing or re-executing every single transaction broadcasted on the Ethereum network. Each shard is still connected to the main Ethereum chain cryptographically through merkle trees. \cite{EthereumEthereum.org} 
+% \textbf{Sharding} \label{Sharding}
+% One solution to increasing the number of transactions throughput on the network is sharding. It refers to splitting the entire Ethereum network into 64 portions called \textbf{shards} \cite{Buterin2020Annotated-spec/beacon-chain.mdEthereum/annotated-spec}. Each shard would contain its own independent state. It is an attempt at breaking up the blockchain into smaller parts no nodes are not responsible for processing or re-executing every single transaction broadcasted on the Ethereum network. Each shard is still connected to the main Ethereum chain cryptographically through merkle trees. \cite{EthereumEthereum.org} 
 
 
 \textbf{Attestations}
 Validators are expected to create, sign and then propagate their attestation to the rest of the network, every epoch.
 Its purpose to vote for a specific slot of an epoch. The focus of this voting to retrieve each validator's view of the blockchain after each epoch. Meaning, their attestation in favour of their first and last block of the epoch are most important. This information is combined to help the network reach consensus about which block-chain to follow.
 
-
-
-% -_____________________________________________________________________________
-\subsection{Post-Merge Ethereum - "The Merge"/ "London Upgrade"/"Paris" idk}
-
-\url{https://blog.ethereum.org/2021/05/18/country-power-no-more}
-
-"The Merge" or "London Upgrade" happened in September 2022. The Ethereum Blockchain switched from the older Proof of Work to the Proof-of-Stake consensus protocol. The Beacon Chain (a test network) is being merged with the original Ethereum blockchain. Both will operate simultaneously in layers. The older Ethereum chain is now known as the 'execution' layer, and Ethereum is now secured by the Proof-Of-Stake 'consensus' layer (the Beacon Chain). 
-
-This merging of the original chain with the Beacon Chain makes the need for miners redundant. \textbf{Validator nodes} now secure the Ethereum network. 
-
-To participate in the validation of transactions on the Ethereum network, a node must put 32 ETH (equivalent to £45000 currently) at stake. These validator nodes will be responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. These are also called Full Nodes later in this paper.
-
-
  ****explain why client diversity is important
  **** once you have a node running, its not automatically a validator node
 ****reasons its good for the network if more poeple run a node, with which come energy consumption
  
 \paragraph{Staking ETH :}
-This can be done in many different ways as not everyone has access to 32 ETH to stake. To get past this high barrier of entry, validator nodes can be operated by solo staking, staking-as-a-service, pooled staking or centralised exchanges.
+This can be done in many different ways as not everyone has access to 32 ETH to stake. To get past this high barrier of entry, validator nodes can be operated by solo staking, staking-as-a-service, pooled staking or centralised exchanges. ***liquid eth here
+\textbf{Liquid ETH: }
+People operating validator nodes must be prepared to lock up 32 ETH for an indefinite period. There are ways around this, however, through using 3rd parties. 
 
 There are some risks involved with staking. Here are a few:
  ***shorten this section, kee relevant bits
 \textbf{Slashing :}
-This is when the algorithm destroys a portion of a validator's stake for behaving maliciously/ against the best interests of the network, introduced as a security feature. These penalties range from 0.5 ETH to the Entire 32 ETH, making it prohibitively expensive to attack Ethereum. 
+This is when the algorithm destroys a portion of a validator's stake for behaving maliciously/ against the best interests of the network.
 
 \textbf{Offline Penalty :}
-If a validator goes offline for a number of days, they incur losses roughly equivalent to what they would have gained had they remained online. This is not the same as slashing; instead, the node loses out on the ETH they would have gained during that time.
+If a validator goes offline for a number of days, they incur losses roughly equivalent to what they would have gained had they remained online. 
 
-\textbf{Liquid ETH: }
-People operating validator nodes must be prepared to lock up 32 ETH for an indefinite period. There are ways around this, however, through using 3rd parties. 
+
  % -------
 \newline \newline
 On the other hand, there are many incentives to run validator nodes. There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEthereum.org}. Following this altruistic mantra, running a node allows a user to interact with the Ethereum Network in a trustless and self-sufficient manner. Everything can be checked and verified with your own validator, removing the need to trust information from any other nodes in the network. 
@@ -227,7 +247,8 @@ Many syncing modes exist, such as full, snap, fast and light mode. The most comm
 
 
 
-
+\subsection{ Existing models }
+\label{LitRevExistingModels}
 \textbf{The CCRI Merge Paper } \cite{CryptoCarbonRatingsInstitute2022TheNetwork}
 
 Assumptions this paper makes:

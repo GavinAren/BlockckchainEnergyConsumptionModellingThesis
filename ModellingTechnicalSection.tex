@@ -7,32 +7,32 @@
 
 % ____________________________________________________________________________
 
-%  MODEL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-\subsection{Model A}
-From the research,it seems like power usage is usually not the limiting factor but rather the storage space needed to run validators.
+% %  MODEL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+% \subsection{Model A}
+% From the research,it seems like power usage is usually not the limiting factor but rather the storage space needed to run validators.
 
-The recommended hardware for a validator one is shown in table \_\_ of the appendix as well as in the table below. \_\_
+% The recommended hardware for a validator one is shown in table \_\_ of the appendix as well as in the table below. \_\_
 
-So according to this hardware recommendation, we could estimate the power usage depending on statistics provided by manufacturers. Let's assume the same configuration of hardware as in the \cite{CryptoCarbonRatingsInstitute2022TheNetwork} (They don't mention type of power supply and mainboard).  According to data from the manufacturers, the power consumption for this configuration comes out to the following: 
+% So according to this hardware recommendation, we could estimate the power usage depending on statistics provided by manufacturers. Let's assume the same configuration of hardware as in the \cite{CryptoCarbonRatingsInstitute2022TheNetwork} (They don't mention type of power supply and mainboard).  According to data from the manufacturers, the power consumption for this configuration comes out to the following: 
 
-\begin{itemize}
-    \item Processor TDP - 105W
+% \begin{itemize}
+%     \item Processor TDP - 105W
     
-    \item An SSD uses 5W while Active
+%     \item An SSD uses 5W while Active
     
-    \item Every 8GB of memory uses 3W, so 16GB of memory will use 6W
+%     \item Every 8GB of memory uses 3W, so 16GB of memory will use 6W
     
-    \item For a solo validator set-up (non-specialised hardware), miscellaneous components are likely to use another 30W
+%     \item For a solo validator set-up (non-specialised hardware), miscellaneous components are likely to use another 30W
     
-    \item As 92\% efficiency is common, the machine will likely peak at 178W of AC power drawn from the wall
+%     \item As 92\% efficiency is common, the machine will likely peak at 178W of AC power drawn from the wall
     
-    \item The machine will run at idle power consumption 50-90\% of time, so on average it would use around 50-100W
+%     \item The machine will run at idle power consumption 50-90\% of time, so on average it would use around 50-100W
     
-\end{itemize}
+% \end{itemize}
 
 % _____________________________________________________________________________
 %  MODEL BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-\section{Model B: Parametric Modelling with Prior Domain Knowledge}
+\section{'Model A': Parametric Modelling with Prior Domain Knowledge}
 
 % \textbf{Light Nodes}
 % Light nodes require much less computational power to run compared to a full node, yet, they still work in a trust-minimised way. This is due to their cryptographically proven way of using block headers of the blockchain to verify the information they are receiving from a full 
@@ -41,7 +41,7 @@ So according to this hardware recommendation, we could estimate the power usage 
 % Light clients send out a lot of requests, a lot more than full nodes. For example, they might need to check the balance of certain accounts to verify the information they are receiving cryptographically. This large number of simple requests ends up requiring more network bandwidth than full nodes \cite{WhatTechnologies}. We also know that light clients are designed to be run on minimal devices such as mobile and IoT devices. The amount of computational and storage resources required by a light node is orders of magnitude lower than a full node. It requires only about 100MB of storage \cite{WhatTechnologies}. This fact can be used to model this. These devices also sync with the latest blocks using checkpoints in seconds instead of hours like a full node.
 
 % _____________________---stage 1
-\textbf{The CRRI Equation Adapted}
+\textbf{The CCRI Equation Adapted}
 This section introduces the CCRI equation for the 'weighted  electricity  consumption  of  an  average  node for each combination of one consensus and one execution client'\cite{CryptoCarbonRatingsInstitute2022TheNetwork} with symbols adapted for this paper. Power and electricity have been synonymously used. 
 
 A Consensus Layer Client's power usage [in Wh] is denoted by subscript:
@@ -90,7 +90,7 @@ The final equation:
 % ____________________stage 1
 \textbf{Stage 1: Adding the Synchronisation Energy} 
 
- The equation \ref{eqn:CCRI} ignores the energy expended during the bootstrapping stage of running a node - the synchronisation process. Geth is the most dominant (\tref{Table:tabsubex}) and long-standing Ethereum EL client. Geth's snap sync mode is the most commonly used sync mode as it strikes a great balance between independent verification and sync speed.
+ The \eref{eqn:CCRI} ignores the energy expended during the bootstrapping stage of running a node - the synchronisation process. Geth is the most dominant (\tref{Table:tabsubex}) and long-standing Ethereum EL client. Geth's snap sync mode is the most commonly used sync mode as it strikes a great balance between independent verification and sync speed.
 % DIAGRAM FOR SNAP SYNC
  All types of syncing modes are very energy-intensive and snap-sync is no exception. It works by downloading the headers of chunks of blocks at a time and verifies these. In parallel to this it starts downloading the state-trie for each block and cryptographically verifying this by regenerating it locally. These computationally intensive processes utilise the CPU to its maximum capacity.
 
@@ -134,7 +134,7 @@ Thus the total power expended during the synchronisation process $\boldsymbol{\m
     \boldsymbol{\mathrm{P}_{SNC} = \mathrm{T}_{EL} * \left({\mathrm{P}_{TDP}} + \mathrm{P}_{SSD}\right)} \label{eqn:Sync}
 \end{equation}
 
-As this is a bootstrapping process, integrating equation \ref{eqn:Sync} into the CCRI equation \ref{eqn:CCRI} results in the following:
+As this is a bootstrapping process, integrating \eref{eqn:Sync} into the CCRI \eref{eqn:CCRI} results in the following:
 
 \begin{equation*}
     \boldsymbol{\mathrm{P}_{SNC} +  {\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
@@ -164,7 +164,7 @@ An expected linear correlation can be seen between the increasing number of vali
 
 Storage space was falsely expected to be a limiting factor as running a single validator takes up almost 2TB of storage. However, after the first validator already has a local copy of the blockchain synced, adding more validators only requires storing a few extra validator keys.
 
-This finding can be explained by understanding Sharding and attestations(section \ref{Sharding}). In each epoch (an epoch has 32 slots), 32 randomly selected block proposers propose one block per slot. The remaining validators are not only assigned 1/32 slots that they need to attest the new block for (vote on its validity) but also to possibly one of 64 voting committees. Unaggregated votes from these committees are aggregated and pushed out on specific gossip channels by certain validators assigned to do so. 
+This finding can be explained by understanding Sharding and attestations(\sref{Sharding}). In each epoch (an epoch has 32 slots), 32 randomly selected block proposers propose one block per slot. The remaining validators are not only assigned 1/32 slots that they need to attest the new block for (vote on its validity) but also to possibly one of 64 voting committees. Unaggregated votes from these committees are aggregated and pushed out on specific gossip channels by certain validators assigned to do so. 
 
 Nodes that are not running validators will only subscribe to the gossip topics that push out aggregated votes. But with each validator that you run, they will first need to subscribe to gossip channels with aggregated attestations but occasionally also to gossip topics with unaggregated attestations if they're selected to aggregate the votes for that slot. Hence, up to 64 validators, validators are subscribing and processing more and more gossip messages but past this, there are no new gossip topics to subscribe to and the CPU usage and gossip messages per second level off, as shown in \fref{Figure:validatorIncrease}.
 
@@ -175,7 +175,7 @@ We tried to replicate this behaviour using logarithmic functions and exponential
     \boldsymbol{\mathrm{E(\mathrm{x})} = \mathrm{A} (1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) + \mathrm{C}}
 \end{equation}
 
-The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the energy measurement obtained for running a single validator client on a specific hardware configuration of a node, denoted by $\boldsymbol{\mathrm{V_{1}}}$. As seen in \fref{Figure:validatorIncrease}, the CPU approaches its maximum capacity as the number of validators approaches 64, after which it levels off. Meanwhile, the SSD is not operating at its maximum capacity. Hence, the asymptotic upper limit of the graph $\boldsymbol{\mathrm{A}}$, can be set to $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ due to the aforementioned reasoning (section \ref{TDPReasoning}). The equation already has its lower limit set to running a single validator, and this equation will only be employed for cases where there are multiple validator clients being run on a single node. Thus, $\boldsymbol{\mathrm{x}}$ denotes the number of additional validator clients run on a node and can only take values from the set of all positive integers.  $\boldsymbol{\mathrm{k}}$, the growth rate constant determines how quickly the energy consumption increases as the validators increase and can be calculated for each node on a case-by-case basis. However, to simplify the equation, we can remove the $\boldsymbol{ + \mathrm{C}}$ as it simply acts as a transition upwards to the graph output by this equation. Removing this transition means we have to subtract $\boldsymbol{ \mathrm{C}}$ from our asymptote $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$. This modification leaves an equation that outputs the extra electricity consumed by $\boldsymbol{\mathrm{x}}$ additional validators:
+The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the energy measurement obtained for running a single validator client on a specific hardware configuration of a node, denoted by $\boldsymbol{\mathrm{V_{1}}}$. As seen in \fref{Figure:validatorIncrease}, the CPU approaches its maximum capacity as the number of validators approaches 64, after which it levels off. Meanwhile, the SSD is not operating at its maximum capacity. Hence, the asymptotic upper limit of the graph $\boldsymbol{\mathrm{A}}$, can be set to $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ due to the aforementioned reasoning (\sref{TDPReasoning}). The equation already has its lower limit set to running a single validator, and this equation will only be employed for cases where there are multiple validator clients being run on a single node. Thus, $\boldsymbol{\mathrm{x}}$ denotes the number of additional validator clients run on a node and can only take values from the set of all positive integers.  $\boldsymbol{\mathrm{k}}$, the growth rate constant determines how quickly the energy consumption increases as the validators increase and can be calculated for each node on a case-by-case basis. However, to simplify the equation, we can remove the $\boldsymbol{ + \mathrm{C}}$ as it simply acts as a transition upwards to the graph output by this equation. Removing this transition means we have to subtract $\boldsymbol{ \mathrm{C}}$ from our asymptote $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$. This modification leaves an equation that outputs the extra electricity consumed by $\boldsymbol{\mathrm{x}}$ additional validators:
 
 \begin{equation}
     \label{eqn:ExpDecay}
@@ -214,11 +214,11 @@ Figure \ref{Figure:MultipleValidators} graphs the example introduced above.
 \begin{figure}[htb!]
     \centering
     \includegraphics[ width=14cm,center]{Figures/AsymptoteMultipleValidators.png}
-    \caption{A plot of equation \ref{eqn:ExpDecay} showing its inverse exponential decay behaviour for configuration 6 from figure \ref{Figure:CCRIhardwareConfig}. The asymptote at $\boldsymbol{\mathrm{A = 129.80}}$W is highlighted y the horizontal dotted black line. A dashed vertical purple line also highlights the value of the curve to be $\boldsymbol{\mathrm{101.8}}$W at $\boldsymbol{\mathrm{x = 63}}$ which is the 64$^\mathrm{th}$ validator on that node.}
+    \caption{A plot of \eref{eqn:ExpDecay} showing its inverse exponential decay behaviour for configuration 6 from figure \ref{Figure:CCRIhardwareConfig}. The asymptote at $\boldsymbol{\mathrm{A = 129.80}}$W is highlighted y the horizontal dotted black line. A dashed vertical purple line also highlights the value of the curve to be $\boldsymbol{\mathrm{101.8}}$W at $\boldsymbol{\mathrm{x = 63}}$ which is the 64$^\mathrm{th}$ validator on that node.}
     \label{Figure:MultipleValidators}
 \end{figure}
 
-Equation \ref{eqn:ExpDecay} is case specific and can be applied independently to estimate the electricity usage of a node with a specific combination of EL and CL clients as well as a specific hardware combination. To integrate this equation into the one proposed earlier, equation \ref{eqn:CCRISync}, it will need to be generalised, keeping all combinations of hardware and clients in mind.
+\eref{eqn:ExpDecay} is case specific and can be applied independently to estimate the electricity usage of a node with a specific combination of EL and CL clients as well as a specific hardware combination. To integrate this equation into the one proposed earlier, \eref{eqn:CCRISync}, it will need to be generalised, keeping all combinations of hardware and clients in mind.
 
 $\boldsymbol{\mathrm{\overline{V}_{1}}}$ captures the electricity consumed by a node on average across all hardware configurations and clients that we have data for. 
 
@@ -227,7 +227,7 @@ $\boldsymbol{\mathrm{\overline{V}_{1}}}$ captures the electricity consumed by a 
 {\pi}} }
 \end{equation*}
 
-Following this, equation \ref{eqn:CCRISync} introduced earlier can be re-written as:
+Following this, \eref{eqn:CCRISync} introduced earlier can be re-written as:
 
 \begin{equation*}
      \boldsymbol{\overline{\mathrm{P}}_{SNC} +  \overline{\mathrm{V}}_{1} 
@@ -260,8 +260,8 @@ Note that hardware configuration-specific terms, such as TDP and SSD power usage
 
 % ___________________________________________________________________MODELS DONE< NOW 
 
-% MODEL BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-\section{My Model: Implementation}
+% MODEL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+\section{Implementing 'Model A'}
 
 \textbf{Average Sync Energy of a node}
 
@@ -279,10 +279,10 @@ Minimum for Validator nodes & \begin{tabular}[c]{@{}l@{}}Dual Core Hyperthreaded
 \label{Table:RecommendedHardware}
 \end{table}
 
-A combination of hardware that closely matches the recommendation by Geth developers must be chosen to fulfil the aim of PoS Ethereum nodes being run on commodity hardware. Performing such data collection is out of the scope of this report. Due to the limited availability of empirical data on hardware running Ethereum after 'the Merge', the hardware configurations 4,5 and 6 in \fref{Figure:CCRIhardwareConfig} from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} are used. Using this data also helps draw fairer comparisons when evaluating our model later on. 
+A combination of hardware that closely matches the recommendation by Geth developers must be chosen to fulfil the aim of PoS Ethereum nodes being run on commodity hardware. Performing such data collection is out of the scope of this report. Due to the limited availability of empirical data on hardware running Ethereum after 'the Merge', the hardware configurations 4,5 and 6 in \fref{Figure:CCRIhardwareConfig} from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} are used. Using this data also helps draw fairer comparisons when evaluating Model A later on. 
 
 Synchronising energy: 
-For the first part of equation \ref{eqn:FinalEqnShort} denoted by $\boldsymbol{\mathrm{P}_{SNC}}$, no empirical data was available in the CCRI report about this synchronisation stage. Non-scientific data for synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$ for users employing varying combinations of hardware and EL clients can be found in \tref{Table:ELRunTime} of the appendix. This limited data is insufficient to differentiate between the sync times for all 4 clients but allows us to roughly estimate the average sync time on varying hardware configurations (relative to \fref{Figure:CCRIhardwareConfig})  in \tref{Table:SyncEnergy}. Geth was given a higher weighting in this estimation as used by  $\sim$ 70\% of the network. 
+For the first part of \eref{eqn:FinalEqnShort} denoted by $\boldsymbol{\mathrm{P}_{SNC}}$, no empirical data was available in the CCRI report about this synchronisation stage. Non-scientific data for synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$ for users employing varying combinations of hardware and EL clients can be found in \tref{Table:ELRunTime} of the appendix. This limited data is insufficient to differentiate between the sync times for all 4 clients but allows us to roughly estimate the average sync time on varying hardware configurations (relative to \fref{Figure:CCRIhardwareConfig})  in \tref{Table:SyncEnergy}. Geth was given a higher weighting in this estimation as used by  $\sim$ 70\% of the network. 
 
 Varying user needs affect their decision in choosing hardware, ranging from different profit structures to low-budget devices and future-proof hardware. There is an immeasurable amount of hardware configurations that users could opt for. Thus, we model this distribution of users between the 3 categories of hardware using a continuous distribution, particularly - the CDF (Cumulative distribution function) of the standard normal distribution. The distribution was divided into 3 parts, 25\% of the network assumed to opt for the low-tier hardware (configuration 4), 50\% for the mid-tier (configuration 5) and 25\% for the high-tier (configuration 6). 
 
@@ -313,7 +313,7 @@ Given this data, the $\boldsymbol{\mathrm{P}_{SNC}}$ for an average node can be 
 % _---------------------------------------
 \textbf{Average electricity consumption of a node after synchronisation}
 \label{postSyncEnergyImplementation}
-For the next part of equation \ref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}_{1}}}$ needs to be calculated. First, the \tref{Table:ClientShares} shows the updated values for EL and CL clients' shares of the Ethereum network that will be used to calculate $\boldsymbol{\phi_{EL,CL}}$.  
+For the next part of \eref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}_{1}}}$ needs to be calculated. First, the \tref{Table:ClientShares} shows the updated values for EL and CL clients' shares of the Ethereum network that will be used to calculate $\boldsymbol{\phi_{EL,CL}}$.  
 
 % --------------------------------------
 \begin{table}[h]
@@ -455,14 +455,14 @@ Annual electricity consumption of the network (running 1 validator each) per tra
 % --------------------------------------------------
 \textbf{Additional consumption from some nodes running multiple validators}
 
-To include the fact that some nodes are running multiple validators, we implement the final part of equation \ref{eqn:FinalEqnShort}, calculating the $\boldsymbol{\mathrm{\overline{V}(\mathrm{x})}}$. 
+To include the fact that some nodes are running multiple validators, we implement the final part of \eref{eqn:FinalEqnShort}, calculating the $\boldsymbol{\mathrm{\overline{V}(\mathrm{x})}}$. 
 
-We know from section \ref{AdditonalNodesReasoning} that mid-tier nodes can run upto 1000 nodes while high-tier nodes can run 2500+ nodes \cite{2021HardwareEthstaker} \cite{Kaushal2022ValidatingConference}. To use the exponential decrease in electricity consumption to their advantage, when users run additional validator nodes, they often run a minimum of 1000+. Since there are 561,472 validators, we assume that 1000+ additional validators are run by $\sim$562 nodes, using mid to high-tier hardware.   
+We know from \sref{AdditonalNodesReasoning} that mid-tier nodes can run upto 1000 nodes while high-tier nodes can run 2500+ nodes \cite{2021HardwareEthstaker} \cite{Kaushal2022ValidatingConference}. To use the exponential decrease in electricity consumption to their advantage, when users run additional validator nodes, they often run a minimum of 1000+. Since there are 561,472 validators, we assume that 1000+ additional validators are run by $\sim$562 nodes, using mid to high-tier hardware.   
 
 $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ can be calculated from \tref{Table:SyncEnergy}: \textbf{205 Wh} \\
-$\boldsymbol{ \overline{\mathrm{V}}_{1}}$ calculated in section \ref{postSyncEnergyImplementation} : \textbf{63.99 Wh} 
+$\boldsymbol{ \overline{\mathrm{V}}_{1}}$ calculated in \sref{postSyncEnergyImplementation} : \textbf{63.99 Wh} 
 
-$\boldsymbol{\mathrm{k}}$ can be calculated by the method shown in section \ref{DetermineK}:
+$\boldsymbol{\mathrm{k}}$ can be calculated by the method shown in \sref{DetermineK}:
 
 \begin{equation*}
     \boldsymbol{\mathrm{141.01} * (1-\mathrm{e}^{-\mathrm{k}(\mathrm{63})}) = \mathrm{120.51}}
@@ -480,28 +480,14 @@ Following the formula, we get $\boldsymbol{\mathrm{\overline{V}(\mathrm{1000})}}
 The hourly consumption of the network will rise by $141.1 * 562 = $ \textbf{79.298 kWh}
 
 The new hourly consumption of the entire network: \textbf{862.66378 kWh} 
-The new hourly electricity consumption of a single node can be derived: \textbf{70.47} Wh
-Annual electricity consumption of a single node: 617.30 kWh 
-Annual electricity consumption of the network: 7.5569 GWh
-Annual electricity consumption of a single node per transaction: 0.0015738 Wh/tx
-Annual electricity consumption of the network per transaction: 19.27 Wh/tx
 
-% \begin{equation}
-%     \label{eqn:FinalEqnShort}
-%      \boldsymbol{\mathrm{P}_{SNC} +  \overline{\mathrm{V}}_{1} + {\left(\mathrm{\overline{P}}_{TDP} -\overline{\mathrm{V}}_{1} )\right(1-\mathrm{e}^{-\mathrm{k}(\mathrm{x})}) \qquad \forall x \in \mathbb{Z}^+}} 
-% \end{equation}
+The final results can be found in \tref{Table:FinalResults}.
+% The new hourly electricity consumption of a single node can be derived: \textbf{70.47} Wh
+% Annual electricity consumption of a single node: 617.30 kWh 
+% Annual electricity consumption of the network: 7.5569 GWh
+% Annual electricity consumption of a single node per transaction: 0.0015738 Wh/tx
+% Annual electricity consumption of the network per transaction: 19.27 Wh/tx
 
-
-\checkmark
-
-
-\textbf{Data Gathering}
-
-% ____________________________________________________________________________
-\subsection{Ethereum's Total Network Energy Consumption}
-
-% ____________________________________________________________________________
-\subsection {Modelling Energy Consumption Per Transaction}
 
 % ____________________________________________________________________________
 \subsection{Assumptions}
@@ -520,46 +506,49 @@ Annual electricity consumption of the network per transaction: 19.27 Wh/tx
     \item for table \_\_ gave higher importance to Geth to estimate sync time as it has a much larger share of the network than the other EL clients
 \end{itemize}
 
+\section{Implementing other models}
 
-% _____________________________________________________________________________
-\section{ Data-Driven Model}
-\subsection{Data Gathering}
+As mentioned in \sref{LitRevExistingModels} there are two existing models found in the wider literature. 
 
+\textbf{The 'CCRI' model} 
+
+As discussed in \sref{CCRIBaseEqnSection} before, this model from report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, forms the $ \boldsymbol{\overline{\mathrm{V}}_{1}}$ part of Model A from this report. Thus, all the data gathering and calculations have already been performed in \sref{postSyncEnergyImplementation}. Updated values from \tref{Table:ClientShares} and \tref{Table:ConsumptionValues} were used to populate \tref{Table:EstimatesPerNode}. The split in network share between the 3 hardware tiers (low, mid and high-tier) was done binomially rather than a continous distribution. However, the split percentages remain the same (25\%, 50\%, 25\% respectively), making the results more comparable. Final results for this model can be found in \tref{Table:FinalResults}.
+
+\textbf{The 'UCL' model} 
+
+The original version of this UCL model can be found in report \cite{Platt2022TheProof-of-Work}. However, the authors of that report released an updated report \cite{IbanezTheExpansion}, last revised on 7$\mathrm{^{th}}$ Feb 23. Because this report is so recent, data from its Results section can be directly taken and updated with the latest node count and transaction amounts used to implement Model A in this report (\sref{postSyncEnergyImplementation}). Resulting values can be found in \tref{Table:FinalResults}. 
 
 
 
 
 
 % ______________________________________________________________________
-\section {Modelling Ethereum's Carbon Emissions}
-\url{https://ethernodes.org/countries}
+% \section {Modelling Ethereum's Carbon Emissions}
+% \url{https://ethernodes.org/countries}
 
-\paragraph{ Simple Linear Regression Model}
-A simple logical model for estimating the energy consumption of Ethereum 2.0's energy consumption logically would be using simple regression. y = mx + c, and if we wanted to say that energy is dependent on transactions, then we can say y is the energy per node, m is the slope we need to find, x is the number of transactions/sec, c is the base energy an idle node requires. Then we multiply this whole thing by the number of validators on the network to get the overall network energy consumption.
+% \paragraph{ Simple Linear Regression Model}
+% A simple logical model for estimating the energy consumption of Ethereum 2.0's energy consumption logically would be using simple regression. y = mx + c, and if we wanted to say that energy is dependent on transactions, then we can say y is the energy per node, m is the slope we need to find, x is the number of transactions/sec, c is the base energy an idle node requires. Then we multiply this whole thing by the number of validators on the network to get the overall network energy consumption.
 
 % ____________________________________________________________________________
 \section{Discussion and Evaluation Of Models}
 % ____________________________________________________________________________
-\subsection{Results}
+\subsection{Final Results}
 
 
 
-
-
-
-
-% Please add the following required packages to your document preamble:
-% \usepackage{multirow}
+% -----------------------------------------------
+% RESULTS  TABLEEEE
+% ----------------------------------------------------------------
 \begin{table}[h]
 \begin{tabular}{ll"ll"l"l|}
 \cline{3-6}
  &
    &
-  \multicolumn{2}{l"}{\textbf{My Model}} &
+  \multicolumn{2}{l"}{\textbf{Model A}} &
   \textbf{CCRI \cite{CryptoCarbonRatingsInstitute2022TheNetwork}} &
   \textbf{UCL \cite{IbanezTheExpansion}} \\ \thickhline
 \multicolumn{1}{|l|}{\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}l@{}}Accounts \\ For:\end{tabular}}}} &
-  \textbf{Synchronisation Energy} &
+  \textbf{\begin{tabular}[c]{@{}l@{}}Synchronisation \\ Energy \end{tabular}} &
   \multicolumn{1}{l|}{Yes} &
   Yes &
   No &
@@ -607,7 +596,7 @@ A simple logical model for estimating the energy consumption of Ethereum 2.0's e
   17.43 &
   23.25 \\ \hline
 \end{tabular}
-\caption{The results (best guess values) obtained from implementing the model proposed in this paper, as well as 2 other models, all using the same data in section \ref{postSyncEnergyImplementation}.}
+\caption{The results (best guess values) obtained from implementing 'Model A' as well as 2 other models, all using the same metrics in \sref{postSyncEnergyImplementation}.}
 \label{Table:FinalResults}
 \end{table}
 
@@ -616,9 +605,9 @@ A simple logical model for estimating the energy consumption of Ethereum 2.0's e
 
 
 % ____________________________________________________________________________
-\subsection{Validation and Evaluation}
+\subsection{Verification and Evaluation}
 
-
+To verify Model A, other models found in the wider literature have been implemented using updated metrics. The results of my model should lie reasonably close to other models and any discrepencies must be explained. 
 
 
 % ____________________________________________________________________________
