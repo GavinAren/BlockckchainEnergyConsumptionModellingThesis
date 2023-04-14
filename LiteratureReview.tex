@@ -8,6 +8,7 @@ This project aims to find the
 
 \section{Blockchain Basics}
 
+Blockchain technology has been acknowledged as a transformative innovation in many industries beyond cryptocurrencies, such as Internet of Things (IoT), healthcare and especially logistics and finance, since its inception in 2008 by Nakamoto in Bitcoin \cite{NakamotoBitcoin:System}. Compared to traditional centralised systems, blockchain offers several distinct advantages, including immutability, heightened security, fault tolerance, transparency and empowering users with a greater level of control through decentralisation.
 
 \subsection{How it works}
 
@@ -72,15 +73,15 @@ There is a consensus protocol that varies from blockchain to blockchain. It desc
 \section{Ethereum Basics}
 
 ***explain the whole of ethereum from an all inclusive perspective, inclusing like why gas exists, what it is, very simply. And teh Dapp ecosysm, and how eth is just a the bottom layer, why Eth exists basically.
+Ethereum is a decentralised blockchain platform that enables the creation of smart contracts and DApps(Decentralised Applications).  
 
-***introduce what a blockchain is, basics
+Nodes that communicate over a network following the 'ETH' protocol form the Ethereum network, also called the Ethereum 'mainnet'. These nodes contribute to maintaining and securing a globally agreed state of the Ethereum Virtual Machine (EVM). This was also described as 'one computer for the entire planet" by Ethereum co-founder Gavin Wood in 2016\cite{Ethereum:Industries}. 
 
-Nodes that communicate over a network following the 'ETH' protocol form the Ethereum network, also called the Ethereum 'mainnet'. These nodes contribute to maintaining and securing a globally agreed state of the Ethereum Virtual Machine (EVM). ***expand
 The security of this network comes from a majority of nodes agreeing on the new change to the state of this EVM. In other words, agreeing on the next block to be permanently added to the blockchain ledger. Such nodes are paid in Ethereum's native cryptocurrency, \textbf{Ether (ETH)}, to run validator software that validates new blocks received over the peer-to-peer network.
 
 ***Introduce the need for consensus protocols
 
-Ethereum is a permissionless blockchain. This means anyone can download the software and start interacting with the Ethereum blockchain. This interaction between a client and the Ethereum blockchain is enabled by the JSON RPC(Remote Procedure Call) API. When any user wants to complete a transaction with another user across the network, they:
+Ethereum is a public, permissionless network, which means that anyone can access and participate in its operations. The interaction between a client and the Ethereum blockchain is enabled by the JSON RPC(Remote Procedure Call) API. When any user wants to complete a transaction with another user across the network, they:
 \begin{enumerate}
     \item Need to specify the transaction amount
     \item Secure the transaction with their own private key
@@ -90,10 +91,15 @@ Ethereum is a permissionless blockchain. This means anyone can download the soft
 The ETH Execution client verifies the transaction request by checking things like whether the user has enough ETH to complete the transaction and if they have used the correct private key etc. \cite{EthereumEthereum.org}. 
 This transaction request is then broadcasted to every other validator node over the execution layer 'gossip network'. Every validator adds this transaction to their local \textbf{'mempool'}. This is a collection of unverified transactions that are waiting to be processed and added to a new block.
 
-In pre-merge PoW Ethereum, miners would have to compete with other miners to solve a computationally- complex problem in a brute-force manner, expending as much computational power as they could. The winner was chosen to be the block proposer for the next block added to the ledger, consequently receiving the rewards that come with it.
+During the pre-merge Proof-of-Work (PoW) era of Ethereum, \textbf{miners} competed to solve a mathematical problem using their computational power, and the first one to solve it was rewarded with Ether and the right to add a block to the blockchain. The difficulty of the problem increased with the number of miners, making it computationally expensive and energy-intensive. 
+% -_____________________________________________________________________________
+
+% __________________________________________________________________________________________-
+
+% ________________________________________________________________________________-
 
 % -_____________________________________________________________________________
-\subsection{"The Merge" - PoS Ethereum}
+\section{Post-Merge PoS Ethereum}
 
 \url{https://blog.ethereum.org/2021/05/18/country-power-no-more}
 
@@ -150,10 +156,7 @@ Equally, there are many incentives to run a validator node. These include:
 \textbf{Block Proposer Rewards :}
 This is the reward for those validators chosen to propose the next block in a slot. When their block is finalised, they are rewarded with a substantial amount of ETH.
 
-
-
-% -_____________________________________________________________________________
-\subsection{Ethereum Key Concepts}
+% ----------------------------------------------------------------------
 
 \subsubsection{Node Types}
 
@@ -209,7 +212,10 @@ Many syncing modes exist, such as Full, Snap, Fast and Light Sync.
 Synchronisation times vary depending on the client software chosen as well the node's hardware configuration. It is not uncommon for syncing times to range between 12 hours and 6 days.
 % -_____________________________________________________________________________
 
+% __________________________________________________________________________________________-
+% -_____________________________________________________________________________
 
+% __________________________________________________________________________________________-
 
 \section{Carbon Emissions of Blockchain Technology }
 
@@ -226,9 +232,24 @@ While the benefits of using decentralised transactional systems are appealing to
 
 The stark difference in emissions per transaction is highlighted in \fref{Figure:CarbonEmissionsPlot}, especially due to using a logarithmic scale. These carbon emissions can be used as a proxy of environmental damage \cite{2022VisaReport}. This environmental damage linked to energy consumption renders it highly unsustainable.
 
+Apart from cryptocurrencies, blockchain technology is increasingly being employed to track provenance in supply chains, especially drug-supply chains \cite{Labaran2021TheNigeria}. The literature contains numerous examples of such implementations using blockchain found in the figure, with some claiming to be low-energy solutions employing off-chain storage and non-PoW consensus mechanisms.
+
+TABLEEE
+
+Newly established independent blockchains, whether intended for cryptocurrency or provenance purposes, often struggle to maintain the two primary benefits of blockchain technology, either through security breaches due to a lack of users or centralization through permissioned blockchain solutions. 51\% attacks occur when a malicious miner or group controls over 50\% of a network's computational power. Small blockchains with few participants are more vulnerable as it is easier for a malicious actor to acquire the necessary computational power, leaving the blockchain susceptible to tampering and theft \cite{Redman2021PrivacyErased}.
+
+
+
+
+
+
+
+
 
 % _______________________________________________________________
+% -_____________________________________________________________________________
 
+% __________________________________________________________________________________________-
 % -_____________________________________________________________________________
 
 \subsection{Mathematical Modelling}
@@ -237,20 +258,28 @@ Modelling is about making some assumptions in order to simplify a complex system
 
 \textbf{Rule-based modelling} involves coming up with certain dynamic rules and limitations that can explain the behaviour of a system. It is all about capturing how the model will behave over time, usually done using quantitative methods.
 
+Observations must be turned into mathematical equations, but this can be challenging as the system's unique properties may be ones we are not familiar with (for example, large networks and nonlinearity). A book on modelling complex systems claims the 4 things to keep in mind when modelling include \cite{SayamaINTRODUCTIONSYSTEMS}:
 
+\begin{itemize}
+    \item The key research questions that need to be addressed
+    \item To answer the research questions, what scale is most appropriate to describe the systems, microscopic or macroscopic
+    \item How the system is structured
+    \item What are all the possible states of the system, and how it changes over time
+\end{itemize}
+
+This report uses the microscopic details of the Ethereum protocol (how attestations are handled) to model its macroscopic effects at scale (increase in overall energy usage). 
 
 
 
 % ____________________________________________________________________---
 
 % ______________________________________________________________________________
-
-\subsection{Papers On Carbon Emissions of Blockchain Systems}
-
-
 % -_____________________________________________________________________________
 
-\subsection{Papers On Modelling Energy Usage Of Blockchain Systems}
+% __________________________________________________________________________________________-
+
+
+\section{Electricity Consumption of PoW Blockchains}
 
 
 % -_____________________________________________________________________________
@@ -264,8 +293,14 @@ Modelling is about making some assumptions in order to simplify a complex system
 \subsubsection{Mathematical Papers}
 
 
+% -_____________________________________________________________________________
+% -_____________________________________________________________________________
 
-\subsection{ Existing models }
+% __________________________________________________________________________________________-
+% __________________________________________________________________________________________-
+
+
+\subsection{ Electricity Consumption of PoS Blockchains }
 \label{LitRevExistingModels}
 \textbf{The CCRI Merge Paper } \cite{CryptoCarbonRatingsInstitute2022TheNetwork}
 
@@ -287,6 +322,8 @@ Assumptions this paper makes:
 AVX instructions enable the processor to perform multiple floating-point operations at the same time, resulting in faster computation and improved performance. \cite{Schuchart2016TheScale}
 
 % ______________________________________________________________________________
+% -_____________________________________________________________________________
 
+% __________________________________________________________________________________________-
 
 \section{Key Points Covered}
