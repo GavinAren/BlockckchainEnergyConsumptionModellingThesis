@@ -370,18 +370,24 @@ A recent study by UCL Centre for Blockchain Technologies \cite{PlattDiscussionPr
 Their generalised model performs well for a few different PoS blockchains, with Ethereum being one of them. In fact, R3, a private company that run the Corda blockchain have also used the same equation to estimate its energy consumption \cite{JustBlog}. However, amidst this generalisation, the UCL study makes a critical mistake of not differentiating between validators (currently $\sim$500,000 \cite{EthereumEthereum.orgc}) and Full Nodes ($\sim$15,000 \cite{NodewatchAnalytics}). Their model only considers validators and estimates only the PoS consensus protocol’s energy usage in isolation. Thus, incomplete in its calculation of network-wide energy consumption by ignoring factors such as the 'Full Nodes' that aren't actively participating in forming consensus but greatly contribute to securing the blockchain. Such factors have not been ignored in the model proposed by this report. The UCL study also relies on speculative assumptions as it was written before Ethereum’s upgrade to PoS consensus (now the world’s largest PoS blockchain). Hence, the most significant PoS blockchain was not included in its study.
 
 
-\textbf{The CCRI Merge Paper } \cite{CryptoCarbonRatingsInstitute2022TheNetwork}
+\textbf{The CCRI Study } 
+\label{CCRIModelLitRev}
+The state-of-the-art research conducted by Crypto Carbon Ratings Institute focuses specifically on the electricity consumption of post-merge PoS Ethereum. It provided the most up-to-date empirical data that has been cited in other studies such as this one \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. These researchers decided on 6 commodity hardware configurations that they ran idly for base power consumption figures and then ran each major EL and CL client software separately, taking 48-hour electricity measurements. The data was used in their equation (detailed in \sref{CCRIBaseEqnSection}), which was formulated using a combination of experimentation and prior domain knowledge. The accuracy of the model was confirmed by comparing the actual measurements from running Full Nodes to their estimated values, which were found to be highly precise.
 
-Assumptions this paper makes:
-\begin{itemize}
-    \item Assumes the syncing energy of each node will skew energy averages, so ignores node bootstrapping energy usage during the sync phase.
+Assumptions and shortcomings of this study:
+\begin{enumerate}
+    \item Different combinations of clients were run to form Full Nodes. However, the next step of running a validator client on the Full Node was not taken due to the barrier of staking 32 ETH. The effects of running a validator client on top of a Full Node were assumed to be negligible.
     
-    \item They run many full nodes with different combinations of execution and consensus layer clients. However, they did not then proceed further and run a validator node due to the high economic barrier of entry (staking 32 ETH). They claim the energy usage of turning it into a validator would be negligible.
+    \item The synchronisation energy consumed whilst bootstrapping Full Nodes was not considered.
     
-    \item Did not consider light nodes and archive nodes, presumably because of the assumption that their energy usage will be negligible as well as the lack of support of light nodes at the time.
+    \item Other node types, such as Light and Archive Nodes, were not considered, presumably due to assuming that they would have negligible effects.
 
-    \item Type of power supply and mainboard was not mentioned. This is important to the estimation as power efficiencies cause more power to be drawn from the grid than the amount that is utilised by a computer.
-\end{itemize}
+    \item The electricity data was collected using computer software, but there is no information available on the type of power supply and mainboard used in the experiments. Therefore, the measurements only account for the electricity consumed by the computer itself and do not factor in the power draw 'At-Wall' or any electrical inefficiencies.
+\end{enumerate}
+
+The model proposed in this report builds upon the CCRI equation by addressing the first 2 shortcomings mentioned above. 
+
+
 
 % -_____________________________________________________________________________
 
