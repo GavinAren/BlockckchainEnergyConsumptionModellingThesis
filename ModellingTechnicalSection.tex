@@ -186,7 +186,7 @@ The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the ene
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=10cm,center]{Figures/CCRIhardwareConfigEdit.png}
-    \caption{Table with hardware configurations of a low-tier, mid-tier and high-tier node relative to the hardware recommendation to run a validator node shown in table \ref{Table:RecommendedHardware}. Source: CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, table 6. Configurations 1,2, and 3 were omitted due to being unable to run the client software.}
+    \caption{Table adapted from CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, showing the hardware configurations of a low-tier, mid-tier and high-tier node used to collect data.}
     \label{Figure:CCRIhardwareConfig}
 \end{figure}
 
@@ -261,9 +261,13 @@ Note that hardware configuration-specific terms, such as TDP and SSD power usage
 % ___________________________________________________________________MODELS DONE< NOW 
 
 % MODEL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-\section{Implementing 'Model A'}
+\section{Implementation and Results}
 
-\textbf{Average Sync Energy of a node}
+Through extensive data gathering of contemporary data, Model A, as well as 2 models from other studies, are implemented in this section.
+
+
+\subsection{Implementing Model A}
+\textbf{Step 1 - Average Sync Energy of a node}
 
 First, 3 hardware configurations must be chosen, including a low, medium and high tier for running validator nodes. The recommended hardware configuration for a Geth client ($\sim$ 70\% network share) is shown in \tref{Table:RecommendedHardware}.
 
@@ -311,8 +315,9 @@ Given this data, the $\boldsymbol{\mathrm{P}_{SNC}}$ for an average node can be 
 % ________________________________________--
 
 % _---------------------------------------
-\textbf{Average electricity consumption of a node after synchronisation}
+\textbf{Step 2 - Average electricity consumption of a node after synchronisation}
 \label{postSyncEnergyImplementation}
+
 For the next part of \eref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}_{1}}}$ needs to be calculated. First, the \tref{Table:ClientShares} shows the updated values for EL and CL clients' shares of the Ethereum network that will be used to calculate $\boldsymbol{\phi_{EL,CL}}$.  
 
 % --------------------------------------
@@ -448,12 +453,12 @@ Annual electricity consumption of the network (running 1 validator each) per tra
 CCRI model: \\
 Annual electricity consumption of the network (running 1 validator each): \textbf{6.84 GWh} \\
 Annual electricity consumption of a single node (running 1 validator each) per transaction: \textbf{0.001424 Wh/tx} \\
-Annual electricity consumption of the network (running 1 validator each) per transaction: \textbf{17.43 Wh/tx} \\
+Annual electricity consumption of the network (running 1 validator each) per transaction: \textbf{17.43 Wh/tx} \newline 
 
 % --------------------------------------------------
 % STAGE 3 of implementation with multiple validators
 % --------------------------------------------------
-\textbf{Additional consumption from some nodes running multiple validators}
+\textbf{ Step 3 - Running multiple validators on some nodes}
 
 To include the fact that some nodes are running multiple validators, we implement the final part of \eref{eqn:FinalEqnShort}, calculating the $\boldsymbol{\mathrm{\overline{V}(\mathrm{x})}}$. 
 
@@ -489,8 +494,10 @@ The final results can be found in \tref{Table:FinalResults}.
 % Annual electricity consumption of the network per transaction: 19.27 Wh/tx
 
 
+
 % ____________________________________________________________________________
-\subsection{Assumptions}
+\subsubsection{Assumptions}
+\label{Assumptions}
 
 \begin{itemize}
     \item They have taken the syncing on nodes into account into their model whereas for general modelling, it would be  abetter estimate to ignore this initial set up energy and get an avergae form then on. That is what this paper has done, taking averages of the Raspberry Pi rather than including the syncing energy.
@@ -506,7 +513,7 @@ The final results can be found in \tref{Table:FinalResults}.
     \item for table \_\_ gave higher importance to Geth to estimate sync time as it has a much larger share of the network than the other EL clients
 \end{itemize}
 
-\section{Implementing other models}
+\subsection{Implementing other models}
 
 As mentioned in \sref{LitRevExistingModels} there are two existing models found in the wider literature. 
 
@@ -519,23 +526,10 @@ As discussed in \sref{CCRIBaseEqnSection} before, this model from report \cite{C
 The original version of this UCL model can be found in report \cite{Platt2022TheProof-of-Work}. However, the authors of that report released an updated report \cite{IbanezTheExpansion}, last revised on 7$\mathrm{^{th}}$ Feb 23. Because this report is so recent, data from its Results section can be directly taken and updated with the latest node count and transaction amounts used to implement Model A in this report (\sref{postSyncEnergyImplementation}). Resulting values can be found in \tref{Table:FinalResults}. 
 
 
-
-
-
-% ______________________________________________________________________
-% \section {Modelling Ethereum's Carbon Emissions}
-% \url{https://ethernodes.org/countries}
-
-% \paragraph{ Simple Linear Regression Model}
-% A simple logical model for estimating the energy consumption of Ethereum 2.0's energy consumption logically would be using simple regression. y = mx + c, and if we wanted to say that energy is dependent on transactions, then we can say y is the energy per node, m is the slope we need to find, x is the number of transactions/sec, c is the base energy an idle node requires. Then we multiply this whole thing by the number of validators on the network to get the overall network energy consumption.
-
-% ____________________________________________________________________________
-\section{Discussion and Evaluation Of Models}
-% ____________________________________________________________________________
-\subsection{Final Results}
-
-
-
+\subsection{Results}
+\label{ResultsSection}
+Results from the aforementioned models are presented in a comparable format in \tref{Table:FinalResults}.
+\clearpage
 % -----------------------------------------------
 % RESULTS  TABLEEEE
 % ----------------------------------------------------------------
@@ -599,15 +593,49 @@ The original version of this UCL model can be found in report \cite{Platt2022The
 \caption{The results (best guess values) obtained from implementing 'Model A' as well as 2 other models, all using the same metrics in \sref{postSyncEnergyImplementation}.}
 \label{Table:FinalResults}
 \end{table}
-After the table comes:
+% -----------------------------------------------------------------------
+
+% ______________________________________________________________________
+% \section {Modelling Ethereum's Carbon Emissions}
+% \url{https://ethernodes.org/countries}
+
+% \paragraph{ Simple Linear Regression Model}
+% A simple logical model for estimating the energy consumption of Ethereum 2.0's energy consumption logically would be using simple regression. y = mx + c, and if we wanted to say that energy is dependent on transactions, then we can say y is the energy per node, m is the slope we need to find, x is the number of transactions/sec, c is the base energy an idle node requires. Then we multiply this whole thing by the number of validators on the network to get the overall network energy consumption.
+
+% _____________________________________________________________________________
+% _____________________________________________________________________________
+% ____________________________________________________________________________
+\section{Evaluation and Discussion}
+
+\subsection{Interpretation and Discussion}
+
+Being able to model the electricity consumption of PoS Ethereum successfully answers RQ1. The results produced by Model A are valid due to 2 main reasons:
+\begin{itemize}
+    \item The aforementioned conditions for the model to produce valid results, detailed in the methodology section of this report (\ref{***}) have been met. 
+    \begin{itemize}
+        \item Trusted sources well justify each conclusion or assumption drawn during the formulation of Model A and have also been well documented (\sref{Assumptions}).
+        \item All data used during modelling was either from strict empirical sources or an average of an extensive collection of non-scientific sources.
+    \end{itemize}
+    \item The results of Model A lie between the only 2 other models found in the wider literature, thus lying in a 'reasonable' range.
+    \item Model A builds upon the CCRI model through the addition
+\end{itemize}
+
+Results from Model A (proposed in this report) are quite close to the CCRI model, with a slight increase in Model A's results. Model A accounts for 2 more sources of energy expenditure as compared to the base CCRI model, which explains the average increase of 9.5\% across all values. 
+
+This suggests that running additional validators and accounting for synchronisation energy increases the energy estimates by 9.50\%. 9.25\% of it can be attributed to running multiple validators alone. This shows that the extra electricity consumed by taking $\sim$500000 validators into account was weighted correctly within the model as it didn't have a disproportionate effect on the final results. Thus, this was a hugely important factor which the other models left out. 
+
+The UCL model seems to be overestimating the consumption values. This can be attributed to the lack of complexity in their model as a result of generalising it for all PoS blockchains.
+
 \begin{figure}[!htb]
     \includegraphics[width=13cm,center]{Figures/ElectricityConsumptionPlot.png}
     \caption{Energy consumption per transaction for Bitcoin \cite{BitcoinDigiconomist}, Ethereum 2.0 [from Model A] and Visa \cite{2022VisaReport}, \cite{VisaHome} plotted on a logarithmic scale. The code is in Appendix C, \fref{Figure:ElectrictyConsumptionPlotCode}}
     \label{Figure:ElectricityConsumptionPlot}
 \end{figure}
-% ____________________________________________________________________________
-\subsection{Interpretation}
 
+PoS Ethereum has had a reduction of 99.997\% in its overall energy use when compared to PoW Ethereum's consumption average over 2022, going from 24.99TWh/year to 7.56kWh/year according to Model A(\cite{CCRIIndices}). This answers RQ2 - the claimed energy reduction of 99.988\% \cite{EthereumEthereum.orgb} is in fact accurate to 2 decimal places.
+
+According to \ref{Figure:ElectricityConsumptionPlot}, Visa could process 
+$\sim$156 transactions in the same electricity it takes PoS Ethereum to complete one. However, this comparison often drawn in the wider literature, is not a fair one as this article explains \cite{Carter2021BitcoinComparison}. The comparison to Visa as a traditional transactional system isn't a great one as ****
 
 % ____________________________________________________________________________
 \subsection{Verification and Evaluation}
