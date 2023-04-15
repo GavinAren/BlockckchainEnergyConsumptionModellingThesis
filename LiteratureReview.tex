@@ -80,7 +80,7 @@ During the pre-merge Proof-of-Work (PoW) era of Ethereum, \textbf{miners} compet
 % -_____________________________________________________________________________
 \section{Post-Merge PoS Ethereum}
 
-"The Merge", also known as the "Paris Upgrade", happened on 15$\mathrm{^{th}}$ September 2022. The Ethereum Blockchain switched from the older Proof of Work (PoW) to the Proof-of-Stake (PoS) consensus protocol. It was coined 'the Merge' as the Beacon Chain (a testing network) was merged with the original Ethereum network. Both networks now operate simultaneously in layers. The older Ethereum chain is now known as the 'execution' layer (EL), now secured by the PoS 'consensus' layer (CL), formerly known as the Beacon Chain. 
+"The Merge", also known as the "Paris Upgrade", happened on 15$\mathrm{^{th}}$ September 2022. The Ethereum Blockchain switched from the older Proof of Work (PoW) to the Proof-of-Stake (PoS) consensus protocol. It was coined 'the Merge' as the Beacon Chain (a test network) was merged with the original Ethereum network. Both networks now operate simultaneously in layers. The older Ethereum chain is now known as the 'execution' layer (EL), now secured by the PoS 'consensus' layer (CL), formerly known as the Beacon Chain. 
 
 The merge of the original chain with the Beacon Chain makes miners redundant. \textbf{Validator nodes} now secure the Ethereum network. 
 
@@ -112,11 +112,11 @@ Validators are expected to create, sign and then propagate their attestation to 
  **** once you have a node running, its not automatically a validator node
 ****reasons its good for the network if more poeple run a node, with which come energy consumption
  
-\paragraph{Staking ETH}
+\textbf{Staking ETH}
 
 There are many different ways to stake ETH as a validator, as not everyone has access to or is prepared to lock up 32 ETH for an indefinite period. To get past this high barrier of entry, users can opt for solo staking, staking-as-a-service, pooled staking or centralised exchanges using 3$\mathrm{^{rd}}$ parties. 
 
-Some of the risks that come with staking include the following:
+The rewards of running a validator node come with some risks including:
  % ***shorten this section, kee relevant bits
  
 \textbf{Slashing :}
@@ -125,13 +125,13 @@ This is when the algorithm destroys a portion of a validator's stake for behavin
 \textbf{Offline Penalty :}
 If a validator goes offline for a number of days, they incur losses roughly equivalent to what they would have gained had they remained online. 
 
-'The Merge' substituted Ethereum's security model's reliance on computational power to \textbf{economic power}, which are comparable in many ways. Malicious attackers need 51\% of the economic power of the entire Ethereum network instead of 51\% of the mining power for a successful attack. These severe economic punishments help to keep the network more secure than before while massively reducing the energy consumption of the network. 
- % -------
-\newline \newline
-Equally, there are many incentives to run a validator node. These include:
+'The Merge' switched Ethereum's security model from computational power to \textbf{economic power}, which are comparable in many ways. Malicious attackers now need 51\% of the economic power of the entire Ethereum network instead of 51\% of the mining power for a successful attack. These severe economic punishments help to keep the network more secure than before while massively reducing the energy consumption of the network. 
+ % ------- CAN BE CUT****
+% \newline \newline
+% Equally, there are many incentives to run a validator node. These include:
 
-\textbf{Block Proposer Rewards :}
-This is the reward for those validators chosen to propose the next block in a slot. When their block is finalised, they are rewarded with a substantial amount of ETH.
+% \textbf{Block Proposer Rewards :}
+% This is the reward for those validators chosen to propose the next block in a slot. When their block is finalised, they are rewarded with a substantial amount of ETH.
 
 % ----------------------------------------------------------------------
 
@@ -351,14 +351,23 @@ Another data-driven study collected and analysed publicly available data to deri
 \subsection{ Electricity Consumption of PoS Blockchains }
 \label{LitRevExistingModels}
 
+There is a large gap in the literature on this niche field of research. This section analyses the work done in this area and why it needs to be improved upon.
 
-Paper \cite{Powell2021AWARENESSBLOCKCHAIN} by Powell et al. aims to make recommendations for building greener blockchains. It applied pre-existing formulae from \cite{CambridgeCBECI} to calculate the energy consumption of Bitcoin and Ethereum 1.0, both of which employ PoW consensus. It did come up with a simple formula to calculate the energy 
-usage of the PoS consensus mechanism of the Polkadot blockchain: “Polkadot Energy Consumption = Energy per server * number of servers * 24 hours * 365 days” [27]. This equation could be included as a small part of the larger mathematical model this paper will create. Still, all research reviewed so far is too focused on PoW blockchains and specifically in the context of cryptocurrency. 
+A study by Powell et al., aimed at making recommendations for building greener blockchains, suggested a simple formula to calculate the energy of the Polkadot blockchain that employs PoS consensus \cite{Powell2021AWARENESSBLOCKCHAIN}. Their model was the first of its kind, and it follows: 
+\begin{align}
+   \boldsymbol{\mathrm{\text{Polkadot Energy Consumption } = }}
+   &\boldsymbol{\mathrm{\text{ Energy per server }* \text{ number of servers } } } \nonumber\\
+   &\boldsymbol{\mathrm{* \text{ 24 hours } *\text{ 365 days }}} \nonumber
+\end{align}
 
-A recent paper by UCL Centre for Blockchain Technologies \cite{PlattDiscussionProof-of-Work} successfully found a good mathematical relationship between validator number, load and hardware configuration when measuring the energy consumption of the PoS consensus protocol in isolation. It combines past literature, datasets from various sources, including the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} and public ledger information to avoid time-consuming investigation and experimentation, just like this paper aims to do. It builds upon the simple equation for PoS suggested by the last paper \cite{Powell2021AWARENESSBLOCKCHAIN}. 
+A recent study by UCL Centre for Blockchain Technologies \cite{PlattDiscussionProof-of-Work} built upon this equation by establishing a mathematical relationship between validator number, network load and hardware configuration to estimate the energy consumption of the PoS consensus protocol in isolation. Their approach was to build upon past literature using new data sets from various sources, including empirical data from CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} and other publicly available metrics while avoiding time-consuming first-hand experimentation, just like this report aims to do. 
 
-While its results are good, the paper only took validator nodes that are actively participating in the consensus protocol into account for its model, as it only aimed to model the consensus protocol’s energy usage in isolation. Thus, incomplete in its calculation of network-wide energy consumption by ignoring factors such as the 'Full Nodes' that aren't actively participating in validation transactions but just contribute to securing the blockchain, which is included in the model proposed in this report. It also relies on speculative assumptions as it was written before Ethereum’s upgrade to PoS consensus (now the world’s largest PoS blockchain). Hence, the most significant PoS blockchain was not included in its study.
+\begin{align}
+   \boldsymbol{\mathrm{\text{Energy Per Transaction} = }}
+   &\boldsymbol{\mathrm{\frac{\text{ Energy per Validator }* \text{ Number of Validators } }{\text{ Number of Transactions }}} } \nonumber\\ \nonumber
+\end{align}
 
+Their generalised model performs well for a few different PoS blockchains, with Ethereum being one of them. In fact, R3, a private company that run the Corda blockchain have also used the same equation to estimate its energy consumption \cite{JustBlog}. However, amidst this generalisation, the UCL study makes a critical mistake of not differentiating between validators (currently $\sim$500,000 \cite{EthereumEthereum.orgc}) and Full Nodes ($\sim$15,000 \cite{NodewatchAnalytics}). Their model only considers validators and estimates only the PoS consensus protocol’s energy usage in isolation. Thus, incomplete in its calculation of network-wide energy consumption by ignoring factors such as the 'Full Nodes' that aren't actively participating in forming consensus but greatly contribute to securing the blockchain. Such factors have not been ignored in the model proposed by this report. The UCL study also relies on speculative assumptions as it was written before Ethereum’s upgrade to PoS consensus (now the world’s largest PoS blockchain). Hence, the most significant PoS blockchain was not included in its study.
 
 
 \textbf{The CCRI Merge Paper } \cite{CryptoCarbonRatingsInstitute2022TheNetwork}
