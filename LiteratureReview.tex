@@ -369,6 +369,8 @@ A recent study by UCL Centre for Blockchain Technologies \cite{PlattDiscussionPr
 
 Their generalised model performs well for a few different PoS blockchains, with Ethereum being one of them. In fact, R3, a private company that run the Corda blockchain have also used the same equation to estimate its energy consumption \cite{JustBlog}. However, amidst this generalisation, the UCL study makes a critical mistake of not differentiating between validators (currently $\sim$500,000 \cite{EthereumEthereum.orgc}) and Full Nodes ($\sim$15,000 \cite{NodewatchAnalytics}). Their model only considers validators and estimates only the PoS consensus protocol’s energy usage in isolation. Thus, incomplete in its calculation of network-wide energy consumption by ignoring factors such as the 'Full Nodes' that aren't actively participating in forming consensus but greatly contribute to securing the blockchain. Such factors have not been ignored in the model proposed by this report. The UCL study also relies on speculative assumptions as it was written before Ethereum’s upgrade to PoS consensus (now the world’s largest PoS blockchain). Hence, the most significant PoS blockchain was not included in its study.
 
+The future work mentioned in the study is closely aligned with the focus of this report, which aims to build a more comprehensive model by incorporating additional factors and considering different node types.
+
 
 \textbf{The CCRI Study } 
 \label{CCRIModelLitRev}
@@ -385,7 +387,7 @@ Assumptions and shortcomings of this study:
     \item The electricity data was collected using computer software, but there is no information available on the type of power supply and mainboard used in the experiments. Therefore, the measurements only account for the electricity consumed by the computer itself and do not factor in the power draw 'At-Wall' or any electrical inefficiencies.
 \end{enumerate}
 
-The model proposed in this report builds upon the CCRI equation by addressing the first 2 shortcomings mentioned above. 
+The model proposed in this report builds upon the CCRI equation by addressing the former pair of shortcomings mentioned above. 
 
 
 

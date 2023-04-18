@@ -283,7 +283,7 @@ Minimum for Validator nodes & \begin{tabular}[c]{@{}l@{}}Dual Core Hyperthreaded
 \label{Table:RecommendedHardware}
 \end{table}
 
-A combination of hardware that closely matches the recommendation by Geth developers must be chosen to fulfil the aim of PoS Ethereum nodes being run on commodity hardware. Performing such data collection is out of the scope of this report. Due to the limited availability of empirical data on hardware running Ethereum after 'the Merge', the hardware configurations 4,5 and 6 in \fref{Figure:CCRIhardwareConfig} from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} are used. Using this data also helps draw fairer comparisons when evaluating Model A later on. 
+A combination of hardware that closely matches the recommendation by Geth developers must be chosen to fulfil the aim of PoS Ethereum nodes being run on commodity hardware. Due to the limited availability of empirical data on hardware running Ethereum after 'the Merge', the hardware configurations 4,5 and 6 in \fref{Figure:CCRIhardwareConfig} from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} are used. Using this data also helps draw fairer comparisons when evaluating Model A later on. 
 
 Synchronising energy: 
 For the first part of \eref{eqn:FinalEqnShort} denoted by $\boldsymbol{\mathrm{P}_{SNC}}$, no empirical data was available in the CCRI report about this synchronisation stage. Non-scientific data for synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$ for users employing varying combinations of hardware and EL clients can be found in \tref{Table:ELRunTime} of the appendix. This limited data is insufficient to differentiate between the sync times for all 4 clients but allows us to roughly estimate the average sync time on varying hardware configurations (relative to \fref{Figure:CCRIhardwareConfig})  in \tref{Table:SyncEnergy}. Geth was given a higher weighting in this estimation as used by  $\sim$ 70\% of the network. 
@@ -462,7 +462,7 @@ Annual electricity consumption of the network (running 1 validator each) per tra
 
 To include the fact that some nodes are running multiple validators, we implement the final part of \eref{eqn:FinalEqnShort}, calculating the $\boldsymbol{\mathrm{\overline{V}(\mathrm{x})}}$. 
 
-We know from \sref{AdditonalNodesReasoning} that mid-tier nodes can run upto 1000 nodes while high-tier nodes can run 2500+ nodes \cite{2021HardwareEthstaker} \cite{Kaushal2022ValidatingConference}. To use the exponential decrease in electricity consumption to their advantage, when users run additional validator nodes, they often run a minimum of 1000+. Since there are 561,472 validators, we assume that 1000+ additional validators are run by $\sim$562 nodes, using mid to high-tier hardware.   
+We know from \sref{AdditonalNodesReasoning} that mid-tier nodes can run upto 1000 nodes while high-tier nodes can run 2500+ nodes \cite{2021HardwareEthstaker} \cite{Kaushal2022ValidatingConference}. To use the exponential decrease in electricity consumption to their advantage, when users run additional validator nodes, they often run a minimum of 1000+. Since there are 561,472 validators, we assume that 1000 additional validators are run on $\sim$562 nodes, using mid to high-tier hardware.   
 
 $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ can be calculated from \tref{Table:SyncEnergy}: \textbf{205 Wh} \\
 $\boldsymbol{ \overline{\mathrm{V}}_{1}}$ calculated in \sref{postSyncEnergyImplementation} : \textbf{63.99 Wh} 
@@ -607,7 +607,7 @@ Results from the aforementioned models are presented in a comparable format in \
 % ____________________________________________________________________________
 \section{Evaluation and Discussion}
 
-\subsection{Interpretation and Discussion}
+\subsection{Interpretation}
 
 Being able to model the electricity consumption of PoS Ethereum successfully answers RQ1. The results produced by Model A are valid due to 2 main reasons:
 \begin{itemize}
@@ -624,27 +624,31 @@ Results from Model A (proposed in this report) are quite close to the CCRI model
 
 This suggests that running additional validators and accounting for synchronisation energy increases the energy estimates by 9.50\%. 9.25\% of it can be attributed to running multiple validators alone. This shows that the extra electricity consumed by taking $\sim$500000 validators into account was weighted correctly within the model as it didn't have a disproportionate effect on the final results. Thus, this was a hugely important factor which the other models left out. 
 
-The UCL model seems to be overestimating the consumption values. This can be attributed to the lack of complexity in their model as a result of generalising it for all PoS blockchains.
+The UCL model seems to be overestimating the consumption values. This can be attributed to the lack of complexity in their model as a result of generalising it for six PoS blockchains.
 
 \begin{figure}[!htb]
     \includegraphics[width=13cm,center]{Figures/ElectricityConsumptionPlot.png}
-    \caption{Energy consumption per transaction for Bitcoin \cite{BitcoinDigiconomist}, Ethereum 2.0 [from Model A] and Visa \cite{2022VisaReport}, \cite{VisaHome} plotted on a logarithmic scale. The code is in Appendix C, \fref{Figure:ElectrictyConsumptionPlotCode}}
+    \caption{2022 data on electricity consumption per transaction for Bitcoin \cite{BitcoinDigiconomist}, Ethereum 2.0 [from Model A] and Visa \cite{2022VisaReport}, \cite{VisaHome} plotted on a logarithmic scale. The code is in Appendix C, \fref{Figure:ElectrictyConsumptionPlotCode}}
     \label{Figure:ElectricityConsumptionPlot}
 \end{figure}
 
-PoS Ethereum has had a reduction of 99.997\% in its overall energy use when compared to PoW Ethereum's consumption average over 2022, going from 24.99TWh/year to 7.56kWh/year according to Model A(\cite{CCRIIndices}). This answers RQ2 - the claimed energy reduction of 99.988\% \cite{EthereumEthereum.orgb} is in fact accurate to 2 decimal places.
+PoS Ethereum has had a reduction of 99.997\% in its overall energy use when compared to PoW Ethereum's consumption average over 2022, going from 24.99TWh/year to 7.56kWh/year according to Model A(\cite{CCRIIndices}). This answers RQ2 - the claimed energy reduction of 99.988\% \cite{EthereumEthereum.orgb} is in fact accurate to 2 decimal places, shown in \fref{Figure:PaypalEthElectrciityPlot}.
 
 According to \ref{Figure:ElectricityConsumptionPlot}, Visa could process 
-$\sim$156 transactions in the same electricity it takes PoS Ethereum to complete one. However, this comparison often drawn in the wider literature, is not a fair one as this article explains \cite{Carter2021BitcoinComparison}. The comparison to Visa as a traditional transactional system isn't a great one as ****
+$\sim$156 transactions in the same electricity it takes PoS Ethereum to complete a single one. This often-made comparison is not one that is fair to make. Ethereum is a completely self-contained monetary system, whereas Visa relies on a range of intermediaries such as the global banking system, SWIFT and the diplomatic strength of the U.S. government \cite{Carter2021BitcoinComparison}. It is like comparing apples to kangaroos. Instead, Ethereum should be compared to Paypal, a platform that, along with digital payments, also offers other financial services and bank-like services.  
+
+\begin{figure}[!htb]
+    \includegraphics[width=13cm,center]{Figures/PaypalEthElectrcityPlot.png}
+    \caption{Electricity consumption per transaction for Ethereum 1.0 \cite{CCRIIndices}, \cite{EthereumBlockchair}, Ethereum 2.0 [from Model A] and Paypal \cite{2007IntroductionPayPal}. The code is in Appendix C, \fref{Figure:PaypalEthElectrciityPlotCode}}
+    \label{Figure:PaypalEthElectrciityPlot}
+\end{figure}
+
+\fref{Figure:PaypalEthElectrciityPlot} shows that Ethereum 2.0 is impressively close to Paypal's electricity consumption while maintaining decentralisation, according to Model A.
+
+
 
 % ____________________________________________________________________________
-\subsection{Verification and Evaluation}
-
-To verify Model A, other models found in the wider literature have been implemented using updated metrics. The results of my model should lie reasonably close to other models and any discrepencies must be explained. 
-
-
-% ____________________________________________________________________________
-\subsection{Discussion}
+\subsection{Limitations}
 *So I did it this way, could've been done another way. My method could've affected the results
 * self-reflection -> smaller factors not considered, maybe if I used a different group of numbers/users some other result would have been achieved, loopholes
 
@@ -658,7 +662,7 @@ Couldn't use API - may have affected the accuracy of data, could've been live da
 
 
 
-\section{Future Work}
+\subsection{Future Work}
 
 ***API wasnt ready, when it is, data0driven modelling could be pursued.
 
