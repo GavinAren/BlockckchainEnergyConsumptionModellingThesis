@@ -168,7 +168,7 @@ This finding can be explained by understanding Sharding and attestations(\sref{S
 
 Nodes that are not running validators will only subscribe to the gossip topics that push out aggregated votes. But with each validator that you run, they will first need to subscribe to gossip channels with aggregated attestations but occasionally also to gossip topics with unaggregated attestations if they're selected to aggregate the votes for that slot. Hence, up to 64 validators, validators are subscribing and processing more and more gossip messages but past this, there are no new gossip topics to subscribe to and the CPU usage and gossip messages per second level off, as shown in \fref{Figure:validatorIncrease}.
 
-We tried to replicate this behaviour using logarithmic functions and exponential decay functions. Through extended experimentation and applying prior knowledge, we found that the exponential decay function (increasing form), equat{eqn: ExpDecayGeneral} ref{eqn: ExpDecayGeneral}, most accurately matches the characteristics we are looking for because it increases at a slower rate at the beginning and then levels off as more validator clients are added to the node. This is consistent with \ref{Figure:validatorIncrease} that grows almost linearly until 64 validators, after which it levels off. The general equation is:
+We tried to replicate this behaviour using logarithmic functions and exponential decay functions. Through extended experimentation and applying prior knowledge, we found that the exponential decay function (increasing form), \eref{eqn: ExpDecayGeneral}, most accurately matches the characteristics we are looking for because it increases at a slower rate at the beginning and then levels off as more validator clients are added to the node. This is consistent with \ref{Figure:validatorIncrease} that grows almost linearly until 64 validators, after which it levels off.
 
 \begin{equation}
     \label{eqn: ExpDecayGeneral}
@@ -640,32 +640,26 @@ $\sim$156 transactions in the same electricity it takes PoS Ethereum to complete
 \begin{figure}[!htb]
     \includegraphics[width=13cm,center]{Figures/PaypalEthElectrcityPlot.png}
     \caption{Electricity consumption per transaction for Ethereum 1.0 \cite{CCRIIndices}, \cite{EthereumBlockchair}, Ethereum 2.0 [from Model A] and Paypal \cite{2007IntroductionPayPal}. The code is in Appendix C, \fref{Figure:PaypalEthElectrciityPlotCode}}
-    \label{Figure:PaypalEthElectrciityPlot}
+    \label{Figure:PaypalEthElectrcityPlot}
 \end{figure}
 
-\fref{Figure:PaypalEthElectrciityPlot} shows that Ethereum 2.0 is impressively close to Paypal's electricity consumption while maintaining decentralisation, according to Model A.
+\fref{Figure:PaypalEthElectrcityPlot} shows that Ethereum 2.0 is impressively close to Paypal's electricity consumption while maintaining decentralisation, according to Model A.
 
 
 
 % ____________________________________________________________________________
-\subsection{Limitations}
-*So I did it this way, could've been done another way. My method could've affected the results
-* self-reflection -> smaller factors not considered, maybe if I used a different group of numbers/users some other result would have been achieved, loopholes
+\subsection{Limitations and Future Work}
+\label{LimitationsFutureWork}
 
-All data comes from CCRI, couldn't have done such as accurate experiment myself.
+\textbf{Secondary data:} Data from the scientific experiment performed in the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} was used as it measured the precise metrics needed for this report. First-hand data collection was out of the scope of this report as the hardware required for mid and high-tier configurations would've cost $sim$£2500 while also requiring 23 days of simultaneously running all 3 nodes. However, no validator nodes were run in the experiment as staking 32ETH was infeasible and the additional electricity was viewed as negligible. While we have disproven this assumption by modelling data found from consistent but non-scientific sources, more work is needed on studying the effects of overloading nodes with thousands of additional validators. Moreover, the impact of this workload on different hardware configurations should also be considered so fewer assumptions are made. 
 
-Also all electricity values are from software within the computers. Hence are not 'at-wall' values which would really show how much electricity is being drawn from the national grid. Perhaps someone well versed in electrical engineering may be able to add some factor to the overall equation that adjusts for the dissipated energy and gets a more accurate estimation 'At-wall'.
+\textbf{Lack of data:} Due to the innovative nature of the research being conducted, there was a paucity of data available for analysis. Some of the improvements made upon the base model come from modelling non-scientific data; hence the model was implemented on averaged values to obtain a 'best guess' estimation. Through further scientific experimentation, high and low estimates can be found to obtain a range that the final results should lie within. 
 
-Couldn't use API - may have affected the accuracy of data, could've been live data, more precise data
+\textbf{Energy inefficiencies: } Electricity consumption data comes from monitoring software run on computers. Thus, these are not 'at-wall' values which truly show how much electricity is being drawn from the national grid, possibly due to voltage regulators that limit the power supply to the machine. This model could benefit from further work conducted by individuals well versed in electrical engineering that account for this dissipated energy, obtaining a more accurate estimation 'At-wall'.
+
+\textbf{Simulation and Prediction: } There is potential for future work in creating a computer-based simulation of this model or just on existing blockchain benchmarking software such as Hyperledger Caliper or Blockbench \cite{Aldweesh2020BenchmarkingApplications}. A more ambitious goal would be predicting energy consumption given different values for the factors included in the model, which would require curve-fitting \cite{IbanezTheExpansion}.
 
 % __________________________________________________________________________
-
-
-
-\subsection{Future Work}
-
-***API wasnt ready, when it is, data0driven modelling could be pursued.
-
 \section{Critical Evaluation}
 
 \subsection{Project Management Evaluation}
