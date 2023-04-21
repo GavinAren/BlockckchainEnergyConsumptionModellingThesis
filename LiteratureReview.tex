@@ -89,8 +89,9 @@ There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEth
 
 Full Nodes need to run both an EL and CL client and must have  synchronised with the latest version of the blockchain in order to interact with the blockchain. 
 
-\subsubsection{Validator Nodes}
-To participate in the validation of transactions, Full Nodes must run an additional validator client and put 32 ETH at stake (currently equivalent to £45000) as collateral. Validator nodes are responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. 
+\subsubsection{Validator Clients}
+\label{ValidatorsLitRev}
+To participate in the validation of transactions, Full Nodes must run an additional validator client and put 32 ETH at stake (currently equivalent to £45000) as collateral. Validator nodes are responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. Each Full Node can run multiple validator client instances, only limited by their computation and financial capacity.
 
 Blocks are 'forged' by validators at a fixed tempo in PoS Ethereum. Every 12-second time \textbf{'slot'}, a pseudo-randomly selected validator gets to forge a new block and broadcast it to the rest of the network. Validators can choose which transactions in their mempool they will include in their next block. Validator client software executes these transactions locally, proposing a state change (such as a change in account balances). Once it completes enough transactions to fill up a block (there is a gas limit per block), it proposes this signed 'beacon' block to all other validators over the consensus layer (CL) network. This block is also wrapped in other information such as rewards, slashings, and attestations, which are discussed later.
 
@@ -105,12 +106,8 @@ The algorithm judges each validator's actions and dishes out rewards and penalti
 
 
 \textbf{Attestations}
-
-Validators are expected to create, sign and then propagate their attestation to the rest of the network, every epoch. It aims to vote in favour or against the blocks proposed in a specific epoch. Attestations of the first and last block of the epoch are the most important as they help to retrieve each validator's view of the blockchain after each epoch. This information is combined to help the network reach consensus about which version of the blockchain to follow.
-
- ****explain why client diversity is important
- **** once you have a node running, its not automatically a validator node
-****reasons its good for the network if more poeple run a node, with which come energy consumption
+\label{attestationLitRev}
+Validators are expected to create, sign and then propagate their attestation to the rest of the network, every epoch. It aims to vote for or against the blocks proposed in a specific epoch. Attestations of the first and last block of the epoch are the most important as they help to retrieve each validator's view of the blockchain after each epoch. This information is combined to help the network reach consensus about which version of the blockchain to follow.
  
 \textbf{Staking ETH}
 
@@ -175,6 +172,7 @@ Some popular CL clients include Prysm, Lighthouse, Teku, Nimbus and Lodestar, wr
 The latest network shares of each of these EL and CL clients can be found in \tref{Table:ClientShares} in \sref{Modelling}.
 
 \textbf{Synchronisation} 
+\label{SyncLitRev}
 
 Synchronisation refers to a new node catching up to the latest version of the Ethereum Blockchain by retrieving the most up-to-date information. This is done by requesting data from peers. This data is cryptographically verified and used to build a local copy of the blockchain, treated as the single source of truth.
 
@@ -184,7 +182,7 @@ Many syncing modes exist, including Full, Snap, Fast and Light Sync.
 
 \textbf{Full Sync }independently verifies the block provenance by re-executing the transactions starting at the Genesis Block. However, only the latest 128 blocks are actually stored in the Full Node, along with a few checkpoints representing older blocks. 
 
-\textbf{Snap Sync }was developed by Geth developers(the prevailing EL client). It works similarly to a Full Sync, except it starts at a much more recent checkpoint to start its verification up to the front of the chain \cite{2022DeveloperGo-ethereum}.
+\textbf{Snap Sync }was developed by Geth developers (the prevailing EL client). It works similarly to a Full Sync, except it starts at a much more recent checkpoint to start its verification up to the front of the chain \cite{2022DeveloperGo-ethereum}.
 
 Synchronisation time varies depending on the client software chosen as well the node's hardware configuration. It is not uncommon for syncing times to range between 12 hours and 6 days (see Appendix B).
 % -_____________________________________________________________________________
