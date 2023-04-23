@@ -89,7 +89,7 @@ The final CCRI equation for the weighted electricity consumption of an average n
 \end{equation}
 \end{center}
 
-
+The CCRI model has been verified and is accurate. Thus, it is \textbf{assumed}  that it is an acceptable base model for 'Model A' to be built upon.
 % ____________________stage 1
 \textbf{Improvement 1 of 2: Adding the Synchronisation Energy} 
 
@@ -109,7 +109,7 @@ $\boldsymbol{\mathrm{P}_{Total}}$ is the total energy consumption of a CPU.\\
 $\boldsymbol{\mathrm{P}_{idle}}$ and $\boldsymbol{\mathrm{P}_{max}}$ denote the power consumption of the CPU in an idle state and under maximum load, respectively.\\
 $\boldsymbol{\mathrm{U}}$ varies between 0 and 1, with 1 representing the peak compute capacity of the CPU.
 
-To capture only the energy consumption of the syncing process, we assume the CPU to be operating at its maximum capacity, hence taking $\boldsymbol{\mathrm{U}}$ to equal 100\%, or $\boldsymbol{1}$ for the sake of simplicity. This negates the need for $\boldsymbol{\mathrm{P}_{idle}}$ to be included in the equation, leaving:
+To capture only the energy consumption of the syncing process, we \textbf{assume} the CPU to be operating at its maximum capacity, hence taking $\boldsymbol{\mathrm{U}}$ to equal 100\%, or $\boldsymbol{1}$ for the sake of simplicity. This negates the need for $\boldsymbol{\mathrm{P}_{idle}}$ to be included in the equation, leaving:
 
 \begin{equation*}
     \boldsymbol{\mathrm{P}_{Total} = {\mathrm{P}_{max}}}
@@ -140,7 +140,7 @@ Thus, the energy usage of an NVMe SSD actively in use [in Wh] needs to be accoun
     \boldsymbol{\mathrm{P}_{SSD} } 
 \end{equation*}
 
-Often, it takes days to complete the synchronisation process. EL clients take most of the synchronisation time while the CL client contributes a tiny fraction \cite{Ethereum/go-ethereum:Protocol}. Hence, we assume the time it takes to complete the synchronisation process can be solely attributed to the EL client [in hours], denoted by:
+Often, it takes days to complete the synchronisation process. EL clients take most of the synchronisation time while the CL client contributes a tiny fraction \cite{Ethereum/go-ethereum:Protocol}. Hence, we \textbf{assume} the time it takes to complete the synchronisation process can be solely attributed to the EL client [in hours], denoted by:
 \begin{equation*}
     \boldsymbol{\mathrm{T}_{EL}}
 \end{equation*}
@@ -207,13 +207,13 @@ This equation can be simplified by removing the $\boldsymbol{ + \mathrm{C}}$. It
 \end{equation}
 
 \label{DetermineK}
-Below is an example calculation to determine constant $\boldsymbol{\mathrm{k}}$ for a node with hardware configuration 6 (see in \fref{Figure:CCRIhardwareConfig}, \sref{ImplementationSection}). 
+Below is an example calculation to determine constant $\boldsymbol{\mathrm{k}}$ for a node with hardware configuration 6 (see in \tref{Table:CCRIhardwareConfig}, \sref{ImplementationSection}). 
 
-$\boldsymbol{\mathrm{C}} = \boldsymbol{\mathrm{150.20}} $W, assuming the node runs the most common CL and EL client combination, Prysm and Geth. Mean values are taken from  \cite{CryptoCarbonRatingsInstitute2022TheNetwork}.
+$\boldsymbol{\mathrm{C}} = \boldsymbol{\mathrm{150.20}} $W, \textbf{assuming} the node runs the most common CL and EL client combination, Prysm and Geth. Mean values are taken from  \cite{CryptoCarbonRatingsInstitute2022TheNetwork}.
 
 $\boldsymbol{\mathrm{A}} = \boldsymbol{\mathrm{280}}$W, the TDP rating for AMD 3970X \cite{AMDDatabase}. When subtracted by the $\boldsymbol{\mathrm{C}}$ value, it equals $\boldsymbol{\mathrm{129.80}}$W.
 
-$\boldsymbol{\mathrm{x}} $ can be set to $\boldsymbol{\mathrm{63}} $ additional validators, as the graph starts at 1 validator running already, totalling 64 validators. Furthermore, this can be equated to $\boldsymbol{\mathrm{0.9 * TDP} = 252}$W through the assumption that the CPU operates at just 10\% below its maximum capacity (TDP rating) at the 63$^\mathrm{{rd}}$ additional validator. Subtraction by $\boldsymbol{\mathrm{C}}$ to account for the upward translation discussed earlier results in $\boldsymbol{\mathrm{252-150.20 = 101.8}}$W. 
+$\boldsymbol{\mathrm{x}} $ can be set to $\boldsymbol{\mathrm{63}} $ additional validators, as the graph starts at 1 validator running already, totalling 64 validators. Furthermore, this can be equated to $\boldsymbol{\mathrm{0.9 * TDP} = 252}$W through the \textbf{assumption} that the CPU operates at just 10\% below its maximum capacity (TDP rating) at the 63$^\mathrm{{rd}}$ additional validator. Subtraction by $\boldsymbol{\mathrm{C}}$ to account for the upward translation discussed earlier results in $\boldsymbol{\mathrm{252-150.20 = 101.8}}$W. 
 
 \begin{equation*}
     \boldsymbol{\mathrm{129.8} * (1-\mathrm{e}^{-\mathrm{k}(\mathrm{63})}) = \mathrm{101.80}}
@@ -286,20 +286,20 @@ Through extensive data gathering, Model A, alongside 2 other models from the wid
 
 First, 3 hardware configurations were chosen, including a low, medium and high tier for running Full Nodes. Hardware configurations recommended for running the Geth EL client ($\sim$ 70\% network share) can be found in \tref{Table:RecommendedHardware}.
 
-\begin{figure}[htb!]
+\begin{table}[htb!]
     \centering
     \includegraphics[width=10cm,center]{Figures/CCRIhardwareConfigEdit.png}
-    \caption{Table adapted from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, showing 3 hardware configurations of a low, mid and high-tier node that were used in their experiment.}
-    \label{Figure:CCRIhardwareConfig}
-\end{figure}
+    \caption{Adapted from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, this table shows 3 of the 6 hardware configurations that were used in their experiment detailing a low, mid and high-tier node.}
+    \label{Table:CCRIhardwareConfig}
+\end{table}
 
-PoS Ethereum was aimed at being run on commodity hardware. Keeping this, as well as the hardware recommendations in \tref{Table:RecommendedHardware} in mind, 3 sets of hardware combinations need to be chosen for implementation of the model. Due to the limited availability of empirical data on hardware running PoS Ethereum, the hardware configurations 4,5 and 6 from \fref{Figure:CCRIhardwareConfig} are used. Using this data also helped draw fairer comparisons when evaluating Model A later on. 
+PoS Ethereum was aimed at being run on commodity hardware. Keeping this, as well as the hardware recommendations in \tref{Table:RecommendedHardware} in mind, 3 sets of hardware combinations need to be chosen for implementation of the model. Due to the limited availability of empirical data on hardware running PoS Ethereum, the hardware configurations 4,5 and 6 from \tref{Table:CCRIhardwareConfig} are used. Using this data also helped draw fairer comparisons when evaluating Model A later on. 
 
 \textbf{Step 1 - Average Sync Energy of a Node}
 
-No empirical data was available for implementing the first part of 'Model A', \eref{eqn:FinalEqnShort}, denoted by $\boldsymbol{\mathrm{P}_{SNC}}$. Non-scientific data gathered on the synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$ reported by users employing varying combinations of hardware and EL clients can be found in \tref{Table:ELRunTime} of the appendix. This data is limited and thus insufficient to differentiate between the sync times for the 4 major EL clients. However, it is sufficient to estimate the average sync time of varying tiers of node hardware (relative to \fref{Figure:CCRIhardwareConfig}), presented in \tref{Table:SyncEnergy}. Data on hardware running the Geth client was given a higher precedence due to its high network share ($\sim$ 70\%). 
+No empirical data was available for implementing the first part of 'Model A', \eref{eqn:FinalEqnShort}, denoted by $\boldsymbol{\mathrm{P}_{SNC}}$. Non-scientific data gathered on the synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$ reported by users employing varying combinations of hardware and EL clients can be found in \tref{Table:ELRunTime} of the appendix. This data is limited and thus insufficient to differentiate between the sync times for the 4 major EL clients. However, it is sufficient to estimate the average sync time of varying tiers of node hardware (relative to \tref{Table:CCRIhardwareConfig}), presented in \tref{Table:SyncEnergy}. Data collected on hardware running the Geth client was \textbf{assumed} to be more representative and given a higher weighting due to its high network share of $\sim$ 70\%. 
 
-Varying external factors affect a user's decision to choose the appropriate hardware for their node, ranging from different profit structures to low-budget devices and future-proof hardware. There is an immeasurable amount of hardware configurations that users could opt for. Thus, we model this distribution of the 3 categories of node hardware using a continuous distribution, particularly - the CDF (Cumulative distribution function) of the standard normal distribution. This distribution was divided into 3 parts; 25\% of the network is assumed to opt for the low-tier hardware (configuration 4), 50\% for the mid-tier (configuration 5) and 25\% for the high-tier hardware (configuration 6), presented in \tref{Table:SyncEnergy}. 
+Varying external factors affect a user's decision to choose the appropriate hardware for their node, ranging from different profit structures to low-budget devices and future-proof hardware. There is an immeasurable amount of hardware configurations that users could opt for. Thus, we model this distribution of the 3 categories of node hardware using a continuous distribution, particularly - the CDF (Cumulative distribution function) of the standard normal distribution. This distribution was divided into 3 parts; 25\% of the network is \textbf{assumed} to opt for the low-tier hardware (configuration 4), 50\% for the mid-tier (configuration 5) and 25\% for the high-tier hardware (configuration 6), presented in \tref{Table:SyncEnergy}. 
 
 \begin{table}[h]
 \centering
@@ -397,14 +397,14 @@ Nimbus (CL)          & \multicolumn{1}{l|}{1.67}       & \multicolumn{1}{l|}{2.0
 Lodestar(CL)         & \multicolumn{1}{l|}{3.14}       & \multicolumn{1}{l|}{3.89}       & 33.55      \\ \hline
 
 \end{tabular}
-\caption{Mean electricity consumption values [in Wh] measured in the report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} for hardware configurations 4-6 mentioned in \fref{Figure:CCRIhardwareConfig} running various clients.  }
+\caption{Mean electricity consumption values [in Wh] measured in the report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} for hardware configurations 4-6 mentioned in \tref{Table:CCRIhardwareConfig} running various clients.  }
 \label{Table:ConsumptionValues}
 \end{table}
 
-Given the data in \tref{Table:ConsumptionValues}, values in \tref{Table:EstimatesPerNode} can be calculated. For example, the first row (Prysm,Geth) was calculated by adding the electricity usage when idle, running Pyrsm, and running Geth per configuration, multiplied by its hardware tier distribution across the network.
+Given the data in \tref{Table:ConsumptionValues}, values in \tref{Table:EstimatesPerNode} were be calculated. For example, the first row (Prysm,Geth) was calculated by adding the electricity usage when idle, running Pyrsm, and running Geth per configuration, multiplied by its hardware tier distribution across the network, shown below:
 \begin{align}
     &\boldsymbol{0.25*(3.66 + 11.23 + 3.51) + 0.50 * (25.04 + 9.70 + 2.87) + 0.25} \nonumber\\
-    &\boldsymbol{* (78.17 + 47.70 + 24.33) = 69.96}\text{Wh} \nonumber
+    &\boldsymbol{* (78.17 + 47.70 + 24.33) = 60.96}\text{Wh} \nonumber
 \end{align}
 
 % -----------------------------------------
@@ -439,9 +439,9 @@ Given the data in \tref{Table:ConsumptionValues}, values in \tref{Table:Estimate
 \end{table}
 
 % -----------------------------------
-Following \eref{eqn:CCRI}, best guess for an individual node =  \textbf{63.76 Wh}. This can be annualised (assuming 8760h in a year) = \textbf{558.55 kWh/year}.
+Following \eref{eqn:CCRI}, best guess for an individual node =  \textbf{63.76 Wh}. This can be annualised (8760h in a year) = \textbf{558.55 kWh/year}.
 
-Assuming the node needs to perform a fresh synchronisation once a year, the annual total consumption of an average node (running 1 validator):
+\textbf{Assuming} the node needs to perform a fresh synchronisation once a year, the annual total consumption of an average node (running 1 validator):
 
 \begin{align}
     &\boldsymbol{ \mathrm{\overline{V}_{1}} + \mathrm{P}_{SNC} = \text{560.58 kWh/year or 63.99 Wh.}} \nonumber
@@ -452,9 +452,9 @@ Assuming the node needs to perform a fresh synchronisation once a year, the annu
 % --------------------------------------------------
 \textbf{ Step 3 - Running multiple validators on some nodes}
 
-To account for some nodes are running multiple validators, the final part of \eref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}(\mathrm{x})}}$ must be calculated. 
+Implementing the final part of \eref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}(\mathrm{x})}}$, accounts for some nodes running multiple validators. 
 
-To reiterate \sref{AdditonalNodesReasoning}, mid-tier nodes can run upto 1000 nodes while high-tier nodes can run 2500+ nodes \cite{2021HardwareEthstaker} \cite{Kaushal2022ValidatingConference}. When users run additional validator nodes, they often run a minimum of 1000+ validators, leveraging the exponential decrease in electricity consumption discussed before, to their advantage. Since there are currently 561,472 validators, for the sake of simplicity, it is assumed that 1000 additional validators are run on $\sim$562 nodes (of the total $\sim$12000 network nodes), and are running on mid to high-tier hardware. Following \eref{eqn:Sync}:
+When users run additional validator clients, they often run a 1000+ to take advantage of the exponential decrease in electricity consumption, seen in \sref{AdditonalNodesReasoning}. Currently, there are 561,472 validators running. Based on this, and for the sake of simplicity, it can be \textbf{assumed} that 1000 additional validators are run on $\sim$562 nodes (of the total $\sim$12000 network nodes), running on mid to high-tier hardware. Thus, following \eref{eqn:Sync} yields:
 
 $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ (from \tref{Table:SyncEnergy}): \textbf{205 Wh} \\
 $\boldsymbol{ \overline{\mathrm{V}}_{1}}$ (from \sref{postSyncEnergyImplementation}) : \textbf{63.99 Wh} 
@@ -467,19 +467,16 @@ $\boldsymbol{\mathrm{k}}$ can be calculated by the method shown in the example i
 
 Which solves to:
 \begin{equation*}
-    \boldsymbol{\mathrm{k} = \mathrm{{3.06096} * {10}^{-2}}}
+    \boldsymbol{\mathrm{k} = \mathrm{{3.061} * {10}^{-2}}}
 \end{equation*}
 
-Finally, $\boldsymbol{\mathrm{x}}$ can be set to \textbf{1000} additional validators for 562 of the total nodes on the network while the rest run no additional nodes.
+Once $\boldsymbol{\mathrm{k}}$ has been calculated, $\boldsymbol{\mathrm{x}}$ can be set to \textbf{1000} additional validators for 562 of the total nodes on the network while the rest run no additional nodes.
 \begin{center}
-    $\boldsymbol{\mathrm{\overline{V}(\mathrm{1000})}} =$ \textbf{141.1 Wh}
+    $\boldsymbol{\mathrm{\overline{V}(\mathrm{1000})}} =$ \textbf{141.10 Wh} \\
+ \textbf{141.10 $*$ 562 = 79.29 kWh}
 \end{center}
 
-The hourly consumption of the network will rise by $141.1 * 562 = $ \textbf{79.298 kWh}
-
-The new hourly consumption of the entire network: \textbf{862.66378 kWh} 
-
-Final results can be found in \tref{Table:FinalResults}.
+The new hourly consumption of the entire network: \textbf{862.66 kWh}. Final results are compiled in \tref{Table:FinalResults}.
 % The new hourly electricity consumption of a single node can be derived: \textbf{70.47} Wh
 % Annual electricity consumption of a single node: 617.30 kWh 
 % Annual electricity consumption of the network: 7.5569 GWh
@@ -489,22 +486,22 @@ Final results can be found in \tref{Table:FinalResults}.
 
 
 % ____________________________________________________________________________
-\subsubsection{Assumptions}
-\label{Assumptions}
+% \subsubsection{Additonal Assumptions}
+% \label{Assumptions}
 
-\begin{itemize}
-    \item They have taken the syncing on nodes into account into their model whereas for general modelling, it would be  abetter estimate to ignore this initial set up energy and get an avergae form then on. That is what this paper has done, taking averages of the Raspberry Pi rather than including the syncing energy.
-    \item The TDP + SSD power usage can be used as an upper limit for the electricity consumption of any hardware set-up
-    \item That growth for more than one validator can be modelled by an exponential decay (increasing form)
-    \item This exponential growth has an upper limit of TDP + SSD power usage and using the single validator energy consumption as the lower limit
-    \item Equation from CCRI gives an accurate estimation and is a good base for my equation
-    \item The EL and CL clients are not changed; just additional Validator clients are run on the same set up
-    \item 10\% lower than the TDP power should be reached by the time the 64$^\mathrm{{th}}$ validator is run.
-    \item Took averages of other EL layer clients per confirguration for NetherMind. not good.
-    \item All these numbers are for running a full node, not validators which sdmieler,2020 said is basically negligible
-    \item high, mid low tiers dont have a fair distribution of hardware but does help achieve more accurate results hopefully
-    \item for table \_\_ gave higher importance to Geth to estimate sync time as it has a much larger share of the network than the other EL clients
-\end{itemize}
+% \begin{itemize}
+    % \item They have taken the syncing on nodes into account into their model whereas for general modelling, it would be  abetter estimate to ignore this initial set up energy and get an avergae form then on. That is what this paper has done, taking averages of the Raspberry Pi rather than including the syncing energy.
+    % \item The TDP + SSD power usage can be used as an upper limit for the electricity consumption of any hardware set-up
+    % \item That growth for more than one validator can be modelled by an exponential decay (increasing form)
+    % \item This exponential growth has an upper limit of TDP + SSD power usage and using the single validator energy consumption as the lower limit
+%     \item The CCRI model has been verified and is accurate. Thus it is acceptable to use as the base for 'Model A'
+%     \item The EL and CL clients are not changed; just additional Validator clients are run on the same set up
+%     \item 10\% lower than the TDP power should be reached by the time the 64$^\mathrm{{th}}$ validator is run.
+%     \item Took averages of other EL layer clients per confirguration for NetherMind. not good.
+%     \item All these numbers are for running a full node, not validators which sdmieler,2020 said is basically negligible
+%     \item high, mid low tiers dont have a fair distribution of hardware but does help achieve more accurate results hopefully
+%     \item for table \_\_ gave higher importance to Geth to estimate sync time as it has a much larger share of the network than the other EL clients
+% \end{itemize}
 
 \subsection{Implementing other models}
 
@@ -521,13 +518,13 @@ The original version of this UCL model can be found in report \cite{Platt2022The
 
 \subsection{Results}
 \label{ResultsSection}
-Metrics as of 10$\mathrm{^{th}}$ April 23: \\
+Metrics recorded on 10$\mathrm{^{th}}$ April 2023: \\
 Number of nodes connected to Ethereum mainnet: \textbf{12242 nodes} \cite{NodewatchAnalytics} \\
 Number of transactions completed each day: \textbf{1074596 tx/day}  \cite{EthereumBlockchair} \\
 The number of validators on the network: \textbf{562729 validators} 
 \cite{EthereumEthereum.orgc}
 
-Results calculated using these metrics for each of the aforementioned models are presented in \tref{Table:FinalResults}.
+Using these metrics, results for each of the aforementioned models are presented in \tref{Table:FinalResults}.
 \clearpage
 % -----------------------------------------------
 % RESULTS  TABLEEEE
@@ -610,9 +607,9 @@ Results calculated using these metrics for each of the aforementioned models are
 
 Being able to model the electricity consumption of PoS Ethereum successfully answers RQ1. The results produced by Model A are valid due to 2 main reasons:
 \begin{itemize}
-    \item The aforementioned conditions for the model to produce valid results, detailed in the methodology section of this report (\ref{***}) have been met. 
+    \item The criteria mentioned in \sref{ModelEvalMEthodology} for producing a valid model have been met. 
     \begin{itemize}
-        \item Trusted sources well justify each conclusion or assumption drawn during the formulation of Model A and have also been well documented (\sref{Assumptions}).
+        \item Credible sources have been used to justify each conclusion or assumption made during the formulation of Model A. Each justification has been thoroughly documented and all 9 assumptions have been highlighted in the text using bold formatting.
         \item All data used during modelling was either from strict empirical sources or an average of an extensive collection of non-scientific sources.
     \end{itemize}
     \item The results of Model A lie between the only 2 other models found in the wider literature, thus lying in a 'reasonable' range.
@@ -631,9 +628,9 @@ The UCL model seems to be overestimating the consumption values. This can be att
     \label{Figure:ElectricityConsumptionPlot}
 \end{figure}
 
-PoS Ethereum has had a reduction of 99.997\% in its overall energy use when compared to PoW Ethereum's consumption average over 2022, going from 24.99TWh/year to 7.56kWh/year according to Model A(\cite{CCRIIndices}). This answers RQ2 - the claimed energy reduction of 99.988\% \cite{EthereumEthereum.orgb} is in fact accurate to 2 decimal places, shown in \fref{Figure:PaypalEthElectrciityPlot}.
+PoS Ethereum has had a reduction of 99.997\% in its overall energy use when compared to PoW Ethereum's consumption average over 2022, going from 24.99TWh/year to 7.56kWh/year according to Model A(\cite{CCRIIndices}). This answers RQ2 (\sref{ResearchQuestions}) - the claimed energy reduction of 99.988\% is only inaccurate by less than 0.01\% according to Model A, as shown in \fref{Figure:PaypalEthElectrcityPlot}.
 
-According to \ref{Figure:ElectricityConsumptionPlot}, Visa could process 
+According to \fref{Figure:ElectricityConsumptionPlot}, Visa can process 
 $\sim$156 transactions in the same electricity it takes PoS Ethereum to complete a single one. This often-made comparison is not one that is fair to make. Ethereum is a completely self-contained monetary system, whereas Visa relies on a range of intermediaries such as the global banking system, SWIFT and the diplomatic strength of the U.S. government \cite{Carter2021BitcoinComparison}. It is like comparing apples to kangaroos. Instead, Ethereum should be compared to Paypal, a platform that, along with digital payments, also offers other financial services and bank-like services.  
 
 \begin{figure}[!htb]
@@ -658,15 +655,6 @@ $\sim$156 transactions in the same electricity it takes PoS Ethereum to complete
 
 \textbf{Simulation and Prediction: } There is potential for future work in creating a computer-based simulation of this model or just on existing blockchain benchmarking software such as Hyperledger Caliper or Blockbench \cite{Aldweesh2020BenchmarkingApplications}. A more ambitious goal would be predicting energy consumption given different values for the factors included in the model, which would require curve-fitting \cite{IbanezTheExpansion}.
 
-% __________________________________________________________________________
-\section{Critical Evaluation}
-
-\subsection{Project Management Evaluation}
-
-Many different approaches to modelling were tried during the course of the project. Some include sensitivity analysis to check which parameters affect the overall electricity consumption the most when using the PoS consensus protocol \cite{MarionAnModelling}. Some data-driven modelling techniques explored included time series analysis and logistic regression \cite{IbanezTheExpansion} however, the 'The Merge' is a very recent event, and it was hard to obtain any meaningful data on it.  ***talk about the risk table
-
-The original plan of this project was to develop blockchain-based solutions for modelling drug supply chains, but it underwent multiple revisions. This was among the foreseen risks in opting for a blockchain-related topic as it is a relatively new technology. This risk was mitigated by following the pre-planned risk mitigation strategy found in in /ref**** in the appendix.
-
-I learnt that it is simple to understand a simplified model of a complex system; however, to be the one modelling it requires absolute subject-matter expertise. Deep knowledge of cryptocurrencies as well as the Ethereum protocol specifically, had to be acquired in order to expand to the pre-existing models meaningfully. 
+% _______________________________________________________________________
 
 \section{Key Points Covered}
