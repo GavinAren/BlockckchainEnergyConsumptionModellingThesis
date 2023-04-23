@@ -1,7 +1,44 @@
 \chapter {Methodology}
 *Have citations to show you methodology is legit
 
-\section {Defining Metrics}
+\section {Validation and Verification}
+
+\subsection{Quantitative}
+\label{MethoologyErrorQuant}
+The aim of a validation metric is to be able to assess the predictive capability of a mathematical model \cite{Kat2012ValidationError}. Metrics for comparison will be obtained by implementing other similar mathematical models. Most relative-error measures rely on true observed values to compare with a predicted value. However, since all models estimate the energy consumption of Ethereum, and there is no true value, selecting an appropriate quantitative error measure is challenging. 
+
+Alternatively, the magnitude error, which compares the relative orders of magnitude between two functions, could be used as a means of validating the results obtained. To calculate the magnitude error using \eref{eqn:ErrorMeasureEqn}, estimates from the only experimental model (CCRI base model) will be used as the true values $\boldsymbol{\mathrm{m}}$ while estimates from our 'Model A' will replace $\boldsymbol{\mathrm{p}}$ \cite{RussellErrorMeasure}. The suggested upper bound for acceptable results is $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$.
+
+\begin{align}
+\label{eqn:ErrorMeasureEqn}
+    &\boldsymbol{\epsilon_\mathrm{rme} = \mathrm{sign(rme)} * \log_{10} (1 + |\mathrm{rme}|)}
+    &\boldsymbol{ \mathrm{rme} = \mathrm{\frac{\mathrm{\sum\limits_{i=1}^{N} p_{i}^{2}} - \mathrm{\sum\limits_{i=1}^{N} m_{i}^{2}}}{\sqrt{\mathrm{\sum\limits_{i=1}^{N} p_{i}^{2}} * \mathrm{\sum\limits_{i=1}^{N} m_{i}^{2}}}}}}
+\end{align}
+
+% --------------------------------------------------------------------
+\subsection{Qualitative}
+\label{QualModelEvalMEthodology}
+ It would be a near-impossible task to successfully simulate the model proposed in this paper using a computer program without losing the main characteristics that are leveraged to build upon the existing CCRI model, such as the non-linear increase in electricity consumption when running additional validators on a single node. The model can be evaluated using some of the model verification techniques mentioned in a chapter \cite{Al-Aomar2015ModelTechniques} from the book 'Process Simulations'.
+
+\textbf{1. Thorough Examination of Model Inputs :}
+
+During the construction of the model, this will be done by solely relying on actual data rather than theories to ensure the credibility of this model. When verifying the model, input values for each part of the model will be obtained only from scientific sources where possible. Otherwise, anecdotal data from multiple sources must be averaged in order to be used in verifying the model. Validation of model inputs is done by making sure that they are:
+\begin{enumerate}
+    \item Correct
+    \item Relevant to the real-world system being modelled
+    \item Being used in the model similar to the way they would be used by the real-world system being modelled
+\end{enumerate}  
+
+
+\textbf{2. Detailed Documentation of Model Logic :}
+Thorough documentation on every design decision made during the construction of the model must be stated. Every decision made in this paper will be intuitively reinforced by domain-specific knowledge or data that was collected in a scientific manner. This is critical to the credibility of this model and helps any future work that may be undertaken on the model.
+
+Additionally, any assumptions made during the model formulation must be highlighted using bold formatting.
+
+
+\textbf{3. Thorough Examination of Model Outputs :}
+
+The model outputs must be checked for 'reasonableness under a variety of input parameters' \cite{Al-Aomar2015ModelTechniques}. Any discrepancies between Model-A and other models must be justified in the discussion section.   
 
 
 \section {Data Gathering}
@@ -24,40 +61,11 @@ Also need to add the syncing energy into the equation as it is not a short proce
 \section {Data-driven Approach To Modelling The Energy Consumption}
 
 \section {Modelling The Carbon Emissions }
-* Advice was to make the model, logcally make the equations, justify each assumption etc, then gather some data for it, apply the data see what output you get. Then implement other's models using this data. Finally compare results, say why your model was/was not accurate.
+* Advice was to make the model, logically make the equations, justify each assumption etc, then gather some data for it, apply the data see what output you get. Then implement other's models using this data. Finally compare results, say why your model was/was not accurate.
 
 \section {Implementing The Model}
 
 % ------------------------------------------------------------------
-% --------------------------------------------------------------------
-\section {Model Evaluation}
-\label{ModelEvalMEthodology}
- It would be a near-impossible task to successfully simulate the model proposed in this paper using a computer program without losing the main characteristics that are leveraged to build upon the existing CCRI model, such as the non-linear increase in electricity consumption when running additional validators on a single node. The model can be evaluated using some of the model verification techniques mentioned in a chapter \cite{Al-Aomar2015ModelTechniques} from the book 'Process Simulations'.
-
-\textbf{1. Thorough Examination of Model Inputs :}
-
-During the construction of the model, this will be done by solely relying on actual data rather than theories to ensure the credibility of this model. When verifying the model, input values for each part of the model will be obtained only from scientific sources where possible. Otherwise, anecdotal data from multiple sources must be averaged in order to be used in verifying the model. Validation of model inputs is done by making sure that they are:
-\begin{enumerate}
-    \item Correct
-    \item Relevant to the real-world system being modelled
-    \item Being used in the model similar to the way they would be used by the real-world system being modelled
-\end{enumerate}  
-
-
-\textbf{2. Detailed Documentation of Model Logic :}
-Thorough documentation on every design decision made during the construction of the model must be stated. Every decision made in this paper will be intuitively reinforced by domain-specific knowledge or data that was collected in a scientific manner. This is critical to the credibility of this model and helps any future work that may be undertaken on the model.
-
-Additionally, any assumptions made during the formulation of the model must be highlighted using bold formatting.
-
-
-\textbf{3. Thorough Examination of Model Outputs :}
-
-The model outputs must be checked for 'reasonableness under a variety of input parameters' \cite{Al-Aomar2015ModelTechniques}. This paper will implement 2 existing models (CCRI and UCL model) with updated metrics and check if the model proposed outputs reasonably close values. Any discrepancies between these model outputs must be justified in the discussion section.   
-
-
-
-
-\section {Contextualising The Model In A Use Case}
 
 \section {Project Management}
 *must be done right here, not later

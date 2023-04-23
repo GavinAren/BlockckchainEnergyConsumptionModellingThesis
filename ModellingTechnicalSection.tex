@@ -184,7 +184,7 @@ Storage space was falsely expected to be a limiting factor to the increasing num
 
 As expected, a linear correlation can be seen between the increasing additional validators and the CPU usage, but only up to $\sim$65 validators. However, after the 60-70 validator range, the CPU usage and the gossip messages per second level off and seem unaffected by the steadily increasing validators. 
 
-This finding can be explained by understanding committees in attestations( \sref{attestationLitRev}). In each epoch (32 slots), 32 randomly selected block proposers propose one block per slot. The remaining validators are not only assigned to one of 64 voting committees of one of the 32 slots that they need to attest to (vote on a new block's validity). Each of these committees publish their attestations into separate gossip topics. Unaggregated votes from these committees are aggregated and pushed out on specific gossip channels by certain validators chosen to do so. 
+This finding can be explained by understanding committees in attestations (\sref{attestationLitRev}). In each epoch (32 slots), 32 randomly selected block proposers propose one block per slot. The remaining validators are not only assigned to one of 64 voting committees of one of the 32 slots that they need to attest to (vote on a new block's validity). Each of these committees publish their attestations into separate gossip topics. Unaggregated votes from these committees are aggregated and pushed out on specific gossip channels by certain validators chosen to do so. 
 
 Full Nodes that are not running validators will only subscribe to the gossip topics that push out aggregated votes. But with each new validator that is run, it subscribes to a new gossip channel associated with the committee it joins that has unaggregated votes. As there are 64 committees per slot, up to 63 additional validators, the node has to subscribe to and process more gossip messages. However, past this, there are no new gossip topics left to subscribe to, and the CPU usage and rate gossip messages per second levels off, as shown in \fref{Figure:validatorIncrease}.
 
@@ -297,7 +297,7 @@ PoS Ethereum was aimed at being run on commodity hardware. Keeping this, as well
 
 \textbf{Step 1 - Average Sync Energy of a Node}
 
-No empirical data was available for implementing the first part of 'Model A', \eref{eqn:FinalEqnShort}, denoted by $\boldsymbol{\mathrm{P}_{SNC}}$. Non-scientific data gathered on the synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$ reported by users employing varying combinations of hardware and EL clients can be found in \tref{Table:ELRunTime} of the appendix. This data is limited and thus insufficient to differentiate between the sync times for the 4 major EL clients. However, it is sufficient to estimate the average sync time of varying tiers of node hardware (relative to \tref{Table:CCRIhardwareConfig}), presented in \tref{Table:SyncEnergy}. Data collected on hardware running the Geth client was \textbf{assumed} to be more representative and given a higher weighting due to its high network share of $\sim$ 70\%. 
+No empirical data was available for implementing the first part of 'Model A', \eref{eqn:FinalEqnShort}, denoted by $\boldsymbol{\mathrm{P}_{SNC}}$. Non-scientific data gathered on the synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$, reported by users employing varying combinations of hardware and EL clients, can be found in \tref{Table:ELRunTime} of the appendix. This data is limited and thus insufficient to differentiate between the sync times for the 4 major EL clients. However, it is sufficient to estimate the average sync time of varying tiers of node hardware (relative to \tref{Table:CCRIhardwareConfig}), presented in \tref{Table:SyncEnergy}. Data collected on hardware running the Geth client was \textbf{assumed} to be more representative and given a higher weighting due to its high network share of $\sim$ 70\%. 
 
 Varying external factors affect a user's decision to choose the appropriate hardware for their node, ranging from different profit structures to low-budget devices and future-proof hardware. There is an immeasurable amount of hardware configurations that users could opt for. Thus, we model this distribution of the 3 categories of node hardware using a continuous distribution, particularly - the CDF (Cumulative distribution function) of the standard normal distribution. This distribution was divided into 3 parts; 25\% of the network is \textbf{assumed} to opt for the low-tier hardware (configuration 4), 50\% for the mid-tier (configuration 5) and 25\% for the high-tier hardware (configuration 6), presented in \tref{Table:SyncEnergy}. 
 
@@ -310,11 +310,11 @@ Low    & 36 & 28  & 3.5 & 25 \\ \hline
 Medium & 24 & 65  & 8.5 & 50 \\ \hline
 High   & 12 & 280 & 10  & 25 \\ \hline
 \end{tabular}
-\caption{This table collects the data used in implementing the  $\boldsymbol{\mathrm{P}_{SNC}}$ part of 'Model A'.  $\boldsymbol{\mathrm{P}_{TDP}}$ source: \cite{IntelFAQs}, \cite{AMDDatabase}. $\boldsymbol{\mathrm{P}_{SSD}}$ source: \cite{RachanaKhamamkar2020AnalyzingDrives}.}
+\caption{Data used to implement the  $\boldsymbol{\mathrm{P}_{SNC}}$ part of 'Model A'.  $\boldsymbol{\mathrm{P}_{TDP}}$ source: \cite{IntelFAQs}, \cite{AMDDatabase}. $\boldsymbol{\mathrm{P}_{SSD}}$ source: \cite{RachanaKhamamkar2020AnalyzingDrives}.}
 \label{Table:SyncEnergy}
 \end{table} 
 
-Given the data in \tref{Table:SyncEnergy}, the $\boldsymbol{\mathrm{P}_{SNC}}$ for an average node can be calculated by following its \eref{eqn:Sync}. Each hardware tier's values are multiplied by its network distribution share: 
+Given \tref{Table:SyncEnergy}, the $\boldsymbol{\mathrm{P}_{SNC}}$ for an average node can be calculated by following its \eref{eqn:Sync}. Each hardware tier's values are multiplied by its network distribution share: 
 \begin{align}
     &\boldsymbol{0.25*(36*(28 + 3.5)) + 0.5*(24*(65+8.5)) + 0.25*(12*(280+10))} \nonumber\\ \nonumber \\
     &\boldsymbol{{\mathrm{P}_{SNC}} = 2035.5} \text{ Wh per node} \nonumber
@@ -616,9 +616,11 @@ Being able to model the electricity consumption of PoS Ethereum successfully ans
     \item Model A builds upon the CCRI model through the addition
 \end{itemize}
 
-Results from Model A (proposed in this report) are quite close to the CCRI model, with a slight increase in Model A's results. Model A accounts for 2 more sources of energy expenditure as compared to the base CCRI model, which explains the average increase of 9.5\% across all values. 
+Model A accounts for 2 more sources of energy expenditure as compared to the base CCRI model, which explains the average Percentage Increase(PE) of 9.5\% across all values. 9.25\% of it can be attributed to running multiple validators, suggesting that the extra electricity consumed by accounting for $\sim$500000 extra validators was weighted reasonably as it didn't have a disproportionate effect on our final results. 
 
-This suggests that running additional validators and accounting for synchronisation energy increases the energy estimates by 9.50\%. 9.25\% of it can be attributed to running multiple validators alone. This shows that the extra electricity consumed by taking $\sim$500000 validators into account was weighted correctly within the model as it didn't have a disproportionate effect on the final results. Thus, this was a hugely important factor which the other models left out. 
+As explained in \sref{MethoologyErrorQuant}, for the results to be satisfactory, the $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$. Using the most comparable values, energy for the entire network per transaction, the $\boldsymbol{\epsilon_\mathrm{rme} = 7.96 * 10^{-2}}$, thus, acceptable.
+
+%  estimates from the only experimental model (CCRI base model) will be used as the true values $\boldsymbol{\mathrm{m}}$ while estimates from our 'Model A' will replace $\boldsymbol{\mathrm{p}}$ \cite{RussellErrorMeasure}. The suggested upper bound for acceptable results is $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$.
 
 The UCL model seems to be overestimating the consumption values. This can be attributed to the lack of complexity in their model as a result of generalising it for six PoS blockchains.
 
