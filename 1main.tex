@@ -23,36 +23,37 @@
 }
 \newcolumntype{"}{@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}}
 \makeatother
-\usepackage{amsmath}
-\usepackage{flushend}
 
 %% ----------------------------------------------------------------
 %% --------------------THESIS/DOC INFORMATION ---------------------
-\department  {School of Electronics and Computer Science}
+\department  {Electronics and Computer Science}
 \DEPARTMENT  {\MakeUppercase{\deptname}}
 \faculty     {Faculty of Engineering and Physical Science}
 \FACULTY     {\MakeUppercase{\facname}}
-\title      {Understanding the Energy Implications of Proof-Of-Stake Blockchains: A Modelling Approach}
-
+\title      {Understanding the Energy Implications of the Proof-Of-Stake Ethereum Blockchain: A Modelling Approach}
+\date       {May 2, 2023}
 \authors    {Gavin Aren} 
 \supervisor {Dr Age Chapman}
 \addresses  {\groupname\\\deptname\\\univname}
-\date       {May 2023}
- 
+
+\usepackage{ragged2e}
 \begin{document}
 %% ------------------ FRONT MATTER ORGANISATION -------------------
 \pagenumbering{gobble} % removes page number
-\copyrightDeclaration{} % !!! Comment this line when printing the hardcopy !!!
-\justify                  %% Set the style to Left justification
+% \copyrightDeclaration{} % !!! Comment this line when printing the hardcopy !!!
+
+\justifying                  %% Set the style to Left justification
 % ________________________________
 % Edited statement of originality
 \frontmatter
 \maketitle
 
 \begin{abstract}
-    This is the abstract. rather short I guess
+% High energy consumption has become synonymous with cryptocurrency mining in recent times.
+    The severe environmental impacts of blockchain technology have become a roadblock to its widespread adoption.  Ethereum, the world's second-largest cryptocurrency, recently switched to a far less computationally intensive consensus mechanism that claims to reduce its energy consumption by over 99\%. Although existing approaches mathematically model parts of the system to try to understand its energy implications, integrating further factors is necessary to produce more accurate estimations. This study presents a new enhanced model to estimate the electricity consumption of Proof-of-Stake Ethereum. Rather than using a purely data-driven approach, this study relies on prior domain knowledge to propose an enhanced mathematical model estimating the electricity consumption of the new Proof Of Stake Ethereum blockchain.   
 \end{abstract}
-% _______________________________________________
+% ___________________________________________,__,__,_
+% \authorshipdeclaration
 \tableofcontents
 \listoffigures
 \listoftables

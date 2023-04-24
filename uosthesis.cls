@@ -92,16 +92,19 @@
 \renewcommand{\chaptermark}[1]{\btypeout{\thechapter.\space #1}\markboth{\chaptername\ \thechapter.\hspace{1em}#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection.\hspace{1em}#1}}
 \renewcommand{\subsectionmark}[1]{}
+
+
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
-\hbox{}
-\thispagestyle{empty}
-\newpage
+%\hbox{}
+%\thispagestyle{empty}
+%\newpage
 \if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \def\cleartoeven{\clearpage\if@twoside \ifodd\c@page
-\hbox{}
-\thispagestyle{empty}
-\newpage
+%\hbox{}
+%\thispagestyle{empty}
+%\newpage
 \if@twocolumn\hbox{}\newpage\fi\fi\fi}
+
 %% -------------------- Figure/Table/Eq/Listing Stying --------------------
 %% Set the styling for non text elements of the document
 \usepackage{amsmath,amsfonts,amssymb,amscd,amsthm,xspace}
@@ -220,12 +223,9 @@
       \setlength{\parskip}{0pt}
       {\scshape\LARGE\textbf{\univname}\par}
       %% TODO: Change all the descriptions to italic like the Thesis one
-      \bigskip
+      % \bigskip
       {\large \facname \par}
       {\large \deptname \par}
-      \vfill
-      {\huge \bf \@title \par
-}
       % \ifthenelse{\equal{\doicode}{}}
       % {}
       % {\smallskip DOI: \href{http://doi.org/\doicode}{\doicode}\par}
@@ -233,31 +233,39 @@
       % {}
       % {\smallskip Volume \volno{} of \volof}
       \vfill
-      {\LARGE \textit{by} \par}
-      \smallskip
+
       {\LARGE \textbf\authornames
         \ifthenelse{\equal{\quals}{}}
         {}
         {\par\Large
         \quals}
       \par}
+      \bigskip
+    {\large \@date \par}
+      \smallskip
         \ifthenelse{\equal{\orcid}{}}
         {}
-        {\smallskip
-        ORCiD: \href{http://orcid.org/\orcid}{\orcid}}
-
+        % {\smallskip
+        % ORCiD: \href{http://orcid.org/\orcid}{\orcid}}
+\bigskip
+\bigskip
+\bigskip
+      {\huge \bf \@title \par
+}
         \vfill
-    {\large \textit{A Part III project report for the award of} \par}
+        \bigskip
+    {\large {Project supervisor: Dr Age Chapman} \par}
+    {\large {Second examiner: Dr Mohammad Soorati} \par} 
+        \bigskip
+        \bigskip
+        \bigskip
+        \bigskip
+    {\large \textit{A project report submitted for the award of} \par}
       {\large \textit{MEng Computer Science} \par}
-        \bigskip
-        \bigskip
-        \bigskip
-    {\large \textbf{Supervisor: Dr Age Chapman} \par}
-    {\large \textbf{Second Examiner: Dr Mohammad Soorati} \par} 
       \bigskip
       \bigskip
-      \bigskip
-      {\Large \@date \par}
+      % \bigskip
+      % {\Large \@date \par}
       \bigskip
     \end{center}
     \par
@@ -290,7 +298,7 @@
     {\textsc\normalsize \facname \par}
     {\textsc\normalsize \deptname \par}
     \bigskip
-    {\normalsize \underline{Doctor of Philosophy}\par}
+    {\normalsize \underline{A project report submitted for the award of MEng Computer Science}\par}
     \bigskip
     {\normalsize\bf \@title \par}
     \medskip

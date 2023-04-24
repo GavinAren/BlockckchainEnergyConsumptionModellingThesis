@@ -1,8 +1,7 @@
 \chapter{Literature Review}
 % -_____________________________________________________________________________
 
-\section{Goals And Methodology}
-This project aims to find the
+This section introduces the basics of Ethereum and blockchains to the reader before acquainting them with the current state of research in the field.
 
 % -_____________________________________________________________________________
 
@@ -303,7 +302,7 @@ Observations must be turned into mathematical equations, but this can be challen
     \item What are all the possible states of the system, and how it changes over time
 \end{itemize}
 
-This report uses the microscopic details of the Ethereum protocol (how attestations are handled) to model its macroscopic effects at scale (increase in overall energy usage). 
+This study uses the microscopic details of the Ethereum protocol (how attestations are handled) to model its macroscopic effects at scale (increase in overall energy usage). 
 
 
 
@@ -319,7 +318,7 @@ This report uses the microscopic details of the Ethereum protocol (how attestati
 
 This section aims to analyse a wide range of papers on the topic of electricity consumption of blockchain. The steps for a structured literature review laid out by \cite{Crosby2015BlockChainBitcoin} are loosely followed. 
 
-Most papers in this niche field of research emphasise Bitcoin and PoW cryptocurrencies. It shows a clear gap in the literature for more work to be done on modelling the electricity consumption of non-PoW blockchains, as this report intends to do.
+Most papers in this niche field of research emphasise Bitcoin and PoW cryptocurrencies. It shows a clear gap in the literature for more work to be done on modelling the electricity consumption of non-PoW blockchains, as this study intends to do.
 % -_____________________________________________________________________________
 
 Paper \cite{Sedlmeir2020TheMyth} attributes almost all the energy consumed by PoW blockchains to the PoW consensus mechanism alone. The other factors contribute a negligible amount of electricity in comparison. However, estimating the electricity consumption of blockchain consensus mechanisms can be challenging due to the scarcity of accurate information on the number of network participants and their hardware configurations. The same study also confirms that Proof-of-Work (PoW) blockchains consume a disproportionate amount of electricity relative to the actual utility they offer. When comparing PoW electricity estimates to those of non-PoW blockchains, the results were several orders of magnitude lower for non-PoW blockchains \cite{Sedlmeir2020TheMyth}. Due to non-PoW consensus algorithms having such a small energy footprint, the energy consumption of a non-PoW blockchain cannot solely be attributed to its consensus algorithm but also to a range of other factors that come with having a large decentralised network. Studies in this area are sparse and are discussed in section ****. 
@@ -358,16 +357,16 @@ A study by Powell et al., aimed at making recommendations for building greener b
    &\boldsymbol{\mathrm{* \text{ 24 hours } *\text{ 365 days }}} \nonumber
 \end{align}
 
-A recent study by UCL Centre for Blockchain Technologies \cite{PlattDiscussionProof-of-Work} built upon this equation by establishing a mathematical relationship between validator number, network load and hardware configuration to estimate the energy consumption of the PoS consensus protocol in isolation. Their approach was to build upon past literature using new data sets from various sources, including empirical data from CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} and other publicly available metrics while avoiding time-consuming first-hand experimentation, just like this report aims to do. 
+A recent study by UCL Centre for Blockchain Technologies \cite{PlattDiscussionProof-of-Work} built upon this equation by establishing a mathematical relationship between validator number, network load and hardware configuration to estimate the energy consumption of the PoS consensus protocol in isolation. Their approach was to build upon past literature using new data sets from various sources, including empirical data from CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} and other publicly available metrics while avoiding time-consuming first-hand experimentation, just like this study aims to do. 
 
 \begin{align}
    \boldsymbol{\mathrm{\text{Energy Per Transaction} = }}
    &\boldsymbol{\mathrm{\frac{\text{ Energy per Validator }* \text{ Number of Validators } }{\text{ Number of Transactions }}} } \nonumber\\ \nonumber
 \end{align}
 
-Their generalised model performs well for a few different PoS blockchains, with Ethereum being one of them. In fact, R3, a private company that run the Corda blockchain have also used the same equation to estimate its energy consumption \cite{JustBlog}. However, amidst this generalisation, the UCL study makes a critical mistake of not differentiating between validators (currently $\sim$500,000 \cite{EthereumEthereum.orgc}) and Full Nodes ($\sim$15,000 \cite{NodewatchAnalytics}). Their model only considers validators and estimates only the PoS consensus protocol’s energy usage in isolation. Thus, incomplete in its calculation of network-wide energy consumption by ignoring factors such as the 'Full Nodes' that aren't actively participating in forming consensus but greatly contribute to securing the blockchain. Such factors have not been ignored in the model proposed by this report. The UCL study also relies on speculative assumptions as it was written before Ethereum’s upgrade to PoS consensus (now the world’s largest PoS blockchain). Hence, the most significant PoS blockchain was not included in its study.
+Their generalised model performs well for a few different PoS blockchains, with Ethereum being one of them. In fact, R3, a private company that run the Corda blockchain have also used the same equation to estimate its energy consumption \cite{JustBlog}. However, amidst this generalisation, the UCL study makes a critical mistake of not differentiating between validators (currently $\sim$500,000 \cite{EthereumEthereum.orgc}) and Full Nodes ($\sim$15,000 \cite{NodewatchAnalytics}). Their model only considers validators and estimates only the PoS consensus protocol’s energy usage in isolation. Thus, incomplete in its calculation of network-wide energy consumption by ignoring factors such as the 'Full Nodes' that aren't actively participating in forming consensus but greatly contribute to securing the blockchain. Such factors have not been ignored in the model proposed by this study. The UCL study also relies on speculative assumptions as it was written before Ethereum’s upgrade to PoS consensus (now the world’s largest PoS blockchain). Hence, the most significant PoS blockchain was not included in its study.
 
-The future work mentioned in the study is closely aligned with the focus of this report, which aims to build a more comprehensive model by incorporating additional factors and considering different node types.
+The future work mentioned in the study is closely aligned with the focus of this study, which aims to build a more comprehensive model by incorporating additional factors and considering different node types.
 
 
 \textbf{The CCRI Study } 
@@ -382,10 +381,10 @@ Assumptions and shortcomings of this study:
     
     \item Other node types, such as Light and Archive Nodes, were not considered, presumably due to assuming that they would have negligible effects.
 
-    \item The electricity data was collected using computer software, but there is no information available on the type of power supply and mainboard used in the experiments. Therefore, the measurements only account for the electricity consumed by the computer itself and do not factor in the power draw 'At-Wall' or any electrical inefficiencies.
+    \item The electricity data was collected using computer software, but there is no information available on the type of power supply and mainboard used in the experiments. Therefore, the measurements only account for the electricity consumed by the computer itself and do not factor in the power draw 'At-Wall' or any electrical inefficiencies. \cite{Warkozek2012ACenters}
 \end{enumerate}
 
-The model proposed in this report builds upon the CCRI equation by addressing the former pair of shortcomings mentioned above. 
+The model proposed in this study builds upon the CCRI equation by addressing the former pair of shortcomings mentioned above. 
 
 
 
@@ -393,11 +392,11 @@ The model proposed in this report builds upon the CCRI equation by addressing th
 
 
 % Quick intro on AVX operations, what is TDP and why that is the upper limit of CPU power consumption
-AVX instructions enable the processor to perform multiple floating-point operations at the same time, resulting in faster computation and improved performance. \cite{Schuchart2016TheScale}
+% AVX instructions enable the processor to perform multiple floating-point operations at the same time, resulting in faster computation and improved performance. \cite{Schuchart2016TheScale}
 
 % ______________________________________________________________________________
 % -_____________________________________________________________________________
 
 % __________________________________________________________________________________________-
 
-\section{Key Points Covered}
+% \section{Key Points Covered}

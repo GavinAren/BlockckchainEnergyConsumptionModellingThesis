@@ -1,31 +1,25 @@
 \chapter{Introduction}
-\url{https://mycelium.xyz/research/environmental-and-societal-impact-of-blockchain}
-\section{Motivations}
+
+\section{Problem}
+In recent times, cryptocurrencies like Bitcoin have become synonymous with high energy consumption, which is the motivation for this project. Bitcoin consumes more energy than large countries like Belgium and has an annual carbon footprint of 55 MtCO2. This has serious ramifications for the environment \cite{BitcoinDigiconomist}. Its biggest competitor, Ethereum, has reduced its estimated energy consumption by 99\% by switching to a Proof-of-Stake (PoS) consensus mechanism, which is far less energy intensive. If a large blockchain like Ethereum, which hosts 70\% of all blockchain projects, can switch to using much less energy-intensive mechanisms, then studying it is extremely important and will help pave the way for other blockchains. 
+
+\subsection{Current State}
+While this is a new and topical research area, most studies model PoW Bitcoin, ignoring non-Proof-of-Work alternatives like Ethereum 2.0 \cite{Lei2021BestRecommendations}. The occasional models for PoS blockchains that do exist in the literature are outdated and need to incorporate contemporary blockchains. 
+
+\section{Goals}
+This study aims to create a mathematical model specifically to estimate the energy consumption of PoS Ethereum. This will rely on understanding Ethereum deeply and applying this knowledge to accredit energy to different contributing factors more accurately to produce better results than any other model. This model will help answer research questions in \sref{ResearchQuestions}. Additionally, other similar models in the field will be implemented for comparison.
 
 \subsection{Research Questions}
 \label{ResearchQuestions}
-\textbf{RQ1} - Using electricity consumption as a proxy of environmental impact, what is the environmental impact of Ethereum 2.0's Proof-of-Stake protocol in comparison to its previous Proof-of-Work protocol and other traditional transactional systems?
+\textbf{RQ1} - Using electricity consumption as a proxy of environmental degradation, what is the environmental impact of Ethereum 2.0's Proof-of-Stake protocol compared to its previous Proof-of-Work protocol and other traditional transactional systems?
 
-\textbf{RQ2} - The Ethereum website claims that this switch to the Proof-of-Stake protocol reduces its electricity consumption by 99.988\%. How accurate is this figure?
+\textbf{RQ2} - Official Ethereum sources claim that this switch to the Proof-of-Stake protocol reduces its electricity consumption by 99.988\% \cite{EthereumEthereum.orgc}. How accurate is this figure?
 
-\subsection{Motivation}
+\section{Scope}
+Creating such a model will require in-depth exploration of all blockchain energy modelling studies and, more specifically, PoS blockchains. Owing to the novelty of this research area, the limited availability of data considerably constrains the project's scope. Next, exploring Ethereum's core concepts as well as the small amount of data available on the subject, will reveal which approach to modelling will work best.  
 
-Over 70\% of all blockchain projects are built on Ethereum (from infura Ethereum page)
-
-
-\section{Project Goals}
-\label{ProjectGoals}
-
-
-\subsection{Problem}
-
-\subsection{Project Goals}
-
-\subsection{Project Scope}
 
 \section{Novel Contributions}
+Obtaining accurate estimates for the electricity consumption of cryptocurrencies is a novel topic of research. It can be an especially difficult task due to the decentralised nature of blockchain networks and the cutting-edge nature of the research area. 'Model-A' proposed in this study accounts for factors such as synchronisation energy and operating multiple additional validators on a single node. These factors, amongst others, identified but not included in the model, have been overlooked in the past as no sufficiently thorough analysis of was done on PoS blockchains, specifically Ethereum.
 
-no one has looked into predicting energy based on the number of validators which is an easily available stat but its behaviour has not been analysed
-only 1 other paper focuses on doing exactly this and this paper added 2 important components their equation does not take into account
-
-its a new area, contributed to the data out there, appendix has some extra data others can use and save time
+The comprehensive compilation of data (found in Appendix A and B) was created through exhaustive research of various internet sources. It unveiled crucial observations and may contribute to future work.

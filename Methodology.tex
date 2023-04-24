@@ -1,13 +1,13 @@
 \chapter {Methodology}
 *Have citations to show you methodology is legit
 
-\section {Validation and Verification}
+\section {Evaluation Metrics}
 
 \subsection{Quantitative}
 \label{MethoologyErrorQuant}
 The aim of a validation metric is to be able to assess the predictive capability of a mathematical model \cite{Kat2012ValidationError}. Metrics for comparison will be obtained by implementing other similar mathematical models. Most relative-error measures rely on true observed values to compare with a predicted value. However, since all models estimate the energy consumption of Ethereum, and there is no true value, selecting an appropriate quantitative error measure is challenging. 
 
-Alternatively, the magnitude error, which compares the relative orders of magnitude between two functions, could be used as a means of validating the results obtained. To calculate the magnitude error using \eref{eqn:ErrorMeasureEqn}, estimates from the only experimental model (CCRI base model) will be used as the true values $\boldsymbol{\mathrm{m}}$ while estimates from our 'Model A' will replace $\boldsymbol{\mathrm{p}}$ \cite{RussellErrorMeasure}. The suggested upper bound for acceptable results is $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$.
+Alternatively, the magnitude error, which compares the relative orders of magnitude between two functions, could be used as a means of validating the results obtained. To calculate the magnitude error using \eref{eqn:ErrorMeasureEqn}, estimates from the only experimental model (CCRI base model) will be used as the true values $\boldsymbol{\mathrm{m}}$ while estimates from our 'Model-A' will replace $\boldsymbol{\mathrm{p}}$ \cite{RussellErrorMeasure}. The suggested upper bound for a result being acceptable is $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$.
 
 \begin{align}
 \label{eqn:ErrorMeasureEqn}
@@ -43,7 +43,9 @@ The model outputs must be checked for 'reasonableness under a variety of input p
 
 \section {Data Gathering}
 
-Couldn't use the API, had to scrape from the API. Data was annualised for each day's estimate, had to be divided by 365. Could explain why this makes sense sccoriding to their equation, maybe they multiplied by 365, or when they measured energy in the experiment for 2 days, they multiplied by 365/2.
+The singular source of scientific data available in this field is the CCRI study \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. Apart from using those results, data sources ranged from blockchain crawlers used to obtain metrics such as transaction counts to anecdotal and non-scientific data from Reddit and Discord communities, with users reporting on personal experiences and measurements. See Appendix A.
+
+The CCRI \cite{Ccri-apiOverview} and Etherscan \cite{EtherscanProvider} APIs will be used to pursue a data-driven approach to modelling. Most of the publicly available CCRI indices have annualised values for various daily estimates and will be divided by 365 to obtain true daily values. 
 
 \section {Modelling The Energy Consumption Using Domain Knowledge}
 
