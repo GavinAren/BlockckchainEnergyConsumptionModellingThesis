@@ -89,8 +89,9 @@ The final CCRI equation for the weighted electricity consumption of an average n
 \end{equation}
 \end{center}
 
-The CCRI model has been verified and is accurate. Thus, it is \textbf{assumed}  that it is an acceptable base model for 'Model-A' to be built upon.
+The CCRI model has been validated via experimentation as presented in its report, establishing it as a reliable foundational model \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. 'Model-A', proposed in this study, enhances this base model by addressing shortcomings 1 and 2 mentioned in \sref{CCRIModelLitRev}.
 % ____________________stage 1
+
 \textbf{Improvement 1 of 2: Adding the Synchronisation Energy} 
 
  \eref{eqn:CCRI} ignores the energy expended during the bootstrapping stage of setting up a node - the synchronisation process. 'Geth' is currently the most dominant ( see \tref{Table:ClientShares}) and long-standing Ethereum EL client. Its snap-sync mode is the most commonly used synchronisation method as it strikes a great balance between independent verification and sync speed (explained in \sref{SyncLitRev}).
@@ -661,7 +662,7 @@ $\sim$156 transactions in the same electricity it takes PoS Ethereum to complete
 
 \section{Conclusion}
 
-The mathematical model presented in this study accurately estimated the electricity consumption of PoS Ethereum. A thorough exploration of the Ethereum blockchain led to the identification of four potential improvements to a state-of-the-art model. Two of these improvements were incorporated into the model proposed, now accounting for synchronisation energy and operating multiple validators on a single node. The results obtained were satisfactory and fell between those from the only two other models in the field, which were implemented for comparison. Special care was taken to follow a robust methodology, supported by well-founded justifications throughout the study. 
+The mathematical model presented in this study accurately estimated the electricity consumption of PoS Ethereum. A thorough exploration of the Ethereum blockchain led to the identification of four potential improvements to a state-of-the-art model. Two of these improvements were incorporated into the model proposed, now accounting for synchronisation energy and operating multiple validators on a single node. The results obtained were satisfactory and fell between those from the only two other models in the field, which were implemented for comparison. Special care was taken to document well-founded justifications and follow a robust methodology supported throughout the study. 
 
 The proposed model demonstrated that the switch in the consensus mechanism reduced the electricity consumption of Ethereum by over 99\%. Additionally, research indicated that comparing Visa to blockchain networks is inappropriate, with PayPal being a more suitable representative of centralised banking systems. Results from Model-A reveal that Ethereum's energy consumption per transaction, previously several orders of magnitude greater than PayPal's, has now decreased to just $\sim$31\% higher. This finding is significant as it represents a reasonable trade-off for many users in exchange for the benefits of decentralisation.  
 
