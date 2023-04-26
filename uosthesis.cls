@@ -182,7 +182,7 @@
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
 %% --------------------- Organisational Structure ----------------------
 \doi{}
-\supervisor  { Dr Age Chapman}
+\supervisor  { Professor Age Chapman}
 \secondexaminer    {Dr Mohammad Soorati}
 \degree      {}
 \authors     {}
@@ -254,7 +254,7 @@
 }
         \vfill
         \bigskip
-    {\large {Project supervisor: Dr Age Chapman} \par}
+    {\large {Project supervisor: Dr Adriane Chapman} \par}
     {\large {Second examiner: Dr Mohammad Soorati} \par} 
         \bigskip
         \bigskip

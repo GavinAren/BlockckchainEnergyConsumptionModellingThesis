@@ -41,7 +41,7 @@ This chapter constitutes the technical section of this study, comprising of crea
 % Light clients send out a lot of requests, a lot more than full nodes. For example, they might need to check the balance of certain accounts to verify the information they are receiving cryptographically. This large number of simple requests ends up requiring more network bandwidth than full nodes \cite{WhatTechnologies}. We also know that light clients are designed to be run on minimal devices such as mobile and IoT devices. The amount of computational and storage resources required by a light node is orders of magnitude lower than a full node. It requires only about 100MB of storage \cite{WhatTechnologies}. This fact can be used to model this. These devices also sync with the latest blocks using checkpoints in seconds instead of hours like a full node.
 
 % _____________________---stage 1
-\textbf{The base equation:}
+\subsection{The base model}
 
 First, the base CCRI equation \cite{CryptoCarbonRatingsInstitute2022TheNetwork} upon which 'Model-A' will be built is introduced below. The symbols denoting each metric have been adjusted for this study, and power and electricity have been synonymously used below. 
 
@@ -92,7 +92,7 @@ The final CCRI equation for the weighted electricity consumption of an average n
 The CCRI model has been validated via experimentation as presented in its report, establishing it as a reliable foundational model \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. 'Model-A', proposed in this study, enhances this base model by addressing shortcomings 1 and 2 mentioned in \sref{CCRIModelLitRev}.
 % ____________________stage 1
 
-\textbf{Improvement 1 of 2: Adding the Synchronisation Energy} 
+\subsection{Improvement 1 : Adding the Synchronisation Energy} 
 
  \eref{eqn:CCRI} ignores the energy expended during the bootstrapping stage of setting up a node - the synchronisation process. 'Geth' is currently the most dominant ( see \tref{Table:ClientShares}) and long-standing Ethereum EL client. Its snap-sync mode is the most commonly used synchronisation method as it strikes a great balance between independent verification and sync speed (explained in \sref{SyncLitRev}).
 % DIAGRAM FOR SNAP SYNC
@@ -167,7 +167,7 @@ Which simplifies to:
 \label{AdditonalNodesReasoning}
 \newline \newline
 % --------------------------------------------------------
-\textbf{ Improvement 2 of 2: Running additional validators on each node}
+\subsection{ Improvement 2 : Running additional validators on each node}
 
 
 Contemporary data suggests that there are roughly 11-15000 nodes connected to the Ethereum network at any given moment \cite{NodewatchAnalytics}; meanwhile, there are 561,472 active validator clients \cite{EthereumEthereum.orgc}. As explained in \sref{ValidatorsLitRev}, it is known that most solo-stakers run 1-1000 validator instances per physical node. With more specialised hardware, 2500-7000 validators can be run on a single node \cite{Kaushal2022ValidatingConference}. 
@@ -278,7 +278,7 @@ Note that hardware configuration-specific terms, such as the CPU's TDP, SSD's po
 % ___________________________________________________________________MODELS DONE< NOW 
 
 % Model-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-\section{Implementation and Results}
+\section{Results Of Application Of Models And Discussion}
 \label{ImplementationSection}
 Through extensive data gathering, Model-A, alongside 2 other models from the wider literature, are implemented in this section.
 
@@ -504,20 +504,20 @@ The new hourly consumption of the entire network: \textbf{862.66 kWh}. Final res
 %     \item for table \_\_ gave higher importance to Geth to estimate sync time as it has a much larger share of the network than the other EL clients
 % \end{itemize}
 
-\subsection{Implementing other models}
+\subsection{Implementing Competing Models}
 
 As mentioned in \sref{LitRevExistingModels} there are two existing models found in the wider literature. 
 
-\textbf{The 'CCRI' model} 
+\textbf{The CCRI Model} 
 
 This model \cite{CryptoCarbonRatingsInstitute2022TheNetwork} forms the $ \boldsymbol{\overline{\mathrm{V}}_{1}}$ part of Model-A proposed in this study, detailed in \sref{CCRIBaseEqnSection}. Through the implementation of Model-A, the CCRI model was also implemented as a step. All the contemporary data collected in \tref{Table:ClientShares} and \tref{Table:ConsumptionValues} was used for calculations in \tref{Table:EstimatesPerNode}. Ever since the CCRI report, OpenEthereum has been deprecated, and the Lodestar client no longer holds a sizeable share of the network, and they were not included in calculations. The study splits the network share between the 3 hardware tiers (low, mid and high-tier) binomially rather than using a continuous distribution like this study. However, the split remains the same at 25\%, 50\%, and 25\%, respectively, making the results more comparable. The final results from this model can be found in \tref{Table:FinalResults}.
 
-\textbf{The 'UCL' model} 
+\textbf{The UCL Model} 
 
 The original UCL model can be found in report \cite{Platt2022TheProof-of-Work}. It was recently updated on 7$\mathrm{^{th}}$ Feb 2023 \cite{IbanezTheExpansion}, and contemporary results from the updated report are directly taken and updated with the same metrics used to implement Model-A for a fair comparison. Results can be found in \tref{Table:FinalResults}. 
 
 
-\subsection{Results}
+\subsection{Final Results}
 \label{ResultsSection}
 Metrics recorded on 10$\mathrm{^{th}}$ April 2023: \\
 Number of nodes connected to Ethereum mainnet: \textbf{12242 nodes} \cite{NodewatchAnalytics} \\
@@ -606,24 +606,20 @@ Using these metrics, results for each of the aforementioned models are presented
 
 \subsection{Interpretation}
 
-Being able to model the electricity consumption of PoS Ethereum successfully answers RQ1. The results produced by Model-A are valid due to 2 main reasons:
-\begin{itemize}
-    \item The criteria mentioned in \sref{ModelEvalMEthodology} for producing a valid model have been met. 
+Being able to model the electricity consumption of PoS Ethereum successfully answers RQ1. The results produced by Model-A are valid due to three main reasons:
+\begin{enumerate}
+    \item The qualitative criteria defined in \sref{QualModelEvalMEthodology}, for model formulation to be valid, has been met. 
     \begin{itemize}
-        \item Credible sources have been used to justify each conclusion or assumption made during the formulation of Model-A. Each justification has been thoroughly documented and all 9 assumptions have been highlighted in the text using bold formatting.
-        \item All data used during modelling was either from strict empirical sources or an average of an extensive collection of non-scientific sources.
+        \item Credible sources have been used to justify each assumption and conclusion drawn during the formulation of Model-A. Comprehensive documentation of each justification has been provided, and all 8 assumptions have been emphasised in the text using bold formatting.
+        \item All data utilised in the modelling process were either derived from strictly empirical sources or an average of a comprehensive collection of non-scientific sources.
     \end{itemize}
-    \item The results of Model-A lie between the only 2 other models found in the wider literature, thus lying in a 'reasonable' range.
-    \item Model-A builds upon the CCRI model through the addition
-\end{itemize}
+    \item Model-A's results fall between the only two other models found in the wider literature, thus positioning them within a 'reasonable' range.
+    \item A In accordance with the quantitative evaluation criteria defined in \sref{MethoologyErrorQuant}, for the results to be deemed satisfactory, $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$. By treating the experimentally verified CCRI model's results as true values and comparing the energy consumption for the entire network per transaction, the $\boldsymbol{\epsilon_\mathrm{rme} = 7.96 * 10^{-2}}$ is obtained, making it acceptable.   
+\end{enumerate}
 
-Model-A accounts for 2 more sources of energy expenditure as compared to the base CCRI model, which explains the average Percentage Increase(PE) of 9.5\% across all values. 9.25\% of it can be attributed to running multiple validators, suggesting that the extra electricity consumed by accounting for $\sim$500000 extra validators was weighted reasonably as it didn't have a disproportionate effect on our final results. 
+Model-A accounts for 2 more sources of energy expenditure as compared to the base CCRI model, which explains the average Percentage Increase (PE) of 9.5\% across all values. 9.25\% of it can be attributed to operating additional validators, suggesting that the extra electricity consumed by accounting for $\sim$500000 extra validators was weighted reasonably since it didn't have a disproportionate effect on our final results. 
 
-As explained in \sref{MethoologyErrorQuant}, for the results to be satisfactory, the $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$. Using the most comparable values, energy for the entire network per transaction, the $\boldsymbol{\epsilon_\mathrm{rme} = 7.96 * 10^{-2}}$, thus, acceptable.
-
-%  estimates from the only experimental model (CCRI base model) will be used as the true values $\boldsymbol{\mathrm{m}}$ while estimates from our 'Model-A' will replace $\boldsymbol{\mathrm{p}}$ \cite{RussellErrorMeasure}. The suggested upper bound for acceptable results is $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$.
-
-The UCL model seems to be overestimating the consumption values. This can be attributed to the lack of complexity in their model as a result of generalising it for six PoS blockchains.
+The UCL model seems to overestimate consumption values. This may stem from the model's lack of complexity, which is a consequence of its generalisation to encompass six PoS blockchains.
 
 \begin{figure}[!htb]
     \includegraphics[width=13cm,center]{Figures/ElectricityConsumptionPlot.png}
@@ -659,11 +655,3 @@ $\sim$156 transactions in the same electricity it takes PoS Ethereum to complete
 \textbf{Simulation and Prediction: } There is potential for future work in creating a computer-based simulation of this model or just on existing blockchain benchmarking software such as Hyperledger Caliper or Blockbench \cite{Aldweesh2020BenchmarkingApplications}. A more ambitious goal would be predicting energy consumption given different values for the factors included in the model, which would require curve-fitting \cite{IbanezTheExpansion}.
 
 % _______________________________________________________________________
-
-\section{Conclusion}
-
-The mathematical model presented in this study accurately estimated the electricity consumption of PoS Ethereum. A thorough exploration of the Ethereum blockchain led to the identification of four potential improvements to a state-of-the-art model. Two of these improvements were incorporated into the model proposed, now accounting for synchronisation energy and operating multiple validators on a single node. The results obtained were satisfactory and fell between those from the only two other models in the field, which were implemented for comparison. Special care was taken to document well-founded justifications and follow a robust methodology supported throughout the study. 
-
-The proposed model demonstrated that the switch in the consensus mechanism reduced the electricity consumption of Ethereum by over 99\%. Additionally, research indicated that comparing Visa to blockchain networks is inappropriate, with PayPal being a more suitable representative of centralised banking systems. Results from Model-A reveal that Ethereum's energy consumption per transaction, previously several orders of magnitude greater than PayPal's, has now decreased to just $\sim$31\% higher. This finding is significant as it represents a reasonable trade-off for many users in exchange for the benefits of decentralisation.  
-
-Although this study was based on novel yet robust modelling techniques, it had several limitations detailed in \sref{LimitationsFutureWork} above.

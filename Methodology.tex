@@ -1,16 +1,16 @@
 \chapter {Methodology}
 
-\section{Model Development}
+\section{Model Development Steps}
 \begin{enumerate}
-    \item Conduct a comprehensive analysis of existing models for PoW and PoS blockchains. Select a state-of-the-art model that employs a bottom-up approach, making it easier to incorporate new factors into it. Provide a comprehensive explanation of its components.
+    \item Conduct a comprehensive analysis of existing models for PoW and PoS blockchains. Select a state-of-the-art model that employs a bottom-up approach, making it easier to incorporate new factors into it \cite{CambridgeCBECI}. Provide a comprehensive explanation of its components.
 
-    \item Acquire a deep understanding of the interplay of microscopic factors and their macroscopic effects in Ethereum PoS. With this knowledge, consider the limited 'post-merge' data available and identify 2-3 factors that can be integrated into the base model.
+    \item Acquire a deep understanding of the interplay of microscopic factors and their macroscopic effects in Ethereum PoS \cite{MarionAnModelling}. With this knowledge, consider the limited 'post-merge' data available and identify 2-3 factors that can be integrated into the base model.
 
-    \item Analyse data and literature relating these factors to electricity consumption in various contexts. Adhering to the principles of Rule-Based Mathematical Modelling outlined in REF, develop equations related to PoS Ethereum, either by adapting existing equations to the given context or through modelling observed behaviours.
+    \item Analyse data and literature relating these factors to electricity consumption in various contexts. Adhering to the principles of Rule-Based Mathematical Modelling outlined in \sref{MathematicalModellingLitRev}, develop equations related to PoS Ethereum, either by adapting existing equations to the given context or through modelling observed behaviours.
 
-    \item Incorporate these equations into the base model. Estimate the network shares of users with different hardware, client, and node configurations, and assign weights parts of the equation where possible.
+    \item Incorporate these equations into the base model. Estimate the network shares of users employing different hardware, client, and node configurations, and assign weights to different parts of the equation where possible \cite{CCRI:Institute}.
 
-    \item Determine the contemporary metrics (e.g., gas fees, transaction count, etc.) required to implement the model proposed along with competing models. Implement all models using the same metrics to produce easily comparable values (like energy consumption per transaction) to facilitate the evaluation of the model's results.
+    \item Determine the contemporary metrics (e.g., gas fees, transaction count, etc.) required to implement the model proposed along with competing models. Implement all models using the same metrics to produce easily comparable values (like energy consumption per transaction) to facilitate the evaluation of the model's results \cite{CryptoCarbonRatingsInstitute2022TheNetwork}.
 
 \end{enumerate}
 
@@ -18,9 +18,9 @@
 
 \subsection{Quantitative}
 \label{MethoologyErrorQuant}
-The aim of a validation metric is to be able to assess the predictive capability of a mathematical model \cite{Kat2012ValidationError}. Metrics for comparison will be obtained by implementing other similar mathematical models. Most relative-error measures rely on true observed values to compare with a predicted value. However, since all models estimate the energy consumption of Ethereum, and there is no true value, selecting an appropriate quantitative error measure is challenging. 
+The aim of a validation metric is to be able to assess the predictive capability of a mathematical model \cite{Kat2012ValidationError}. Results for comparison will be obtained by implementing other similar mathematical models found in the literature. Most relative-error measures compare true observed values to prediction results. However, since all models estimate the energy consumption of Ethereum, there is no true value. Thus, selecting an appropriate quantitative error measure is challenging. 
 
-Alternatively, the magnitude error, which compares the relative orders of magnitude between two functions, could be used as a means of validating the results obtained. To calculate the magnitude error using \eref{eqn:ErrorMeasureEqn}, estimates from the only experimental model (CCRI base model) will be used as the true values $\boldsymbol{\mathrm{m}}$ while estimates from our 'Model-A' will replace $\boldsymbol{\mathrm{p}}$ \cite{RussellErrorMeasure}. The suggested upper bound for a result being acceptable is $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$.
+The magnitude error, which compares the relative orders of magnitude between two functions, could be used as a means of validating the results obtained. To calculate the magnitude error using \eref{eqn:ErrorMeasureEqn}, results from an experimental model with scientific data will be treated as the true value, $\boldsymbol{\mathrm{m}}$, while estimates from our 'Model-A' will replace prediction value, $\boldsymbol{\mathrm{p}}$ \cite{RussellErrorMeasure}. The suggested upper bound for a result being acceptable is $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$.
 
 \begin{align}
 \label{eqn:ErrorMeasureEqn}
@@ -31,70 +31,60 @@ Alternatively, the magnitude error, which compares the relative orders of magnit
 % --------------------------------------------------------------------
 \subsection{Qualitative}
 \label{QualModelEvalMEthodology}
- It would be a near-impossible task to successfully simulate the model proposed in this paper using a computer program without losing the main characteristics that are leveraged to build upon the existing CCRI model, such as the non-linear increase in electricity consumption when running additional validators on a single node. The model can be evaluated using some of the model verification techniques mentioned in a chapter \cite{Al-Aomar2015ModelTechniques} from the book 'Process Simulations'.
+ It would be a near-impossible task to successfully verify the model through h simulate PoS Ethereum without losing its microscopic characteristics that this study relies on to improve upon the base model. Some qualitative techniques that can instead be used to verify the model include the following \cite{Al-Aomar2015ModelTechniques}:
 
-\textbf{1. Thorough Examination of Model Inputs :}
-
-During the construction of the model, this will be done by solely relying on actual data rather than theories to ensure the credibility of this model. When verifying the model, input values for each part of the model will be obtained only from scientific sources where possible. Otherwise, anecdotal data from multiple sources must be averaged in order to be used in verifying the model. Validation of model inputs is done by making sure that they are:
+\textbf{1. Thorough Examination of Model Inputs - } During development, the input values for each part of the model will be obtained only from scientific sources. If infeasible, anecdotal data from multiple sources must be averaged as a substitute. A 'valid' input is defined as being:
 \begin{enumerate}
     \item Correct
     \item Relevant to the real-world system being modelled
     \item Being used in the model similar to the way they would be used by the real-world system being modelled
 \end{enumerate}  
 
-
-\textbf{2. Detailed Documentation of Model Logic :}
-Thorough documentation on every design decision made during the construction of the model must be stated. Every decision made in this paper will be intuitively reinforced by domain-specific knowledge or data that was collected in a scientific manner. This is critical to the credibility of this model and helps any future work that may be undertaken on the model.
-
-Additionally, any assumptions made during the model formulation must be highlighted using bold formatting.
+\textbf{2. Detailed Documentation of Model Logic - }
+Every decision made during the formulation of the model must be clearly documented and well-justified using observed data or domain-specific knowledge. All assumptions will be highlighted using bold formatting.
 
 
-\textbf{3. Thorough Examination of Model Outputs :}
-
-The model outputs must be checked for 'reasonableness under a variety of input parameters' \cite{Al-Aomar2015ModelTechniques}. Any discrepancies between Model-A and other models must be justified in the discussion section.   
-
+\textbf{3. Thorough Examination of Model Outputs - }
+The model's results must lie in a 'reasonable' range when compared to competing model's results \cite{Al-Aomar2015ModelTechniques}. Any discrepancies between Model-A and other models must be clearly addressed in the discussion section.   
 
 \section {Data Gathering}
 
-The singular source of scientific data available in this field is the CCRI study \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. Apart from using those results, data sources ranged from blockchain crawlers used to obtain metrics such as transaction counts to anecdotal and non-scientific data from Reddit and Discord communities, with users reporting on personal experiences and measurements. See Appendix A.
+The primary scientific data source in this field is from the CCRI study \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, which has been referenced in most other studies in this emerging area of research \cite{IbanezTheExpansion}. In addition to this data, a variety of sources, including blockchain crawlers for obtaining metrics such as transaction counts, and anecdotal or non-scientific sources like Reddit and Discord communities (where reputed users share their measurements), were collected and averaged. See Appendix A.
 
-The CCRI \cite{Ccri-apiOverview} and Etherscan \cite{EtherscanProvider} APIs will be used to pursue a data-driven approach to modelling. Most of the publicly available CCRI indices have annualised values for various daily estimates and will be divided by 365 to obtain true daily values. 
+The CCRI \cite{Ccri-apiOverview} and Etherscan \cite{EtherscanProvider} APIs will be used to pursue a data-driven approach to modelling. The majority of indices publicly accessible on the CCRI website display annualized values for daily estimates. These values will be divided by 365 to acquire accurate daily figures.
 
-\section {Modelling The Energy Consumption Using Domain Knowledge}
+% \section {Modelling The Energy Consumption Using Domain Knowledge}
 
-*Define everything in your modelling world, what your definition of everything is
+% *Define everything in your modelling world, what your definition of everything is
 
-We care about the power coming from the grid. The AC 'At-Wall'. We gather estimations for the recommended configuration of hardware for Ethereum nodes running validator clients. 
+% We care about the power coming from the grid. The AC 'At-Wall'. We gather estimations for the recommended configuration of hardware for Ethereum nodes running validator clients. 
 
-Also decide on which way of data gathering is better. Prepare a table of online users claiming their power consumption. Also, estimate the power consumption of the recommended configuration of hardware through manufacturer websites. This is then compared to the data from the \cite{CryptoCarbonRatingsInstitute2022TheNetwork} report actually running a single validator node to check if this bottom-up hardware estimation approach is valid. 
+% Also decide on which way of data gathering is better. Prepare a table of online users claiming their power consumption. Also, estimate the power consumption of the recommended configuration of hardware through manufacturer websites. This is then compared to the data from the \cite{CryptoCarbonRatingsInstitute2022TheNetwork} report actually running a single validator node to check if this bottom-up hardware estimation approach is valid. 
 
-Knowing the fact that increasing the number of validator clients on a single machine increases the power consumption logarithmically, we apply this assumption to the CCRI equation. We also need to account for power inefficiency of the computer by adding a factor to this equation. The report does not mention the power supply or mainboard used.
+% Knowing the fact that increasing the number of validator clients on a single machine increases the power consumption logarithmically, we apply this assumption to the CCRI equation. We also need to account for power inefficiency of the computer by adding a factor to this equation. The report does not mention the power supply or mainboard used.
 
-Also need to add the syncing energy into the equation as it is not a short process. Need to model this, depending on the data and add it to the equation. (possibly for every combination of CL and EL client)
-
-
-\section {Data-driven Approach To Modelling The Energy Consumption}
-
-\section {Modelling The Carbon Emissions }
-* Advice was to make the model, logically make the equations, justify each assumption etc, then gather some data for it, apply the data see what output you get. Then implement other's models using this data. Finally compare results, say why your model was/was not accurate.
-
-\section {Implementing The Model}
-
+% Also need to add the syncing energy into the equation as it is not a short process. Need to model this, depending on the data and add it to the equation. (possibly for every combination of CL and EL client)
 % ------------------------------------------------------------------
 
 \section {Project Management}
-*must be done right here, not later
 
-Couldn't use CCRI API as it wasn't ready yet. Has to scrape it from the website from the network section.
+Agile project management practices were used during the course of this project. 
 
-Couldn't use API - may have affected the accuracy of data, could've been live data, more precise data
+\subsection{Task Management}
 
-\section{Critical Evaluation}
+The topic itself was changed many times during the course of this project; thus, an agile methodology was critical to the success of this project. For micro-task management, a tool called Todoist was used, categorising tasks by the macro-task, shown in Appendix ****. Various self-set milestones were dated into my task list and, when complete, updated into my Gantt chart.
 
-\subsection{Project Management Evaluation}
+Macro-level task management was done by implementing a Gantt chart. These tasks and their timelines were updated every month, often changing drastically due to the newfound knowledge of the research area and progress in the technical section. 
 
-Many different approaches to modelling were tried during the course of the project. Some include sensitivity analysis to check which parameters affect the overall electricity consumption the most when using the PoS consensus protocol \cite{MarionAnModelling}. Some data-driven modelling techniques explored included time series analysis and logistic regression \cite{IbanezTheExpansion} however, the 'The Merge' is a very recent event, and it was hard to obtain any meaningful data on it.  ***talk about the risk table
+\subsection{Time Management}
 
-The original plan of this project was to develop blockchain-based solutions for modelling drug supply chains, but it underwent multiple revisions. This was among the foreseen risks in opting for a blockchain-related topic as it is a relatively new technology. This risk was mitigated by following the pre-planned risk mitigation strategy found in in /ref**** in the appendix.
+The Gannt chart also allowed for time management of tasks at a macro level. It allowed for time allocation for each major project task across both semesters. Realistic allocations were made for this project, taking other coursework and holidays into account. 
 
-I learnt that it is simple to understand a simplified model of a complex system; however, to be the one modelling it requires absolute subject-matter expertise. Deep knowledge of cryptocurrencies as well as the Ethereum protocol specifically, had to be acquired in order to expand to the pre-existing models meaningfully. 
+Additionally, a short summary of all the relevant literature papers read during the course of this project was recorded in a notebook. This allowed for easy organisation of ideas and avoided re-reading of papers, saving time. A picture can be found in Appendix ****.
+
+\subsection{Risk Management}
+
+All forseen risks of undertaking such a project have been compiled into a risk analysis table found in Appendix ***. Their probability was calculated through probability ** severity.\\\
+
+\subsection{Critical Review}
+
