@@ -61,15 +61,22 @@
 \onehalfspacing
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{2.0ex plus0.5ex minus0.2ex}
-\usepackage{vmargin}
-\setmarginsrb           { 1.5in}  % left margin
-                        { 0.6in}  % top margin
-                        { 1.0in}  % right margin
-                        { 0.8in}  % bottom margin
-                        {  20pt}  % head height
-                        {0.25in}  % head sep
-                        {   9pt}  % foot height
-                        { 0.3in}  % foot sep
+% \usepackage{vmargin}
+
+% \setmarginsrb           { 1.5in}  % left margin
+%                         { 0.6in}  % top margin
+%                         { 1.0in}  % right margin
+%                         { 0.8in}  % bottom margin
+%                         {  20pt}  % head height
+%                         {0.25in}  % head sep
+%                         {   9pt}  % foot height
+%                         { 0.3in}  % foot sep
+
+% 
+\usepackage[a4paper,margin=24mm,top=24mm,bottom=24mm,outer=24mm,heightrounded]{geometry}
+
+
+
 \raggedbottom
 \setlength{\topskip}{1\topskip \@plus 5\p@}
 \doublehyphendemerits=10000       % No consecutive line hyphens.
@@ -189,14 +196,16 @@
 \qualifications{}
 \orcidid{}
 \volume{}{}
+\faculty     {Faculty of Engineering and Physical Science}
+\FACULTY     {\MakeUppercase{\facname}}
+\department  {School of Electronics and Computer Science}
+\DEPARTMENT  {\MakeUppercase{\deptname}}
 \university  {\texorpdfstring{\href{http://www.southampton.ac.uk}
                 {University of Southampton}}
                 {University of Southampton}}
 \UNIVERSITY  {\MakeUppercase{\univname}}
-\department  {School of Electronics and Computer Science}
-\DEPARTMENT  {\MakeUppercase{\deptname}}
-\faculty     {Faculty of Engineering and Physical Science}
-\FACULTY     {\MakeUppercase{\facname}}
+
+
 \addresses   {}
 \subject     {}
 \keywords    {}
@@ -221,11 +230,13 @@
     \vskip 60\p@
     \begin{center}
       \setlength{\parskip}{0pt}
+      {\large \deptname \par}
+      {\large \facname \par}
       {\scshape\LARGE\textbf{\univname}\par}
       %% TODO: Change all the descriptions to italic like the Thesis one
       % \bigskip
-      {\large \facname \par}
-      {\large \deptname \par}
+      
+      
       % \ifthenelse{\equal{\doicode}{}}
       % {}
       % {\smallskip DOI: \href{http://doi.org/\doicode}{\doicode}\par}

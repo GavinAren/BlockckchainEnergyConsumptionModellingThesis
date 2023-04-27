@@ -23,6 +23,17 @@
 }
 \newcolumntype{"}{@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}}
 \makeatother
+% \documentclass[12pt]{article}
+\usepackage{geometry}
+\usepackage{etoolbox}
+\newlength{\firstmargintw}
+\setlength{\firstmargintw}{35mm}
+\makeatletter
+\patchcmd{\@oddhead}{\hfil}{\hskip\firstmargintw\hfil}{}{}
+\patchcmd{\@evenhead}{\hfil}{\hskip\firstmargintw\hfil}{}{}
+\makeatother
+
+\usepackage{caption}
 
 %% ----------------------------------------------------------------
 %% --------------------THESIS/DOC INFORMATION ---------------------
@@ -37,7 +48,11 @@
 \addresses  {\groupname\\\deptname\\\univname}
 
 \usepackage{ragged2e}
+\usepackage{geometry}
+\geometry{left=0.96in, right = 0.96in, top = 0.96in, bottom=0.96in}
+
 \begin{document}
+\newgeometry{left=1.4in,right = 0.96in, top = 0.96in, bottom=0.96in }
 %% ------------------ FRONT MATTER ORGANISATION -------------------
 \pagenumbering{gobble} % removes page number
 % \copyrightDeclaration{} % !!! Comment this line when printing the hardcopy !!!
@@ -47,18 +62,21 @@
 % Edited statement of originality
 \frontmatter
 \maketitle
-
+\restoregeometry
 \begin{abstract}
 % High energy consumption has become synonymous with cryptocurrency mining in recent times.
     The severe environmental impacts of blockchain technology have become a roadblock to its widespread adoption.  Ethereum, the world's second-largest cryptocurrency, recently switched to a far less computationally intensive consensus mechanism that claims to reduce its energy consumption by over 99\%. Although existing approaches mathematically model parts of the system to try to understand its energy implications, integrating further factors is necessary to produce more accurate estimations. This study presents a new enhanced model to estimate the electricity consumption of Proof-of-Stake Ethereum. Rather than using a purely data-driven approach, this study relies on prior domain knowledge to propose an enhanced mathematical model estimating the electricity consumption of the new Proof Of Stake Ethereum blockchain.   
 \end{abstract}
 % ___________________________________________,__,__,_
 % \authorshipdeclaration
+
+\include{StatementOfOriginality}
+\acknowledgements{I would like to express my sincere gratitude to my supervisor, Dr Adriane Chapman, for her unwavering guidance during the numerous challenges I faced in deciding on this project topic. Her advice was instrumental throughout the course of the project. I would also like to extend special thanks to Prof. Steve R. Gunn for his valuable suggestions on the modelling section of this study. Lastly, my thanks go to Dr Mohammad Soorati for his steadfast assistance.}
 \tableofcontents
 \listoffigures
 \listoftables
 
-\acknowledgements{I would like to express my sincere gratitude to my supervisor, Dr Adriane Chapman, for her unwavering guidance during the numerous challenges I faced in deciding on this project topic. Her advice was instrumental throughout the course of the project. I would also like to extend special thanks to Prof. Steve R. Gunn for his valuable suggestions on the modelling section of this study. Lastly, my thanks go to Dr Mohammad Soorati for his steadfast assistance.}
+
 
 \listofsymbols{ll}{
     PoW & Proof-of-Work\\
@@ -73,11 +91,27 @@
     ETH & Ether\\
     EVM & Ethereum Virtual Machine\\
     \\
-    $w$ & The weight vector\\
-    $\S$ & If relevant to discipline
+    $\epsilon_\mathrm{rme}$ & Magnitude Error\\
+    $\mathrm{rme}$ & Relative Measure of Error \\
+    $\mathrm{m_{i}}$ & True Electricity Values\\
+    $\mathrm{p_{i}}$ & Model's Prediction Values\\
+    $\mathrm{T}_{EL}$ & Synchronisation Time\\
+    $\mathrm{P}_{TDP}$ & TDP for a CPU\\
+    $\mathrm{P}_{SSD}$ & Electricity Usage of an NVMe SSD\\
+    $\mathrm{\overline{P}}_{ID}$ & Idle Client’s Power Usage\\
+    $\mathrm{\overline{P}}_{CL}$ & Consensus Layer Client’s Power Usage\\
+    $\mathrm{\overline{P}}_{EL}$ & Execution Layer Client’s Power Usage\\
+    $\mathrm{P}_{SNC}$ & Sync Process Electricity Expenditure\\
+    ${\phi_{EL,CL}}$ & Network Share of a Specific CL-EL Client Combination\\
+    $\mathrm{n}$ & Total Number of CL-EL Client combinations\\
+    ${\pi}$ &  Total Network Share of $\mathrm{n}$\\
+    $\mathrm{k}$ & Growth Rate Constant\\
+    $\mathrm{x}$ & Additional Validators\\
+    $\overline{\mathrm{V}}_{1}$ & Average Energy of a Node Running One Validator\\
+    $\mathrm{\overline{V}(\mathrm{x})}$ & Extra Energy Consumed by $\mathrm{x}$ Additional Validators\\
+    
 }
 \mainmatter %-\frontmatter
-
 
 % ____________________________________________________________
 % \pagenumbering{gobble}

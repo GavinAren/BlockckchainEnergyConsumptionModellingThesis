@@ -3,6 +3,8 @@
 
 This section introduces the basics of Ethereum and blockchains to the reader before acquainting them with the current state of research in the field.
 
+The terms \textbf{power} and \textbf{energy} refer to \textbf{electrical energy} through this study. 
+
 % -_____________________________________________________________________________
 
 \section{Blockchain Basics}
@@ -59,8 +61,6 @@ Nodes that communicate over a network following the 'ETH' protocol form the Ethe
 
 The security of this network comes from a majority of nodes agreeing on the new change to the state of this EVM. In other words, agreeing on the next block to be permanently added to the blockchain ledger. Such nodes are paid in Ethereum's native cryptocurrency, \textbf{Ether (ETH)}, to run validator software that validates new blocks received over the peer-to-peer network.
 
-***Introduce the need for consensus protocols
-
 Ethereum is a public, permissionless network, which means that anyone can access and participate in its operations. The interaction between a client and the Ethereum blockchain is enabled by the JSON RPC(Remote Procedure Call) API. When any user wants to complete a transaction with another user across the network, they:
 \begin{enumerate}
     \item Need to specify the transaction amount
@@ -98,15 +98,19 @@ Blocks are 'forged' by validators at a fixed tempo in PoS Ethereum. Every 12-sec
 
 The algorithm judges each validator's actions and dishes out rewards and penalties at the end of each epoch accordingly. 
 
-***Instead of sharding, explain attestations here, include a diagram \url{https://kb.beaconcha.in/attestation}
-
 % \textbf{Sharding} \label{Sharding}
 % One solution to increasing the number of transactions throughput on the network is sharding. It refers to splitting the entire Ethereum network into 64 portions called \textbf{shards} \cite{Buterin2020Annotated-spec/beacon-chain.mdEthereum/annotated-spec}. Each shard would contain its own independent state. It is an attempt at breaking up the blockchain into smaller parts no nodes are not responsible for processing or re-executing every single transaction broadcasted on the Ethereum network. Each shard is still connected to the main Ethereum chain cryptographically through merkle trees. \cite{EthereumEthereum.org} 
 
 
 \textbf{Attestations}
 \label{attestationLitRev}
-Validators are expected to create, sign and then propagate their attestation to the rest of the network, every epoch. It aims to vote for or against the blocks proposed in a specific epoch. Attestations of the first and last block of the epoch are the most important as they help to retrieve each validator's view of the blockchain after each epoch. This information is combined to help the network reach consensus about which version of the blockchain to follow.
+Validators in a voting committee are expected to create, sign and broadcast their attestations(votes) to the rest of the network over the gossip network. These votes are either for or against the block being proposed in a specific slot. For each of the 64 committees formed, chosen aggregator nodes are responsible for aggregating their votes and propagating this information to the rest of the consensus nodes. If enough nodes agree on the block, it is added to the blockchain. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=13cm,center]{Figures/AttestationsDiragram.png}
+    \caption{A diagram visualising the new block proposal and attestation process in PoS Ethereum}
+    \label{Figure:AttestationsDiragram}
+\end{figure}
  
 \textbf{Staking ETH}
 
@@ -122,12 +126,7 @@ This is when the algorithm destroys a portion of a validator's stake for behavin
 If a validator goes offline for a number of days, they incur losses roughly equivalent to what they would have gained had they remained online. 
 
 'The Merge' switched Ethereum's security model from computational power to \textbf{economic power}, which are comparable in many ways. Malicious attackers now need 51\% of the economic power of the entire Ethereum network instead of 51\% of the mining power for a successful attack. These severe economic punishments help to keep the network more secure than before while massively reducing the energy consumption of the network. 
- % ------- CAN BE CUT****
-% \newline \newline
-% Equally, there are many incentives to run a validator node. These include:
 
-% \textbf{Block Proposer Rewards :}
-% This is the reward for those validators chosen to propose the next block in a slot. When their block is finalised, they are rewarded with a substantial amount of ETH.
 
 % ----------------------------------------------------------------------
 
@@ -200,7 +199,7 @@ While the benefits of using decentralised transactional systems are appealing to
 \begin{figure}[h]
     \centering
     \includegraphics[width=13cm,center]{Figures/CarbonEmissionsPlot.png}
-    \caption{Carbon emissions per transaction for Bitcoin, Ethereum 1.0 and Visa plotted on a logarithmic scale. The code is in Appendix C, \fref{Figure:CarbonEmissionsPlotCode}. Data source: \cite{Kohli2023AnSolutions} }
+    \caption{Carbon emissions per transaction for Bitcoin, Ethereum 1.0 and Visa plotted on a logarithmic scale. Code is in Appendix C. Source: \cite{Kohli2023AnSolutions} }
     \label{Figure:CarbonEmissionsPlot}
 \end{figure}
 
@@ -317,17 +316,17 @@ This study uses the microscopic details of the Ethereum protocol (how attestatio
 
 \section{Modelling PoW Energy Consumption}
 
-This section aims to analyse a wide range of papers on the topic of electricity consumption of blockchain. The steps for a structured literature review laid out by \cite{Crosby2015BlockChainBitcoin} are loosely followed. 
+This section aims to analyse a wide range of papers on the topic of energy consumption of blockchain. The steps for a structured literature review laid out by \cite{Crosby2015BlockChainBitcoin} are loosely followed. 
 
 Most papers in this niche field of research emphasise Bitcoin and PoW cryptocurrencies. It shows a clear gap in the literature for more work to be done on modelling the electricity consumption of non-PoW blockchains, as this study intends to do.
 % -_____________________________________________________________________________
 
-Paper \cite{Sedlmeir2020TheMyth} attributes almost all the energy consumed by PoW blockchains to the PoW consensus mechanism alone. The other factors contribute a negligible amount of electricity in comparison. However, estimating the electricity consumption of blockchain consensus mechanisms can be challenging due to the scarcity of accurate information on the number of network participants and their hardware configurations. The same study also confirms that Proof-of-Work (PoW) blockchains consume a disproportionate amount of electricity relative to the actual utility they offer. When comparing PoW electricity estimates to those of non-PoW blockchains, the results were several orders of magnitude lower for non-PoW blockchains \cite{Sedlmeir2020TheMyth}. Due to non-PoW consensus algorithms having such a small energy footprint, the energy consumption of a non-PoW blockchain cannot solely be attributed to its consensus algorithm but also to a range of other factors that come with having a large decentralised network. Studies in this area are sparse and are discussed in section ****. 
+Paper \cite{Sedlmeir2020TheMyth} attributes almost all the energy consumed by PoW blockchains to the PoW consensus mechanism alone. The other factors contribute a negligible amount of energy in comparison. However, estimating the energy consumption of blockchain consensus mechanisms can be challenging due to the scarcity of accurate information on the number of network participants and their hardware configurations. The same study also confirms that Proof-of-Work (PoW) blockchains consume a disproportionate amount of energy relative to the actual utility they offer. When comparing PoW electricity estimates to those of non-PoW blockchains, the results were several orders of magnitude lower for non-PoW blockchains \cite{Sedlmeir2020TheMyth}. Due to non-PoW consensus algorithms having such a small energy footprint, their energy consumption cannot solely be attributed to its consensus algorithm but rather to a range of other factors too, which come with having a large decentralised network. This is discussed further in \sref{LitRevExistingModels}. 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=8cm,center]{Figures/SimplePoWModel.png}
-    \caption{A simple model estimating the upper bound of electricity consumption of a PoW blockchain \fref{Figure:CarbonEmissionsPlotCode}. Source: \cite{Sedlmeir2020TheMyth} }
+    \caption{A simple model estimating the upper bound of electricity consumption of a PoW blockchain. Source: \cite{Sedlmeir2020TheMyth} }
     \label{Figure:SimplePoWModel}
 \end{figure}
 
@@ -372,7 +371,7 @@ The future work mentioned in the study is closely aligned with the focus of this
 
 \textbf{The CCRI Study } 
 \label{CCRIModelLitRev}
-The state-of-the-art research conducted by Crypto Carbon Ratings Institute focuses specifically on the electricity consumption of post-merge PoS Ethereum. It provided the most up-to-date empirical data that has been cited in other studies such as this one \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. These researchers decided on 6 commodity hardware configurations that they ran idly for base power consumption figures and then ran each major EL and CL client software separately, taking 48-hour electricity measurements. The data was used in their equation (detailed in \sref{CCRIBaseEqnSection}), which was formulated using a combination of experimentation and prior domain knowledge. The accuracy of the model was confirmed by comparing the actual measurements from running Full Nodes to their estimated values, which were found to be highly precise.
+The state-of-the-art research conducted by Crypto Carbon Ratings Institute focuses specifically on the energy consumption of post-merge PoS Ethereum. It provided the most up-to-date empirical data that has been cited in other studies such as this one \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. These researchers decided on 6 commodity hardware configurations that they ran idly for base power consumption figures and then ran each major EL and CL client software separately, taking 48-hour electricity measurements. The data was used in their equation (detailed in \sref{CCRIBaseEqnSection}), which was formulated using a combination of experimentation and prior domain knowledge. The accuracy of the model was confirmed by comparing the actual measurements from running Full Nodes to their estimated values, which were found to be highly precise.
 
 Assumptions and shortcomings of this study:
 \begin{enumerate}

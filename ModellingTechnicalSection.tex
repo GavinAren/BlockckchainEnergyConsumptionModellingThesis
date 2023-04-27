@@ -1,4 +1,4 @@
-\chapter{Modelling The Electricity Usage Of Ethereum}
+\chapter{Modelling The energy Usage Of Ethereum}
 \label{Modelling}
 
 % ____________________________________________________________________________
@@ -43,7 +43,7 @@ This chapter constitutes the technical section of this study, comprising of crea
 % _____________________---stage 1
 \subsection{The base model}
 
-First, the base CCRI equation \cite{CryptoCarbonRatingsInstitute2022TheNetwork} upon which 'Model-A' will be built is introduced below. The symbols denoting each metric have been adjusted for this study, and power and electricity have been synonymously used below. 
+First, the base CCRI equation \cite{CryptoCarbonRatingsInstitute2022TheNetwork} upon which 'Model-A' will be built is introduced below. The symbols denoting each metric have been adapted to the context of this study.
 
 \begin{center}
 A Consensus Layer Client's power usage [in Wh]:
@@ -61,7 +61,7 @@ An Execution Layer Client's power usage [in Wh]:
     \boldsymbol{\mathrm{P}_{ID}}
 \end{equation*} 
 
-Mean electricity usage for each of the 3 client types is denoted by: 
+Mean energy usage for each of the 3 client types is denoted by: 
 \begin{equation*}
   \boldsymbol{\mathrm{{\overline{P}}_{CL}}}\quad      \boldsymbol{\mathrm{{\overline{P}}_{EL}}}\quad  \boldsymbol{\mathrm{{\overline{P}}_{ID}}}   
 \end{equation*}
@@ -81,7 +81,7 @@ The total share of the network occupied by all ${n}$ tested combinations of CL a
     \boldsymbol{{\pi} = \displaystyle\sum\limits_{i=1}^{n}{\phi_{EL,CL}}}
 \end{equation*}
 
-The final CCRI equation for the weighted electricity consumption of an average node for each combination of CL and EL client \cite{CryptoCarbonRatingsInstitute2022TheNetwork}: 
+The final CCRI equation for the weighted energy consumption of an average node for each combination of CL and EL client \cite{CryptoCarbonRatingsInstitute2022TheNetwork}: 
 \label{CCRIBaseEqnSection}
 \begin{equation}
 \boldsymbol{\frac{\displaystyle\sum\limits_{i=1}^{n}{ \left({\left(\mathrm{\overline{P}}_{ID} + \mathrm{\overline{P}}_{CL} + \mathrm{\overline{P}}_{EL}\right)} * {\phi_{EL,CL}} \right)}}
@@ -200,7 +200,7 @@ The lower limit or Y-intercept, $\boldsymbol{\mathrm{C}}$, can be set to the ene
 As seen in \fref{Figure:validatorIncrease}, the CPU approaches its maximum capacity as the number of validators approaches 64, while the SSD does not have to work at under a high workload as it has already synchronised a copy of the blockchain when the first validator was run. Hence, the asymptotic upper limit of the graph, $\boldsymbol{\mathrm{A}}$, can be set to $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ due to the aforementioned reasons in \sref{TDPReasoning}. \\
 $\boldsymbol{\mathrm{x}}$ - denotes the number of additional validator clients run on a node and can only take values from the set of all positive integers. This is because the equation has it lower limit set to running a single validator and is designed to account for any validators added after that. \\
 The growth rate constant $\boldsymbol{\mathrm{k}}$ - determines how quickly the energy consumption increases as the validators increase. It can be calculated on a case-by-case basis for any node. \\
-This equation can be simplified by removing the $\boldsymbol{ + \mathrm{C}}$. It acts as a transition upwards to the graph output by this equation. Removing this transition means we have to subtract $\boldsymbol{ \mathrm{C}}$ from the asymptotic upper-limit $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ too. Through these modifications emerges an equation for $\boldsymbol{{\mathrm{\overline{V}(\mathrm{x})}}}$ that estimates the extra electricity consumed by $\boldsymbol{\mathrm{x}}$ additional validators:
+This equation can be simplified by removing the $\boldsymbol{ + \mathrm{C}}$. It acts as a transition upwards to the graph output by this equation. Removing this transition means we have to subtract $\boldsymbol{ \mathrm{C}}$ from the asymptotic upper-limit $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ too. Through these modifications emerges an equation for $\boldsymbol{{\mathrm{\overline{V}(\mathrm{x})}}}$ that estimates the extra energy consumed by $\boldsymbol{\mathrm{x}}$ additional validators:
 
 \begin{equation}
     \label{eqn:ExpDecay}
@@ -273,7 +273,7 @@ Expanding all terms results in the final equation for 'Model-A' to look like:
      &\boldsymbol{\qquad \qquad \qquad \qquad \qquad \qquad \forall \text{ } x \in \mathbb{Z}^+}\nonumber 
 \end{align}
 
-Note that hardware configuration-specific terms, such as the CPU's TDP, SSD's power usage and even electricity measurements for each client, must be weighted by the estimated share of the network using that node hardware in order to get a better estimate for the network's cumulative electricity consumption. 
+Note that hardware configuration-specific terms, such as the CPU's TDP, SSD's power usage and even electricity measurements for each client, must be weighted by the estimated share of the network using that node hardware in order to get a better estimate for the network's cumulative energy consumption. 
 
 % ___________________________________________________________________MODELS DONE< NOW 
 
@@ -377,7 +377,7 @@ The next part of \eref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}_{1}
 % --------------------------------------------
 
 
-Empirical data on the energy consumption values recorded for all 3 hardware configurations running all clients separately can be found in \tref{Table:ConsumptionValues}. The Nethermind client which now holds a sizeable network share has no empirical electricity consumption data available. Its values are substituted by the other 3 EL clients' averaged values per configuration.
+Empirical data on the energy consumption values recorded for all 3 hardware configurations running all clients separately can be found in \tref{Table:ConsumptionValues}. The Nethermind client which now holds a sizeable network share has no empirical energy consumption data available. Its values are substituted by the other 3 EL clients' averaged values per configuration.
 
 % ----------------------
 \begin{table}[htb!]
@@ -455,7 +455,7 @@ Following \eref{eqn:CCRI}, best guess for an individual node =  \textbf{63.76 Wh
 
 Implementing the final part of \eref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}(\mathrm{x})}}$, accounts for some nodes running multiple validators. 
 
-When users run additional validator clients, they often run a 1000+ to take advantage of the exponential decrease in electricity consumption, seen in \sref{AdditonalNodesReasoning}. Currently, there are 561,472 validators running. Based on this, and for the sake of simplicity, it can be \textbf{assumed} that 1000 additional validators are run on $\sim$562 nodes (of the total $\sim$12000 network nodes), running on mid to high-tier hardware. Thus, following \eref{eqn:Sync} yields:
+When users operate additional validator clients, they often run a 1000+ to take advantage of the exponential decrease in energy consumption, seen in \sref{AdditonalNodesReasoning}. Currently, there are 561,472 validators running. Based on this, and for the sake of simplicity, it can be \textbf{assumed} that 1000 additional validators are run on $\sim$562 nodes (of the total $\sim$12000 network nodes), running on mid to high-tier hardware. Thus, following \eref{eqn:Sync} yields:
 
 $\boldsymbol{\mathrm{\overline{P}}_{TDP}}$ (from \tref{Table:SyncEnergy}): \textbf{205 Wh} \\
 $\boldsymbol{ \overline{\mathrm{V}}_{1}}$ (from \sref{postSyncEnergyImplementation}) : \textbf{63.99 Wh} 
@@ -478,11 +478,11 @@ Once $\boldsymbol{\mathrm{k}}$ has been calculated, $\boldsymbol{\mathrm{x}}$ ca
 \end{center}
 
 The new hourly consumption of the entire network: \textbf{862.66 kWh}. Final results are compiled in \tref{Table:FinalResults}.
-% The new hourly electricity consumption of a single node can be derived: \textbf{70.47} Wh
-% Annual electricity consumption of a single node: 617.30 kWh 
-% Annual electricity consumption of the network: 7.5569 GWh
-% Annual electricity consumption of a single node per transaction: 0.0015738 Wh/tx
-% Annual electricity consumption of the network per transaction: 19.27 Wh/tx
+% The new hourly energy consumption of a single node can be derived: \textbf{70.47} Wh
+% Annual energy consumption of a single node: 617.30 kWh 
+% Annual energy consumption of the network: 7.5569 GWh
+% Annual energy consumption of a single node per transaction: 0.0015738 Wh/tx
+% Annual energy consumption of the network per transaction: 19.27 Wh/tx
 
 
 
@@ -492,7 +492,7 @@ The new hourly consumption of the entire network: \textbf{862.66 kWh}. Final res
 
 % \begin{itemize}
     % \item They have taken the syncing on nodes into account into their model whereas for general modelling, it would be  abetter estimate to ignore this initial set up energy and get an avergae form then on. That is what this paper has done, taking averages of the Raspberry Pi rather than including the syncing energy.
-    % \item The TDP + SSD power usage can be used as an upper limit for the electricity consumption of any hardware set-up
+    % \item The TDP + SSD power usage can be used as an upper limit for the energy consumption of any hardware set-up
     % \item That growth for more than one validator can be modelled by an exponential decay (increasing form)
     % \item This exponential growth has an upper limit of TDP + SSD power usage and using the single validator energy consumption as the lower limit
 %     \item The CCRI model has been verified and is accurate. Thus it is acceptable to use as the base for 'Model-A'
@@ -617,7 +617,7 @@ Being able to model the electricity consumption of PoS Ethereum successfully ans
     \item A In accordance with the quantitative evaluation criteria defined in \sref{MethoologyErrorQuant}, for the results to be deemed satisfactory, $\boldsymbol{\epsilon_\mathrm{rme} \leq 0.2}$. By treating the experimentally verified CCRI model's results as true values and comparing the energy consumption for the entire network per transaction, the $\boldsymbol{\epsilon_\mathrm{rme} = 7.96 * 10^{-2}}$ is obtained, making it acceptable.   
 \end{enumerate}
 
-Model-A accounts for 2 more sources of energy expenditure as compared to the base CCRI model, which explains the average Percentage Increase (PE) of 9.5\% across all values. 9.25\% of it can be attributed to operating additional validators, suggesting that the extra electricity consumed by accounting for $\sim$500000 extra validators was weighted reasonably since it didn't have a disproportionate effect on our final results. 
+Model-A accounts for 2 more sources of energy expenditure as compared to the base CCRI model, which explains the average Percentage Increase (PE) of 9.5\% across all values. 9.25\% of it can be attributed to operating additional validators, suggesting that the extra energy consumed by accounting for $\sim$500000 extra validators was weighted reasonably since it didn't have a disproportionate effect on our final results. 
 
 The UCL model seems to overestimate consumption values. This may stem from the model's lack of complexity, which is a consequence of its generalisation to encompass six PoS blockchains.
 
@@ -630,7 +630,7 @@ The UCL model seems to overestimate consumption values. This may stem from the m
 PoS Ethereum has had a reduction of 99.997\% in its overall energy use when compared to PoW Ethereum's consumption average over 2022, going from 24.99TWh/year to 7.56kWh/year according to Model-A(\cite{CCRIIndices}). This answers RQ2 (\sref{ResearchQuestions}) - the claimed energy reduction of 99.988\% is only inaccurate by less than 0.01\% according to Model-A, as shown in \fref{Figure:PaypalEthElectrcityPlot}.
 
 According to \fref{Figure:ElectricityConsumptionPlot}, Visa can process 
-$\sim$156 transactions in the same electricity it takes PoS Ethereum to complete a single one. This often-made comparison is not one that is fair to make. Ethereum is a completely self-contained monetary system, whereas Visa relies on a range of intermediaries such as the global banking system, SWIFT and the diplomatic strength of the U.S. government \cite{Carter2021BitcoinComparison}. It is like comparing apples to kangaroos. Instead, Ethereum should be compared to Paypal, a platform that, along with digital payments, also offers other financial services and bank-like services.  
+$\sim$156 transactions in the same amount of energy it takes PoS Ethereum to complete a single one. This often-made comparison is not one that is fair to make. Ethereum is a completely self-contained monetary system, whereas Visa relies on a range of intermediaries such as the global banking system, SWIFT and the diplomatic strength of the U.S. government \cite{Carter2021BitcoinComparison}. It is like comparing apples to kangaroos. Instead, Ethereum should be compared to Paypal, a platform that, along with digital payments, also offers other financial services and bank-like services.  
 
 \begin{figure}[!htb]
     \includegraphics[width=13cm,center]{Figures/PaypalEthElectrcityPlot.png}
@@ -638,7 +638,7 @@ $\sim$156 transactions in the same electricity it takes PoS Ethereum to complete
     \label{Figure:PaypalEthElectrcityPlot}
 \end{figure}
 
-\fref{Figure:PaypalEthElectrcityPlot} shows that Ethereum 2.0 is impressively close to Paypal's electricity consumption while maintaining decentralisation, according to Model-A.
+\fref{Figure:PaypalEthElectrcityPlot} shows that Ethereum 2.0 is impressively close to Paypal's energy consumption while maintaining decentralisation, according to Model-A.
 
 
 
