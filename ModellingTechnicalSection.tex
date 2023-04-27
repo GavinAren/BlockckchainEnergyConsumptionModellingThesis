@@ -298,7 +298,7 @@ PoS Ethereum was aimed at being run on commodity hardware. Keeping this, as well
 
 \textbf{Step 1 - Average Sync Energy of a Node}
 
-No empirical data was available for implementing the first part of 'Model-A', \eref{eqn:FinalEqnShort}, denoted by $\boldsymbol{\mathrm{P}_{SNC}}$. Non-scientific data gathered on the synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$, reported by users employing varying combinations of hardware and EL clients, can be found in \tref{Table:ELRunTime} of the appendix. This data is limited and thus insufficient to differentiate between the sync times for the 4 major EL clients. However, it is sufficient to estimate the average sync time of varying tiers of node hardware (relative to \tref{Table:CCRIhardwareConfig}), presented in \tref{Table:SyncEnergy}. Data collected on hardware running the Geth client was \textbf{assumed} to be more representative and given a higher weighting due to its high network share of $\sim$ 70\%. 
+No empirical data was available for implementing the first part of 'Model-A', \eref{eqn:FinalEqnShort}, denoted by $\boldsymbol{\mathrm{P}_{SNC}}$. Non-scientific data gathered on the synchronisation time $\boldsymbol{\mathrm{T}_{EL}}$, reported by users employing varying combinations of hardware and EL clients, can be found in Appendix B. This data is limited and thus insufficient to differentiate between the sync times for the 4 major EL clients. However, it is sufficient to estimate the average sync time of varying tiers of node hardware (relative to \tref{Table:CCRIhardwareConfig}), presented in \tref{Table:SyncEnergy}. Data collected on hardware running the Geth client was \textbf{assumed} to be more representative and given a higher weighting due to its high network share of $\sim$ 70\%. 
 
 Varying external factors affect a user's decision to choose the appropriate hardware for their node, ranging from different profit structures to low-budget devices and future-proof hardware. There is an immeasurable amount of hardware configurations that users could opt for. Thus, we model this distribution of the 3 categories of node hardware using a continuous distribution, particularly - the CDF (Cumulative distribution function) of the standard normal distribution. This distribution was divided into 3 parts; 25\% of the network is \textbf{assumed} to opt for the low-tier hardware (configuration 4), 50\% for the mid-tier (configuration 5) and 25\% for the high-tier hardware (configuration 6), presented in \tref{Table:SyncEnergy}. 
 
@@ -623,7 +623,7 @@ The UCL model seems to overestimate consumption values. This may stem from the m
 
 \begin{figure}[!htb]
     \includegraphics[width=13cm,center]{Figures/ElectricityConsumptionPlot.png}
-    \caption{2022 data on electricity consumption per transaction for Bitcoin \cite{BitcoinDigiconomist}, Ethereum 2.0 [from Model-A] and Visa \cite{2022VisaReport}, \cite{VisaHome} plotted on a logarithmic scale. The code is in Appendix C, \fref{Figure:ElectrictyConsumptionPlotCode}}
+    \caption{2022 data on electricity consumption per transaction for Bitcoin \cite{BitcoinDigiconomist}, Ethereum 2.0 [from Model-A] and Visa \cite{2022VisaReport}, \cite{VisaHome} plotted on a logarithmic scale. Code available in Appendix C}
     \label{Figure:ElectricityConsumptionPlot}
 \end{figure}
 
@@ -634,7 +634,7 @@ $\sim$156 transactions in the same electricity it takes PoS Ethereum to complete
 
 \begin{figure}[!htb]
     \includegraphics[width=13cm,center]{Figures/PaypalEthElectrcityPlot.png}
-    \caption{Electricity consumption per transaction for Ethereum 1.0 \cite{CCRIIndices}, \cite{EthereumBlockchair}, Ethereum 2.0 [from Model-A] and Paypal \cite{2007IntroductionPayPal}. The code is in Appendix C, \fref{Figure:PaypalEthElectrciityPlotCode}}
+    \caption{Electricity consumption per transaction for Ethereum 1.0 \cite{CCRIIndices}, \cite{EthereumBlockchair}, Ethereum 2.0 [from Model-A] and Paypal \cite{2007IntroductionPayPal}. Code found in Appendix C.}
     \label{Figure:PaypalEthElectrcityPlot}
 \end{figure}
 
