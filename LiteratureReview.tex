@@ -1,28 +1,28 @@
 \chapter{Literature Review}
 % -_____________________________________________________________________________
 
-This section introduces the basics of Ethereum and blockchains to the reader before acquainting them with the current state of research in the field.
+This section introduces the foundations of blockchain systems and Ethereum to the reader before acquainting them with the current state of research in the field.
 
-The terms \textbf{power} and \textbf{energy} refer to \textbf{electrical energy} through this study. 
+The terms '\textbf{power}' and '\textbf{energy}' refer to \textbf{electrical energy} through this study. 
 
 % -_____________________________________________________________________________
 
 \section{Blockchain Basics}
 
-Blockchain technology has been acknowledged as a transformative innovation in many industries beyond cryptocurrencies, such as Internet of Things (IoT), healthcare and especially logistics and finance, since its inception in 2008 by Nakamoto in Bitcoin \cite{NakamotoBitcoin:System}. Compared to traditional centralised systems, blockchain offers several distinct advantages, including immutability, heightened security, fault tolerance, transparency and empowering users with a greater level of control through decentralisation.
+Blockchain has been recognised as a transformative innovation in many industries beyond cryptocurrencies, such as  healthcare, Internet of Things (IoT), logistics and especially finance. It was first introduced in 2008 by Nakamoto \cite{NakamotoBitcoin:System}. Compared to traditional centralised systems, blockchain offers several distinct advantages, including immutability, heightened security, fault tolerance, transparency and it gives users a greater level of control, all through decentralisation.
 
 \subsection{How it works}
 
-Similar to a linked list, a blockchain is a series of 'blocks' containing some information, with each block linked to the block before, using deterministic cryptographic hashes. This forms an immutable chain of blocks holding hashed information that cannot be altered, known as the ledger, shown in \fref{Figure:BasicBlockchain}. Going back and altering any block in this ledger invalidates the hashes of all the blocks after it. This is what makes blockchains resistant to data modification (\textbf{immutable}). Each participating machine is called a node on the network. Each node holds its personal copy of the transactions and hashed blocks and is responsible for spreading any new transaction information to the whole network.
+A blockchain is similar to a linked list in that it consists of a series of blocks containing transaction information. Each block is linked to the one before it using deterministic cryptographic hashes, forming an immutable chain of blocks that hold hashed information which cannot be altered. This chain of blocks is also known as the public \textbf{ledger}, depicted in \fref{Figure:BasicBlockchain}. Altering any of the blocks in this ledger will invalidate the hashes of all the blocks after it, making blockchain technology resistant to data modification. Computers choosing to participate in a blockchain network are called \textbf{nodes}, each of which hold a copy of the public ledger. This ledger is updated as new transaction information is received by the node, which is also responsible for propagating it to the rest of the network.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=13cm,center]{Figures/BlockchainStructure.png}
-    \caption{The data structure underlying blockchain \cite{ADocumentation}. The first block is called the Genesis Block.}
+    \caption{The data structure underlying blockchain. The first block is called the Genesis Block. Source: \cite{ADocumentation}.}
     \label{Figure:BasicBlockchain}
 \end{figure}
 
-Blockchain removes the need for an intermediary, such as a bank, to mediate a transaction between 2 parties. External authorities are not required to validate the authenticity and integrity of data. It is a decentralised data structure that serves as the single source of truth to all nodes on the network creating trust between anonymous actors.
+The public ledger is a decentralised data structure that serves as the single source of truth to all nodes on the network creating trust between anonymous actors. This removes the need for an intermediary, like a bank, to mediate a transaction between 2 parties. External authorities are not required to validate the authenticity and integrity of data either.
 
 
 
@@ -30,48 +30,56 @@ Blockchain removes the need for an intermediary, such as a bank, to mediate a tr
 
 \subsection{Consensus Protocols}
 
-The consensus protocol chosen determines how nodes validate and agree on any new transactions being added to the public ledger, and it varies between different blockchains. It makes sure that all nodes in a network have a consistent view of the ledger. This mechanism plays a crucial role in safeguarding against a variety of attacks that malicious nodes could attempt.
+The consensus protocol determines how nodes validate and agree on any new transactions being permanently added to the public ledger, and it varies between different blockchains. It makes sure that all nodes in a network have a consistent view of the ledger. This mechanism plays a crucial role in safeguarding against a variety of attacks that malicious nodes could attempt.
 % -_____________________________________________________________________________
 
 \subsubsection{Proof-Of-Work}
 
-PoW is the consensus algorithm that couples voting weight with computing 
-power. Thus it relies on computational resources to defend against the Sybil attack \cite{Sedlmeir2020TheMyth}.
+PoW (Proof-Of-Work) is a type of consensus algorithm that couples voting weight with computing 
+power. It relies on the network's computational resources to defend against the Sybil Attack \cite{Sedlmeir2020TheMyth}.
 
-\textbf{Miners} are nodes actively participating in the consensus-forming process. Miners compete 
-to solve a computationally challenging mathematical puzzle in order to verify a group of transactions included in a block. In a brute-force manner, miners try to guess the right 'nonce' (number only used once) that when it is combined with the rest of the block header information and hashed, the hash has to have a certain number of leading zeros at the beginning. It is like trying to guess the number of a winning lottery ticket. It is challenging to produce (in terms of time and compute power) but easy to verify for other nodes \cite{Centieiro2021BitcoinCoding}. Once a node guesses the correct 'nonce', it broadcasts it to the rest of the network for validation. When most other miners have agreed on its legitimacy, the new block can permanently be added to the blockchain ledger, and the block proposer is rewarded with mining fees.
+In PoW, nodes that actively chose to participate in the consensus-forming process are called \textbf{'miners'}. These miners compete 
+to solve a computationally challenging mathematical puzzle in order to verify a group of transactions included in a block. 
+% CAN BE CUT**
+In a brute-force manner, miners try to guess the right 'nonce' (number only used once) that when it is combined with the rest of the block header information and hashed, the hash has to have a certain number of leading zeros at the beginning. 
+% ---
+It is like trying to guess the number of a winning lottery ticket. It's challenging to produce (in terms of time and compute power) but easy to verify for other nodes \cite{Centieiro2021BitcoinCoding}. Once a node guesses the correct 'nonce', it proposes it to the rest of the network for validation. When most other miners have agreed on its legitimacy, the new block is permanently added to the blockchain ledger, and the block proposer is rewarded with mining fees and tips associated with those transactions.
 
 % -_____________________________________________________________________________
 
 \subsubsection{Proof-Of-Stake}
 
-PoS is a consensus protocol that relies on economic power rather than computational power to secure the network. It requires nodes called ‘validators’ to put up a set amount of their cryptocurrency at stake (as collateral). In exchange, they increase their chance of being randomly selected as the block proposer for the next round of transactions and consequently earn the block rewards that come with it \cite{King2012PPCoin:Proof-of-Stake}. In some implementations of PoW, the more a validator puts at stake, the higher their chance of being picked as the block proposer. If a validator submits a fraudulent transaction or tampers with transaction information, they risk losing their staked cryptocurrency and any block rewards they may have received, as other observing nodes always verify each new block \cite{Napoletano2022WhatAdvisor}. 
+PoS (Proof-Of-Stake) is a newer consensus protocol that relies on economic power rather than computational power to secure the blockchain. In PoW, nodes choosing to participate in the consensus-forming process are called \textbf{'validators'}, which put up a set amount of their cryptocurrency at stake (as collateral). In exchange, they increase their chance of being randomly selected as the block proposer for the next round of transactions and consequently earn the block rewards that come with it \cite{King2012PPCoin:Proof-of-Stake}. In some implementations of PoS, the more a validator puts at stake, the higher their chance of being picked as the block proposer. Suppose a validator submits a fraudulent transaction or tampers with any transaction information. In that case, they risk losing their staked cryptocurrency and any block rewards they may have received, as other observing nodes always verify each new block \cite{Napoletano2022WhatAdvisor}. 
 
-PoS is a much less energy-intensive design compared to PoW.
-
-% -_____________________________________________________________________________
+Compared to PoW, PoS is a much less energy-intensive mechanism by design.
 
 % -_____________________________________________________________________________
 
-\section{Ethereum Basics}
+% -_____________________________________________________________________________
 
-Ethereum was introduced in 2015 by Vitalik Buterin as a blockchain platform with capabilities beyond cryptocurrency. It features smart contracts, which are segments of code that contain specific conditions. These contracts enable the creation of self-executing programs that activate automatically when the specified criteria are met. Ethereum's blockchain forms the backbone for a variety of applications, including Decentralized Applications (DApps), thanks to the functionality of smart contracts.
+\section{Introduction to Ethereum}
 
-Nodes that communicate over a network following the 'ETH' protocol form the Ethereum network, also called the Ethereum 'mainnet'. These nodes contribute to maintaining and securing a globally agreed state of the Ethereum Virtual Machine (EVM). This was also described as 'one computer for the entire planet" by Ethereum co-founder Gavin Wood in 2016\cite{Ethereum:Industries}. 
+Ethereum is an open-source blockchain platform that has grown to become the world's second largest blockchain (after Bitcoin) by market capitalisation. It was introduced in 2015 by Vitalik Buterin as a platform with capabilities beyond just cryptocurrency \cite{ButerinEthereum:Platform.}. It features smart contracts, which are self-executing programs that automatically activate when the specified criteria are met. The Ethereum blockchain forms the backbone for a variety of applications, including Decentralised Applications (DApps), thanks to the functionality of smart contracts.
 
-The security of this network comes from a majority of nodes agreeing on the new change to the state of this EVM. In other words, agreeing on the next block to be permanently added to the blockchain ledger. Such nodes are paid in Ethereum's native cryptocurrency, \textbf{Ether (ETH)}, to run validator software that validates new blocks received over the peer-to-peer network.
+Nodes that communicate following the 'ETH' protocol make up the Ethereum network, also called the Ethereum 'mainnet'. These nodes all contribute to maintaining and securing a globally agreed state of the Ethereum Virtual Machine (EVM). This was also described as 'one computer for the entire planet" by Ethereum co-founder Gavin Wood in 2016 \cite{Ethereum:Industries}. 
 
-Ethereum is a public, permissionless network, which means that anyone can access and participate in its operations. The interaction between a client and the Ethereum blockchain is enabled by the JSON RPC(Remote Procedure Call) API. When any user wants to complete a transaction with another user across the network, they:
+The security of this network comes from a majority of nodes agreeing on a new change to the current state of the EVM. In other words, agreeing on the next block to be permanently added to the blockchain ledger. Such consensus-forming nodes are paid in Ethereum's native cryptocurrency, \textbf{Ether (ETH)}, for running validator software that helps validate new blocks received over the peer-to-peer network.
+
+Ethereum is a public, permissionless network, which means that anyone can access and participate in its operations. 
+% ---
+The interaction between a client and the Ethereum blockchain is enabled by the JSON RPC(Remote Procedure Call) API. 
+% --
+When a user wants to complete a transaction with another user on the network, they:
 \begin{enumerate}
     \item Need to specify the transaction amount
     \item Secure the transaction with their own private key
-    \item Specify the tip they are willing to pay on top of the base transaction fees (both in 'gas' units) to incentivise a validator to validate and include their transaction in an upcoming block
+    \item Specify the tip they are willing to pay on top of the base transaction fees (defined in 'gas' units) to a validator to validate and include their transaction in an upcoming block
 \end{enumerate}
 
 The ETH Execution client verifies the transaction request by checking things like whether the user has enough ETH to complete the transaction and if they have used the correct private key etc. \cite{EthereumEthereum.org}. 
 This transaction request is then broadcasted to every other validator node over the execution layer 'gossip network'. Every validator adds this transaction to their local \textbf{'mempool'}. This is a collection of unverified transactions that are waiting to be processed and added to a new block.
 
-During the pre-merge Proof-of-Work (PoW) era of Ethereum, \textbf{miners} competed to solve a mathematical problem using their computational power, and the first one to solve it was rewarded with Ether and earned the right to add a block to the blockchain. The difficulty of the problem automatically increased with the number of miners, making it computationally expensive and energy-intensive. 
+During the pre-merge PoW era of Ethereum, \textbf{miners} used to compete to solve a mathematical problem using their computational power, and the winner was rewarded with Ether and earned the right to add a block to the blockchain. As more miners joined the network, the difficulty of the problem proportionally increased, resulting in a computationally expensive and energy-intensive process.
 % -_____________________________________________________________________________
 
 % ________________________________________________________________________________-
@@ -79,22 +87,22 @@ During the pre-merge Proof-of-Work (PoW) era of Ethereum, \textbf{miners} compet
 % -_____________________________________________________________________________
 \section{Post-Merge PoS Ethereum}
 
-"The Merge", also known as the "Paris Upgrade", happened on 15$\mathrm{^{th}}$ September 2022. The Ethereum Blockchain switched from the older Proof of Work (PoW) to the Proof-of-Stake (PoS) consensus protocol. It was coined 'the Merge' as the Beacon Chain (a test network) was merged with the original Ethereum network. Both networks now operate simultaneously in layers. The older Ethereum chain is now known as the 'execution' layer (EL), now secured by the PoS 'consensus' layer (CL), formerly known as the Beacon Chain. 
+"The Merge", also known as the Paris Upgrade, took place on 15$\mathrm{^{th}}$ September 2022. The Ethereum Blockchain switched from the older Proof of Work (PoW) consensus protocol to Proof-of-Stake (PoS). The name "The Merge" derives from the fact that the Beacon Chain, a test network for Ethereum 2.0, was merged with the original Ethereum network. Both networks now operate simultaneously in layers. The old Ethereum chain is now referred to as the 'execution' layer (EL), now secured by the PoS 'consensus' layer (CL), formerly known as the Beacon Chain. 
 
-The merge of the original chain with the Beacon Chain makes miners redundant. \textbf{Validator nodes} now secure the Ethereum network. 
+The merge of the original chain with the Beacon Chain made miners redundant. The Ethereum blockchain is now secured by \textbf{validator nodes}. 
 
-\subsubsection{Full Nodes}
+\subsection{Full Nodes}
 There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEthereum.org}. Following this altruistic mantra, running a Full Node allows a user to interact with the Ethereum Network in a trustless and self-sufficient manner. Everything can be checked and verified by your own node, removing the need to trust information from any other nodes in the network. 
 
 Full Nodes need to run both an EL and CL client and must have  synchronised with the latest version of the blockchain in order to interact with the blockchain. 
 
-\subsubsection{Validator Clients}
+\subsection{Validator Clients}
 \label{ValidatorsLitRev}
 To participate in the validation of transactions, Full Nodes must run an additional validator client and put 32 ETH at stake (currently equivalent to £45000) as collateral. Validator nodes are responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. Each Full Node can run multiple validator client instances, only limited by their computation and financial capacity.
 
 Blocks are 'forged' by validators at a fixed tempo in PoS Ethereum. Every 12-second time \textbf{'slot'}, a pseudo-randomly selected validator gets to forge a new block and broadcast it to the rest of the network. Validators can choose which transactions in their mempool they will include in their next block. Validator client software executes these transactions locally, proposing a state change (such as a change in account balances). Once it completes enough transactions to fill up a block (there is a gas limit per block), it proposes this signed 'beacon' block to all other validators over the consensus layer (CL) network. This block is also wrapped in other information such as rewards, slashings, and attestations, which are discussed later.
 
-32 time slots make up an \textbf{epoch}, usually around 6 minutes. For every slot, apart from selecting a block proposer (validator), a small committee of nodes is also randomly selected, whose votes determine whether the proposed block is valid or not. When these nodes receive the proposed block from the chosen validator, they pass it on to their Execution Layer Client (EL), where the block's data is verified. This includes ensuring the block corresponds to the correct slot, correct parent etc. Most importantly, the transactions in the block are re-executed to check that the proposed state changes are valid \cite{EthereumEthereum.org}. If the new block passes all checks, the nodes add it to their own local canonical blockchain. The one they believe to be the single source of truth. 
+32 time slots make up an \textbf{epoch} ($\sim$6 minutes). For every slot, apart from selecting a block proposer (validator), a small committee of nodes is also randomly selected, whose votes determine whether the proposed block is valid or not. When these nodes receive the proposed block from the chosen validator, they pass it on to their Execution Layer Client (EL), where the block's data is verified. This includes ensuring the block corresponds to the correct slot, correct parent etc. Most importantly, the transactions in the block are re-executed to check that the proposed state changes are valid \cite{EthereumEthereum.org}. If the new block passes all checks, the nodes add it to their own local canonical blockchain. The one they believe to be the single source of truth. 
 
 The algorithm judges each validator's actions and dishes out rewards and penalties at the end of each epoch accordingly. 
 
@@ -108,7 +116,7 @@ Validators in a voting committee are expected to create, sign and broadcast thei
 \begin{figure}[h]
     \centering
     \includegraphics[width=13cm,center]{Figures/AttestationsDiragram.png}
-    \caption{A diagram visualising the new block proposal and attestation process in PoS Ethereum}
+    \caption{A flow diagram visualising the new block proposal and attestation process in PoS Ethereum}
     \label{Figure:AttestationsDiragram}
 \end{figure}
  
@@ -375,13 +383,13 @@ The state-of-the-art research conducted by Crypto Carbon Ratings Institute focus
 
 Assumptions and shortcomings of this study:
 \begin{enumerate}
-    \item Different combinations of clients were run to form Full Nodes. However, the next step of running a validator client on the Full Node was not taken due to the barrier of staking 32 ETH. The effects of running a validator client on top of a Full Node were assumed to be negligible.
+    \item Different combinations of clients were run to form Full Nodes. However, the next step of running a validator client on the Full Node was not taken due to the barrier of staking 32 ETH. The energy expenditure of operating a validator client on top of a Full Node was assumed to be negligible.
     
     \item The synchronisation energy consumed whilst bootstrapping Full Nodes was not considered.
     
     \item Other node types, such as Light and Archive Nodes, were not considered, presumably due to assuming that they would have negligible effects.
 
-    \item The electricity data was collected using computer software, but there is no information available on the type of power supply and mainboard used in the experiments. Therefore, the measurements only account for the electricity consumed by the computer itself and do not factor in the power draw 'At-Wall' or any electrical inefficiencies. \cite{Warkozek2012ACenters}
+    \item The electricity data was collected using computer software rather than a hardware meter, and no information is available on the type of power supply and mainboard used in the experiment. Therefore, the measurements only account for the electricity consumed by the computer itself and do not factor in the power drawn 'At-Wall' or any electrical inefficiencies. \cite{Warkozek2012ACenters}
 \end{enumerate}
  
 
