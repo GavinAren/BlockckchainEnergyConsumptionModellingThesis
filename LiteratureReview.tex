@@ -41,7 +41,7 @@ power. It relies on the network's computational resources to defend against the 
 In PoW, nodes that actively chose to participate in the consensus-forming process are called \textbf{'miners'}. These miners compete 
 to solve a computationally challenging mathematical puzzle in order to verify a group of transactions included in a block. 
 % CAN BE CUT**
-In a brute-force manner, miners try to guess the right 'nonce' (number only used once) that when it is combined with the rest of the block header information and hashed, the hash has to have a certain number of leading zeros at the beginning. 
+% In a brute-force manner, miners try to guess the right 'nonce' (number only used once) that when it is combined with the rest of the block header information and hashed, the hash has to have a certain number of leading zeros at the beginning. 
 % ---
 It is like trying to guess the number of a winning lottery ticket. It's challenging to produce (in terms of time and compute power) but easy to verify for other nodes \cite{Centieiro2021BitcoinCoding}. Once a node guesses the correct 'nonce', it proposes it to the rest of the network for validation. When most other miners have agreed on its legitimacy, the new block is permanently added to the blockchain ledger, and the block proposer is rewarded with mining fees and tips associated with those transactions.
 
@@ -65,19 +65,19 @@ Nodes that communicate following the 'ETH' protocol make up the Ethereum network
 
 The security of this network comes from a majority of nodes agreeing on a new change to the current state of the EVM. In other words, agreeing on the next block to be permanently added to the blockchain ledger. Such consensus-forming nodes are paid in Ethereum's native cryptocurrency, \textbf{Ether (ETH)}, for running validator software that helps validate new blocks received over the peer-to-peer network.
 
-Ethereum is a public, permissionless network, which means that anyone can access and participate in its operations. 
-% ---
-The interaction between a client and the Ethereum blockchain is enabled by the JSON RPC(Remote Procedure Call) API. 
-% --
-When a user wants to complete a transaction with another user on the network, they:
-\begin{enumerate}
-    \item Need to specify the transaction amount
-    \item Secure the transaction with their own private key
-    \item Specify the tip they are willing to pay on top of the base transaction fees (defined in 'gas' units) to a validator to validate and include their transaction in an upcoming block
-\end{enumerate}
+% Ethereum is a public, permissionless network, which means that anyone can access and participate in its operations. 
+% % ---
+% The interaction between a client and the Ethereum blockchain is enabled by the JSON RPC(Remote Procedure Call) API. 
+% % --
+% When a user wants to complete a transaction with another user on the network, they:
+% \begin{enumerate}
+%     \item Need to specify the transaction amount
+%     \item Secure the transaction with their own private key
+%     \item Specify the tip they are willing to pay on top of the base transaction fees (defined in 'gas' units) to a validator to validate and include their transaction in an upcoming block
+% \end{enumerate}
 
-The ETH Execution client verifies the transaction request by checking things like whether the user has enough ETH to complete the transaction and if they have used the correct private key etc. \cite{EthereumEthereum.org}. 
-This transaction request is then broadcasted to every other validator node over the execution layer 'gossip network'. Every validator adds this transaction to their local \textbf{'mempool'}. This is a collection of unverified transactions that are waiting to be processed and added to a new block.
+% The ETH Execution client verifies the transaction request by checking things like whether the user has enough ETH to complete the transaction and if they have used the correct private key etc. \cite{EthereumEthereum.org}. 
+% This transaction request is then broadcasted to every other validator node over the execution layer 'gossip network'. Every validator adds this transaction to their local \textbf{'mempool'}. This is a collection of unverified transactions that are waiting to be processed and added to a new block.
 
 During the pre-merge PoW era of Ethereum, \textbf{miners} used to compete to solve a mathematical problem using their computational power, and the winner was rewarded with Ether and earned the right to add a block to the blockchain. As more miners joined the network, the difficulty of the problem proportionally increased, resulting in a computationally expensive and energy-intensive process.
 % -_____________________________________________________________________________
@@ -87,69 +87,66 @@ During the pre-merge PoW era of Ethereum, \textbf{miners} used to compete to sol
 % -_____________________________________________________________________________
 \section{Post-Merge PoS Ethereum}
 
-"The Merge", also known as the Paris Upgrade, took place on 15$\mathrm{^{th}}$ September 2022. The Ethereum Blockchain switched from the older Proof of Work (PoW) consensus protocol to Proof-of-Stake (PoS). The name "The Merge" derives from the fact that the Beacon Chain, a test network for Ethereum 2.0, was merged with the original Ethereum network. Both networks now operate simultaneously in layers. The old Ethereum chain is now referred to as the 'execution' layer (EL), now secured by the PoS 'consensus' layer (CL), formerly known as the Beacon Chain. 
+"The Merge", also known as the Paris Upgrade, took place on 15$\mathrm{^{th}}$ September 2022. The Ethereum Blockchain switched from the older Proof of Work (PoW) consensus protocol to Proof-of-Stake (PoS). The name "The Merge" derives from the fact that the Beacon Chain, a test network for Ethereum 2.0, was merged with the original Ethereum network. Both networks now operate simultaneously in layers. The old Ethereum chain is now referred to as the 'execution' layer (EL), now secured by the PoS 'consensus' layer (CL), formerly known as the Beacon Chain \cite{EthereumEthereum.org}. 
 
-The merge of the original chain with the Beacon Chain made miners redundant. The Ethereum blockchain is now secured by \textbf{validator nodes}. 
+The merge of the original chain with the Beacon Chain made miners redundant. The Ethereum blockchain is now secured by \textbf{Validator Nodes}. 
 
-\subsection{Full Nodes}
-There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEthereum.org}. Following this altruistic mantra, running a Full Node allows a user to interact with the Ethereum Network in a trustless and self-sufficient manner. Everything can be checked and verified by your own node, removing the need to trust information from any other nodes in the network. 
+\subsection{Types of Nodes}
 
-Full Nodes need to run both an EL and CL client and must have  synchronised with the latest version of the blockchain in order to interact with the blockchain. 
+The 4 main types of nodes include Full, Validator, Archive and Light Nodes. Archive nodes are designed to maintain an exact and complete copy of the entire ledger, dating back to the Genesis block. Light Nodes, on the other hand, offer a lightweight solution for users to interact with the Ethereum network, allowing for wider participation. The two remaining node types are discussed in detail below.
 
-\subsection{Validator Clients}
+\subsubsection{Full Nodes}
+There is a popular mantra in blockchain, "Don't trust, verify" \cite{EthereumEthereum.org}. Following this altruistic mantra, users running a Full Node can interact with the Ethereum network in a trustless and self-sufficient manner. Everything is checked and verified by your own node, helping to secure the network while removing the need to trust information received from other nodes. 
+
+Full Nodes need to run both execution and consensus layer client software and must also be synchronised with the latest version of the public ledger in order to interact with the blockchain. 
+
+To complete a transaction with another user on the network, users need to specify the amount in ETH, secure it with their private key, and set a tip for validators to incentivise them to include the transaction in an upcoming block.
+
+The Ethereum EL client locally verifies the transaction request, ensuring the user has sufficient funds and a valid private key, before broadcasting it to all validator nodes via the gossip network. Validators then add this transaction to their local \textbf{'mempool'}, a collection of unverified transactions waiting to be processed and added to a new block \cite{EthereumEthereum.org}.
+
+\subsubsection{Validator Nodes}
 \label{ValidatorsLitRev}
-To participate in the validation of transactions, Full Nodes must run an additional validator client and put 32 ETH at stake (currently equivalent to £45000) as collateral. Validator nodes are responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. Each Full Node can run multiple validator client instances, only limited by their computation and financial capacity.
+Validator Nodes are responsible for storing data, processing transactions and adding new blocks to the Ethereum blockchain permanently. To participate in the consensus-forming process of validating transactions, Full Nodes must run an additional validator client software and put 32 ETH at stake (currently equivalent to £45000) as collateral. Each Full Node can run multiple validator client instances, limited only by their computational and financial capacity.
 
-Blocks are 'forged' by validators at a fixed tempo in PoS Ethereum. Every 12-second time \textbf{'slot'}, a pseudo-randomly selected validator gets to forge a new block and broadcast it to the rest of the network. Validators can choose which transactions in their mempool they will include in their next block. Validator client software executes these transactions locally, proposing a state change (such as a change in account balances). Once it completes enough transactions to fill up a block (there is a gas limit per block), it proposes this signed 'beacon' block to all other validators over the consensus layer (CL) network. This block is also wrapped in other information such as rewards, slashings, and attestations, which are discussed later.
+Every 12-second \textbf{slot}, Validator Nodes are responsible for one of the two:
 
-32 time slots make up an \textbf{epoch} ($\sim$6 minutes). For every slot, apart from selecting a block proposer (validator), a small committee of nodes is also randomly selected, whose votes determine whether the proposed block is valid or not. When these nodes receive the proposed block from the chosen validator, they pass it on to their Execution Layer Client (EL), where the block's data is verified. This includes ensuring the block corresponds to the correct slot, correct parent etc. Most importantly, the transactions in the block are re-executed to check that the proposed state changes are valid \cite{EthereumEthereum.org}. If the new block passes all checks, the nodes add it to their own local canonical blockchain. The one they believe to be the single source of truth. 
+\textbf{1) Proposing a New Block}
 
-The algorithm judges each validator's actions and dishes out rewards and penalties at the end of each epoch accordingly. 
+In PoS Ethereum, blocks are "forged" by validators at a fixed pace. Every 12-second \textbf{'slot'}, a validator is randomly selected to forge a new block and broadcast it to the rest of the network. Validators can select which transactions from their mempool to include in the next block. Validator client software executes these transactions locally, proposing a state change (such as a change in account balances). Once the block is full, the validator proposes it to other validators over the consensus layer network. This block is also wrapped in other information such as rewards, slashings, and attestations, discussed later \cite{EthereumEthereum.org}.
 
-% \textbf{Sharding} \label{Sharding}
-% One solution to increasing the number of transactions throughput on the network is sharding. It refers to splitting the entire Ethereum network into 64 portions called \textbf{shards} \cite{Buterin2020Annotated-spec/beacon-chain.mdEthereum/annotated-spec}. Each shard would contain its own independent state. It is an attempt at breaking up the blockchain into smaller parts no nodes are not responsible for processing or re-executing every single transaction broadcasted on the Ethereum network. Each shard is still connected to the main Ethereum chain cryptographically through merkle trees. \cite{EthereumEthereum.org} 
+\textbf{2) Validation \& Attestations}
+\label{AttestationsLitRev}
 
+Every slot, a small committee of nodes is also randomly selected, whose \textbf{attestations} (votes) determine whether the block proposed is valid or not. Nodes verify the proposed block with their EL client by checking the block's data, ensuring the correct slot, parent, etc., and, most importantly, re-executing the transactions to confirm that the proposed state changes are valid \cite{EthereumEthereum.org}. If the new block passes all checks, validators in each voting committee are expected to create, sign and broadcast their attestations to the rest of the network over the \textbf{gossip} network. If enough nodes agree, the block is added to the blockchain,  illustrated in \fref{Figure:AttestationsDiragram}. 
 
-\textbf{Attestations}
-\label{attestationLitRev}
-Validators in a voting committee are expected to create, sign and broadcast their attestations(votes) to the rest of the network over the gossip network. These votes are either for or against the block being proposed in a specific slot. For each of the 64 committees formed, chosen aggregator nodes are responsible for aggregating their votes and propagating this information to the rest of the consensus nodes. If enough nodes agree on the block, it is added to the blockchain. 
-\begin{figure}[h]
+% \clearpage
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=13cm,center]{Figures/AttestationsDiragram.png}
     \caption{A flow diagram visualising the new block proposal and attestation process in PoS Ethereum}
     \label{Figure:AttestationsDiragram}
 \end{figure}
- 
+
+ % ---CAN BE REMOVED**
 \textbf{Staking ETH}
 
-There are many different ways to stake ETH as a validator, as not everyone has access to or is prepared to lock up 32 ETH for an indefinite period. To get past this high barrier of entry, users can opt for solo staking, staking-as-a-service, pooled staking or centralised exchanges using 3$\mathrm{^{rd}}$ parties. 
+In Ethereum, an \textbf{epoch} is comprised of 32 slots ($\sim$6 minutes). The algorithm judges each validator's actions and dishes out rewards and penalties at the end of each epoch accordingly. Rewards for staking ETH and operating a Validator Node come in the form of transaction fees and tips paid by users. However, there are also some risks involved.
 
-The rewards of running a validator node come with some risks including:
- % ***shorten this section, kee relevant bits
- 
 \textbf{Slashing :}
-This is when the algorithm destroys a portion of a validator's stake for behaving maliciously/ against the best interests of the network.
+This is when a portion of a validator's stake is destroyed for behaving maliciously or against the best interests of the network.
 
 \textbf{Offline Penalty :}
-If a validator goes offline for a number of days, they incur losses roughly equivalent to what they would have gained had they remained online. 
+A validator that goes offline for several days incurs losses approximately equal to the gains they would have made had they remained online. 
+% ----
 
-'The Merge' switched Ethereum's security model from computational power to \textbf{economic power}, which are comparable in many ways. Malicious attackers now need 51\% of the economic power of the entire Ethereum network instead of 51\% of the mining power for a successful attack. These severe economic punishments help to keep the network more secure than before while massively reducing the energy consumption of the network. 
+The Merge switched Ethereum's security model's reliance on  computational power to \textbf{economic power}. Malicious attackers now need 51\% of the economic power of the entire network instead of computational power to conduct a successful attack. The severe economic punishments mentioned earlier help to keep the network more secure than ever before while massively reducing its energy consumption. 
 
 
 % ----------------------------------------------------------------------
 
-\subsubsection{Node Types}
+% The version of the ledger stored by Full Nodes and validators is periodically pruned so that they don't hold the entire chain dating back to the Genesis block. \textbf{Archive Nodes} are a type of node that maintain an exact and complete copy of the entire blockchain dating back to the Genesis block. 
 
-Validator nodes are responsible for one of the two:
-\begin{enumerate}
-    \item Propose a new block by executing pending transactions from the mempool when randomly chosen as a block proposer for a slot
-    \item Check blocks other validator nodes are proposing and attest to them by checking their validity and voting 
-\end{enumerate}
-As explained before, these nodes must stake 32 ETH in order to participate in securing the Ethereum network and earn rewards for adding blocks to the blockchain.
-
-The version of the ledger stored by Full Nodes and validators is periodically pruned so that they don't hold the entire chain dating back to the Genesis block. \textbf{Archive Nodes} are a type of node that maintain an exact and complete copy of the entire blockchain dating back to the Genesis block. 
-
-Apart from users looking to earn ETH or altruistic users wanting to secure the Ethereum network, not many users have the incentive to invest the time and resources to run a Full Node. This is why most users end up using centralised 3rd party hosted nodes. Client wallets like MetaMask and MyEtherWallet connect to a remote node in a non-cryptographically proven matter. New lighter node types, such as Light Nodes, were introduced to help make Ethereum accessible to more users, which in turn also makes the network more secure.
+% Apart from users looking to earn ETH or altruistic users wanting to secure the Ethereum network, not many users have the incentive to invest the time and resources to run a Full Node. This is why most users end up using centralised 3rd party hosted nodes. Client wallets like MetaMask and MyEtherWallet connect to a remote node in a non-cryptographically proven matter. New lighter node types, such as Light Nodes, were introduced to help make Ethereum accessible to more users, which in turn also makes the network more secure.
 
 % \textbf{Light Nodes :}
 % These are nodes that don't stake Ethereum. Instead, they are just used for accessing the network along with storing and processing the validation of the blocks within the network. These rely on full nodes as intermediaries to receive up-to-date information about the state of the blockchain. In essence, they are spectator nodes that constantly monitor the network and are witnesses that all activity complies with the rules.
@@ -159,38 +156,36 @@ Apart from users looking to earn ETH or altruistic users wanting to secure the E
 % By design, they don't need to store or process the same amount of information that full nodes do. PoW light nodes only used download the headers of each block and were able to trace back. PoS light nodes also has to keep track of validators and their balances to stay on the chain with the most stake. This small amount of information allows light nodes to operate in a trust-minimised manner.
 
 
-\subsubsection{Client Types and Synchronisation}
+\subsection{Clients Types}
 
-In the context of a blockchain, client software is software that connects users to each other in a peer-to-peer manner. Due to this cross-communication, these clients form a network where each client acts as a node. 
+Client software is software that facilitates communication between nodes in a peer-to-peer manner.
 
 \textbf{Execution Layer Clients}
 
-EL clients come in the form of community-maintained open-source software, formerly known as 'Eth 1' clients. Having a diverse share of client software being run on nodes participating in the network makes it more decentralised and reduces single points of failure.
+EL clients come in the form of community-maintained open-source software, formerly known as 'Eth 1' clients. Having a diverse share of client software being run on nodes participating in the network makes it more secure and reduces single points of failure.
 
-Some popular EL clients include Geth, Nethermind, Besu and Erigon, written in languages such as Java, Go, and C\# \cite{EthereumEthereum.org}. 
+Some popular EL clients include Geth, Nethermind, Besu and Erigon \cite{EthereumEthereum.org}. 
 
 \textbf{Consensus Layer Clients }
 
-Following 'The Merge', CL clients, also known as 'Eth 2' clients, provide the security layer to the Ethereum network. This layer is responsible for the PoS consensus mechanism.
+Following 'The Merge', CL clients, known as 'Eth 2' clients, facilitate the new PoS consensus-forming mechanism, securing the Ethereum blockchain.
 
-Some popular CL clients include Prysm, Lighthouse, Teku, Nimbus and Lodestar, written in languages such as Rust, Nim, Typescript and Go \cite{EthereumEthereum.org}. 
+Some popular CL clients include Prysm, Lighthouse, Teku, Nimbus and Lodestar \cite{EthereumEthereum.org}. 
 
-The latest network shares of each of these EL and CL clients can be found in \tref{Table:ClientShares} in \sref{Modelling}.
-
-\textbf{Synchronisation} 
+\subsection{Synchronisation} 
 \label{SyncLitRev}
 
-Synchronisation refers to a new node catching up to the latest version of the Ethereum Blockchain by retrieving the most up-to-date information. This is done by requesting data from peers. This data is cryptographically verified and used to build a local copy of the blockchain, treated as the single source of truth.
+Synchronisation refers to a new node catching up to the latest version of the Ethereum blockchain ledger by retrieving the most up-to-date information during bootstrapping. Data received from peer nodes is cryptographically verified and used to build a local copy of the ledger.
 
-PoS Ethereum relies on the Consensus Layer for handling consensus logic and block propagation. Thus, synchronisation is a shared process between the EL and CL client. In order for the EL client to start verifying and syncing a local copy of the blockchain, the CL client has to download the block header. Only when the CL client provides the EL client with a header to use as a synching target can it cryptographically verify the chain of blocks being synced is valid. After this chain of block headers has been formed and validated, the rest of the blocks' information is downloaded \cite{2022DeveloperGo-ethereum}. This is the step that often takes the longest.
+PoS Ethereum relies on the Consensus Layer for handling consensus logic and block propagation. Thus, synchronisation is a shared process between the EL and CL client. In order for the EL client to start verifying and syncing a local copy of the blockchain, the CL client has to download the appropriate block headers. Once the chain of block headers is formed and validated, the remaining block information is downloaded, which is typically the most time-consuming step \cite{2022DeveloperGo-ethereum}.
 
-Many syncing modes exist, including Full, Snap, Fast and Light Sync.
+There are different types of syncing modes, including Full, Snap, Fast and Light Sync.
 
-\textbf{Full Sync }independently verifies the block provenance by re-executing the transactions starting at the Genesis Block. However, only the latest 128 blocks are actually stored in the Full Node, along with a few checkpoints representing older blocks. 
+\textbf{Full Sync }independently verifies the block provenance by re-executing the transactions starting at the Genesis Block. However, in a Full Node, only the latest 128 blocks are actually stored, along with a few checkpoints representing older blocks \cite{EthereumEthereum.org}. 
 
-\textbf{Snap Sync }was developed by Geth developers (the prevailing EL client). It works similarly to a Full Sync, except it starts at a much more recent checkpoint to start its verification up to the front of the chain \cite{2022DeveloperGo-ethereum}.
+\textbf{Snap Sync } works similarly to a Full Sync, except it starts at a much more recent checkpoint to start its verification up to the front of the chain \cite{2022DeveloperGo-ethereum}.
 
-Synchronisation time varies depending on the client software chosen as well the node's hardware configuration. It is not uncommon for syncing times to range between 12 hours and 6 days (see Appendix B).
+Synchronisation time varies depending on the client software chosen, as well as the node's hardware configuration. Syncing times can range from 12 hours up to 6 days or more (see Appendix B).
 % -_____________________________________________________________________________
 
 % __________________________________________________________________________________________-
@@ -200,20 +195,22 @@ Synchronisation time varies depending on the client software chosen as well the 
 
 \section{Carbon Emissions of Blockchain Technology }
 
-Bitcoin, the world's largest cryptocurrency, currently holds a market cap of \$588 billion, with Ethereum trailing behind narrowly (\$242 billion market cap) \cite{BitcoinCoinMarketCap}. Most of these cryptocurrencies rely on the Proof of Work consensus, which by design uses energy-intensive processes to secure the network. Hence, it should not be surprising that they have huge adversarial effects on the environment. Empirical findings using the ARDL model show that increasing the volume of trading all cryptocurrencies results in higher energy consumption, with long-term effects on the environment \cite{Schinckus2020Crypto-currenciesConsumption}. \newline 
+Bitcoin, the world's largest cryptocurrency, currently holds a market cap of \$588 billion, with Ethereum trailing behind narrowly (\$242 billion market cap) \cite{BitcoinCoinMarketCap}. Most cryptocurrencies still rely on the Proof-of-Work mechanism, which by design uses energy-intensive processes to secure the network. Hence, it should not be surprising that they have huge adversarial effects on the environment. Empirical findings using the ARDL model (used to analyse the long-term relationship between variables) show that increasing the volume of trading all cryptocurrencies results in higher energy consumption, with long-term effects on the environment \cite{Schinckus2020Crypto-currenciesConsumption}. 
 
-While the benefits of using decentralised transactional systems are appealing to many, it has become synonymous with inefficiency and disproportionate energy consumption \cite{DeVriesBitcoinsProblem}. Digiconomist's index suggests that if Bitcoin's energy was to be compared to that of entire countries, it would rank 38th in the world, finishing ahead of large countries like Chile and Bangladesh \cite{BitcoinDigiconomist}. The energy cost of redundancy due to decentralisation has become hugely problematic, inhibiting the wider adoption of cryptocurrencies. To put this into context, a comparison is often drawn between cryptocurrencies and traditional transactional systems such as Visa and MasterCard, which will always be more efficient due to their centralised nature \cite{Kohli2023AnSolutions}.  
+While the benefits of using decentralised transactional systems appeal to many, it has become synonymous with inefficiency and disproportionate energy consumption \cite{DeVriesBitcoinsProblem}. Digiconomist's index suggests that if Bitcoin's energy was to be compared to that of entire countries, it would rank 38$\mathrm{^{th}}$ in the world, finishing ahead of large countries like Chile and Bangladesh \cite{BitcoinDigiconomist}. The high energy costs associated with the inherent have become hugely problematic, inhibiting the wider adoption of cryptocurrencies. 
 
-\begin{figure}[h]
+To put this in perspective, comparisons between cryptocurrencies and traditional centralised transactional systems, such as Visa, are often drawn \cite{Kohli2023AnSolutions}. However, due to their centralised nature, these systems will always be more efficient, as shown in \fref{Figure:CarbonEmissionsPlot}, which uses a logarithmic scale.
+
+\begin{figure}[!htb]
     \centering
     \includegraphics[width=13cm,center]{Figures/CarbonEmissionsPlot.png}
     \caption{Carbon emissions per transaction for Bitcoin, Ethereum 1.0 and Visa plotted on a logarithmic scale. Code is in Appendix C. Source: \cite{Kohli2023AnSolutions} }
     \label{Figure:CarbonEmissionsPlot}
 \end{figure}
 
-The stark difference in emissions per transaction is highlighted in \fref{Figure:CarbonEmissionsPlot}, especially due to using a logarithmic scale. These carbon emissions can be used as a proxy of environmental damage \cite{2022VisaReport}. This environmental damage linked to energy consumption renders it highly unsustainable.
+These carbon emissions can be used as a proxy for environmental damage \cite{2022VisaReport}, which is associated with high energy consumption and makes PoW cryptocurrencies unsustainable.
 
-Apart from cryptocurrencies, blockchain technology is increasingly being employed to track provenance in supply chains, especially drug-supply chains \cite{Labaran2021TheNigeria}. The literature contains numerous examples of such implementations using blockchain found in \tref{Table:DrugSupplyImplementations}, with some claiming to be low-energy solutions employing off-chain storage and non-PoW consensus mechanisms.
+Besides cryptocurrencies, blockchain technology is experiencing significant growth in the drug-supply chain industry \cite{Labaran2021TheNigeria}. This sector features the adoption of large-scale blockchain solutions that boast low-energy usage, found in \tref{Table:DrugSupplyImplementations}. Consequently, the answer to reducing high energy consumption may be found in these innovative applications of blockchain technology, most of which employ non-PoW mechanisms.
 
 \begin{table}[!htb]
 \centering
@@ -226,11 +223,11 @@ Apart from cryptocurrencies, blockchain technology is increasingly being employe
   \textbf{\begin{tabular}[c]{@{}l@{}}Analysis of \\ Blockchain in \\ Healthcare\end{tabular}} &
   \textbf{\begin{tabular}[c]{@{}l@{}}Drug \\ Traceability\\ Solution\end{tabular}} \\ \thickhline
 \textbf{\begin{tabular}[c]{@{}l@{}}Blockchain \\ Platform\end{tabular}} &
-  Ethereum &
-  Ethereum &
+  Ethereum 1.0 &
+  Ethereum 1.0&
   Hedera &
   \begin{tabular}[c]{@{}l@{}}Hyperledger\\ Fabric\end{tabular} &
-  Ethereum \\ \hline
+  Ethereum 1.0 \\ \hline
 \textbf{\begin{tabular}[c]{@{}l@{}}Consensus \\ Algorithm\end{tabular}} &
   PoW &
   \begin{tabular}[c]{@{}l@{}}practical\\ Byzantine\\ fault tolerance\end{tabular} &
@@ -274,15 +271,11 @@ Apart from cryptocurrencies, blockchain technology is increasingly being employe
   \cite{Mettler2016BlockchainHere} &
   \cite{Musamih2021AChain} \\ \hline
 \end{tabular}
-\caption{Several implementations of drug-supply chain solutions that use blockchain technology, with 3 implementations using Ethereum 1.0}
+\caption{Several implementations of drug-supply chain solutions that use blockchain technology, with 3 implementations using high-energy Ethereum 1.0.}
 \label{Table:DrugSupplyImplementations}
 \end{table}
 
-However, newly established independent blockchains, whether intended for cryptocurrency or provenance purposes, often struggle to maintain the two primary benefits of blockchain technology, either through security breaches due to a lack of users or centralization through permissioned blockchain solutions. 51\% attacks occur when a malicious miner or group controls over 50\% of a network's computational power. Small blockchains with few participants are more vulnerable as it is easier for a malicious actor to acquire the necessary computational power, leaving the blockchain susceptible to tampering and theft \cite{Redman2021PrivacyErased}.
-
-
-
-
+However, newly established independent blockchains, for cryptocurrencies or provenance purposes, often struggle with achieving decentralisation benefits, facing security breaches or centralisation issues. 51\% attacks occur when a malicious miner or group controls over 50\% of a network's computational power. Small blockchains with few participants are more vulnerable as it is easier for a malicious actor to acquire the necessary computational power, leaving the blockchain susceptible to tampering and theft \cite{Redman2021PrivacyErased}.
 
 
 
@@ -297,11 +290,11 @@ However, newly established independent blockchains, whether intended for cryptoc
 \subsection{Mathematical Modelling}
 \label{MathematicalModellingLitRev}
 
-Modelling is about making some assumptions in order to simplify a complex system and test a hypothesis. There are a number of approaches for scientific model building, descriptive and rule-based modelling \cite{SayamaINTRODUCTIONSYSTEMS}. This paper employs the latter.
+Mathematical modelling simplifies complex systems and tests hypotheses by making some assumptions. There are various approaches for scientific model building, including descriptive and rule-based modelling \cite{SayamaINTRODUCTIONSYSTEMS}. This study employs the latter.
 
-\textbf{Rule-based modelling} involves coming up with certain dynamic rules and limitations that can explain the behaviour of a system. It is all about capturing how the model will behave over time, usually done using quantitative methods.
+\textbf{Rule-based modelling} focuses on formulating dynamic rules and limitations that can explain the behaviour of a system over time. This is usually done using quantitative methods.
 
-Observations must be turned into mathematical equations, but this can be challenging as the system's unique properties may be ones we are not familiar with (for example, large networks and nonlinearity). A book on modelling complex systems claims the 4 things to keep in mind when modelling include \cite{SayamaINTRODUCTIONSYSTEMS}:
+Turning observations into mathematical equations can be challenging, especially when dealing with unique properties like large networks and nonlinearity. When modelling complex systems, according to \cite{SayamaINTRODUCTIONSYSTEMS}, it's crucial to remember the following four factors:
 
 \begin{itemize}
     \item The key research questions that need to be addressed
@@ -310,7 +303,7 @@ Observations must be turned into mathematical equations, but this can be challen
     \item What are all the possible states of the system, and how it changes over time
 \end{itemize}
 
-This study uses the microscopic details of the Ethereum protocol (how attestations are handled) to model its macroscopic effects at scale (increase in overall energy usage). 
+This study will use the microscopic details of the Ethereum protocol (how attestations are handled) to model its macroscopic effects at scale (increase in overall energy usage) \cite{MarionAnModelling}. 
 
 
 
@@ -324,12 +317,12 @@ This study uses the microscopic details of the Ethereum protocol (how attestatio
 
 \section{Modelling PoW Energy Consumption}
 
-This section aims to analyse a wide range of papers on the topic of energy consumption of blockchain. The steps for a structured literature review laid out by \cite{Crosby2015BlockChainBitcoin} are loosely followed. 
+This subsection analyses various papers on the energy consumption of blockchain, loosely following the structured literature review steps outlined by \cite{Crosby2015BlockChainBitcoin}.
 
-Most papers in this niche field of research emphasise Bitcoin and PoW cryptocurrencies. It shows a clear gap in the literature for more work to be done on modelling the electricity consumption of non-PoW blockchains, as this study intends to do.
+Most papers in this niche field emphasise Bitcoin and PoW cryptocurrencies. There is a clear gap in the literature for more work to be done on modelling the electricity consumption of non-PoW blockchains, as this study intends to do.
 % -_____________________________________________________________________________
 
-Paper \cite{Sedlmeir2020TheMyth} attributes almost all the energy consumed by PoW blockchains to the PoW consensus mechanism alone. The other factors contribute a negligible amount of energy in comparison. However, estimating the energy consumption of blockchain consensus mechanisms can be challenging due to the scarcity of accurate information on the number of network participants and their hardware configurations. The same study also confirms that Proof-of-Work (PoW) blockchains consume a disproportionate amount of energy relative to the actual utility they offer. When comparing PoW electricity estimates to those of non-PoW blockchains, the results were several orders of magnitude lower for non-PoW blockchains \cite{Sedlmeir2020TheMyth}. Due to non-PoW consensus algorithms having such a small energy footprint, their energy consumption cannot solely be attributed to its consensus algorithm but rather to a range of other factors too, which come with having a large decentralised network. This is discussed further in \sref{LitRevExistingModels}. 
+Paper \cite{Sedlmeir2020TheMyth} attributes almost all the energy consumed by PoW blockchains to the PoW consensus mechanism alone. Other factors contribute a negligible amount of energy in comparison. However, estimating the energy consumption of blockchain consensus mechanisms can be challenging due to the scarcity of accurate information on the number of network participants and their hardware configurations. The same study also confirms that PoW blockchains consume a disproportionate amount of energy relative to the actual utility they offer. When comparing PoW electricity estimates to those of non-PoW blockchains, the results were several orders of magnitude lower for non-PoW blockchains \cite{Sedlmeir2020TheMyth}. 
 
 \begin{figure}[h]
     \centering
@@ -338,15 +331,12 @@ Paper \cite{Sedlmeir2020TheMyth} attributes almost all the energy consumed by Po
     \label{Figure:SimplePoWModel}
 \end{figure}
 
-Energy consumption in many PoW-focused papers is attributed to metrics like block rewards, coin price, transaction fee, average block time and hashing difficulty which are all publicly available and reliable metrics, \cite{Mcdonald2022EthereumEstimate}. Such a model is shown in \fref{Figure:SimplePoWModel}.
+Energy consumption in many PoW-focused papers is attributed to metrics like block rewards, coin price, transaction fee, average block time and hashing difficulty which are all publicly available and reliable metrics, \cite{Mcdonald2022EthereumEstimate}. Such a model is shown in \fref{Figure:SimplePoWModel}. On the contrary, non-PoW consensus algorithms have such a much small energy footprint that cannot solely be attributed to its consensus mechanism but also to various factors associated with maintaining a large decentralised network, as explained in \sref{LitRevExistingModels}. 
 
 % -_____________________________________________________________________________
-Another data-driven study collected and analysed publicly available data to derive a joule per hash (per 'nonce' value calculated) value based on a small number of direct measurements from a small testbed network \cite{Cole2018ModelingAlgorithms}. Using a LASSO (Least Absolute Shrinkage and Selection Operator) regression model, the researchers were able to estimate the energy usage of PoW cryptocurrencies with 92\% accuracy. The same cannot be done for PoS blockchains due to the lack of data availability and the vast range of factors affecting its energy consumption outside of the consensus protocol itself.
+Another study combined publicly available data with a small number of direct measurements from a small testbed network to derive a joule per hash value based on \cite{Cole2018ModelingAlgorithms}. Using a LASSO (Least Absolute Shrinkage and Selection Operator) regression model, the researchers were able to estimate the energy usage of PoW cryptocurrencies with 92\% accuracy. The same cannot be done for PoS blockchains due to the lack of data availability and the vast range of factors affecting its energy consumption outside of the consensus protocol itself.
 
-Digiconomist \cite{BitcoinDigiconomist} and CBECI \cite{CambridgeCBECI} are two well-known real-time models used to estimate the energy consumption of Bitcoin. These are highly credible models and have been referenced many times in the wider literature, such as \cite{Cole2018ModelingAlgorithms}, \cite{Lei2021BestRecommendations}, and \cite{Erdogan2022AnalyzingSustainability}, \cite{Platt2022TheProof-of-Work}, respectively. Both models use live tracking of Bitcoin's price and mining hash rate to maintain accuracy but take different approaches to arrive at similar estimates. Digiconomist's top-down approach estimates the total revenue earned by USA-based Bitcoin miners. It assumes that 60\% of this revenue is spent on operational costs, primarily electricity, in the case of PoW. By using the global average electricity costs, the model is able to calculate Bitcoin's energy consumption. In contrast, CBECI uses a bottom-up approach, focusing on selecting contemporary mining equipment that maximises the number of hashes computed per Joule of energy used. The model then uses a profitability threshold to extrapolate Bitcoin's annual electricity consumption. This paper takes inspiration from both approaches introduced by these models to develop a model for non-PoW blockchains.
-
-
-
+Digiconomist \cite{BitcoinDigiconomist} and CBECI \cite{CambridgeCBECI} are two well-known real-time models used to estimate the energy consumption of Bitcoin. These are highly credible models and have been referenced many times in the wider literature, such as \cite{Cole2018ModelingAlgorithms}, \cite{Lei2021BestRecommendations}, and \cite{Erdogan2022AnalyzingSustainability}, \cite{Platt2022TheProof-of-Work}, respectively. Both models use live tracking of Bitcoin's price and mining hash rate to maintain accuracy but take different approaches to arrive at similar estimates. Digiconomist's top-down approach estimates the total revenue earned by USA-based Bitcoin miners. It assumes that 60\% of this revenue is spent on operational costs, primarily electricity, in the case of PoW. By using the global average electricity costs, the model is able to calculate Bitcoin's energy consumption. In contrast, CBECI uses a bottom-up approach, focusing on selecting contemporary mining equipment that maximises the number of hashes computed per Joule of energy used. The model then uses a profitability threshold to extrapolate Bitcoin's annual electricity consumption. This study will take a bottom-up approach to develop a model for non-PoW Ethereum.
 
 
 % __________________________________________________________________________________________-
@@ -356,40 +346,45 @@ Digiconomist \cite{BitcoinDigiconomist} and CBECI \cite{CambridgeCBECI} are two 
 \subsection{ Electricity Consumption of PoS Blockchains }
 \label{LitRevExistingModels}
 
-There is a large gap in the literature on this niche field of research. This section analyses the work done in this area and why it needs to be improved upon.
+There is an even larger gap in the literature on this emerging research topic. This subsection analyses the work done in this area and why it needs improvement.
 
-A study by Powell et al., aimed at making recommendations for building greener blockchains, suggested a simple formula to calculate the energy of the Polkadot blockchain that employs PoS consensus \cite{Powell2021AWARENESSBLOCKCHAIN}. Their model was the first of its kind, and it follows: 
+A study by Powell et al. \cite{Powell2021AWARENESSBLOCKCHAIN}, aimed at making recommendations for building greener blockchains, suggested a simple formula to calculate the energy of the Polkadot blockchain that employs PoS consensus. The model was the first of its kind, and it follows: 
 \begin{align}
    \boldsymbol{\mathrm{\text{Polkadot Energy Consumption } = }}
    &\boldsymbol{\mathrm{\text{ Energy per server }* \text{ number of servers } } } \nonumber\\
    &\boldsymbol{\mathrm{* \text{ 24 hours } *\text{ 365 days }}} \nonumber
 \end{align}
 
-A recent study by UCL Centre for Blockchain Technologies \cite{PlattDiscussionProof-of-Work} built upon this equation by establishing a mathematical relationship between validator number, network load and hardware configuration to estimate the energy consumption of the PoS consensus protocol in isolation. Their approach was to build upon past literature using new data sets from various sources, including empirical data from CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} and other publicly available metrics while avoiding time-consuming first-hand experimentation, just like this study aims to do. 
+\textbf{UCL Model } 
+
+A recent study by the UCL Centre for Blockchain Technologies \cite{PlattDiscussionProof-of-Work} improved upon this equation by establishing a mathematical relationship between the number of validators, network load and hardware configurations to estimate the energy consumption of the PoS consensus protocol, in isolation. Their approach was to build upon past literature using new data sets from various sources, including empirical data from CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} and other publicly available metrics, while avoiding time-consuming first-hand experimentation, just like this study aims to do. 
 
 \begin{align}
    \boldsymbol{\mathrm{\text{Energy Per Transaction} = }}
    &\boldsymbol{\mathrm{\frac{\text{ Energy per Validator }* \text{ Number of Validators } }{\text{ Number of Transactions }}} } \nonumber\\ \nonumber
 \end{align}
 
-Their generalised model performs well for a few different PoS blockchains, with Ethereum being one of them. In fact, R3, a private company that run the Corda blockchain have also used the same equation to estimate its energy consumption \cite{JustBlog}. However, amidst this generalisation, the UCL study makes a critical mistake of not differentiating between validators (currently $\sim$500,000 \cite{EthereumEthereum.orgc}) and Full Nodes ($\sim$15,000 \cite{NodewatchAnalytics}). Their model only considers validators and estimates only the PoS consensus protocol’s energy usage in isolation. Thus, incomplete in its calculation of network-wide energy consumption by ignoring factors such as the 'Full Nodes' that aren't actively participating in forming consensus but greatly contribute to securing the blockchain. Such factors have not been ignored in the model proposed by this study. The UCL study also relies on speculative assumptions as it was written before Ethereum’s upgrade to PoS consensus (now the world’s largest PoS blockchain). Hence, the most significant PoS blockchain was not included in its study.
+Their generalised model performs well for a few different PoS blockchains, with Ethereum 2.0 being one of them. In fact, R3, a private company that runs the Corda blockchain have also used the UCL  equation to estimate Corda's energy consumption \cite{JustBlog}. However, amidst this generalisation, the UCL study makes a critical error by not differentiating between operating validators clients (currently $\sim$500,000 \cite{EthereumEthereum.orgc}) and Full Nodes ($\sim$15,000 \cite{NodewatchAnalytics}). Their model only considers Full Nodes, which is an error repeated in an updated paper by the same researchers \cite{IbanezTheExpansion}, likely due to the aim of generalisation and modelling only the PoS consensus mechanism's energy consumption in isolation. Thus, incomplete in its calculation of network-wide energy consumption by ignoring factors such as the validators that are actively participating in consensus-forming processes. 
 
-The future work mentioned in the study is closely aligned with the focus of this study, which aims to build a more comprehensive model by incorporating additional factors and considering different node types.
+The original UCL study also relies on speculative assumptions as it was written before Ethereum’s upgrade to PoS consensus (now the world’s largest PoS blockchain). Hence, the most significant PoS blockchain was not included in its study.
+
+The future work mentioned by the researchers closely matches the focus of this study, which aims to build a more comprehensive model by incorporating additional factors like active validators.
 
 
-\textbf{The CCRI Study } 
+\textbf{CCRI Model } 
 \label{CCRIModelLitRev}
-The state-of-the-art research conducted by Crypto Carbon Ratings Institute focuses specifically on the energy consumption of post-merge PoS Ethereum. It provided the most up-to-date empirical data that has been cited in other studies such as this one \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. These researchers decided on 6 commodity hardware configurations that they ran idly for base power consumption figures and then ran each major EL and CL client software separately, taking 48-hour electricity measurements. The data was used in their equation (detailed in \sref{CCRIBaseEqnSection}), which was formulated using a combination of experimentation and prior domain knowledge. The accuracy of the model was confirmed by comparing the actual measurements from running Full Nodes to their estimated values, which were found to be highly precise.
+
+The state-of-the-art research conducted by Crypto Carbon Ratings Institute focuses specifically on the energy consumption of post-merge PoS Ethereum. It provided the most up-to-date empirical data that has been cited in other studies such as this one \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. Its researchers decided on 6 commodity hardware configurations that were run idly for base power consumption figures. Then each major EL and CL client software was run separately, taking 48-hour electricity measurements. The data helped develop their equation (detailed in \sref{CCRIBaseEqnSection}), which was formulated using a combination of experimental and prior domain knowledge. The model's accuracy was confirmed by comparing the actual measurements from Full Nodes to the model's estimations, which were found to be highly precise.
 
 Assumptions and shortcomings of this study:
 \begin{enumerate}
-    \item Different combinations of clients were run to form Full Nodes. However, the next step of running a validator client on the Full Node was not taken due to the barrier of staking 32 ETH. The energy expenditure of operating a validator client on top of a Full Node was assumed to be negligible.
+    \item While various measurements were combined to represent running a Full Node, the next step of running a validator client was not taken. This is because the energy expenditure of operating a validator client on top of a Full Node was assumed to be negligible and also due to the requirement of staking 32 ETH.
     
     \item The synchronisation energy consumed whilst bootstrapping Full Nodes was not considered.
     
     \item Other node types, such as Light and Archive Nodes, were not considered, presumably due to assuming that they would have negligible effects.
 
-    \item The electricity data was collected using computer software rather than a hardware meter, and no information is available on the type of power supply and mainboard used in the experiment. Therefore, the measurements only account for the electricity consumed by the computer itself and do not factor in the power drawn 'At-Wall' or any electrical inefficiencies. \cite{Warkozek2012ACenters}
+    \item The electricity measurements were collected using computer software rather than hardware meters, and no information was provided on the type of power supply and mainboard used in the experiment. Therefore, the software measurements only account for the electricity used by the computer itself and do not factor in the power drawn 'At-Wall' or any other electrical inefficiencies \cite{Warkozek2012ACenters}.
 \end{enumerate}
  
 
