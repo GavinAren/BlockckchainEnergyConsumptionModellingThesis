@@ -110,11 +110,11 @@ Validator Nodes are responsible for storing data, processing transactions and ad
 
 Every 12-second \textbf{slot}, Validator Nodes are responsible for one of the two:
 
-\textbf{1) Proposing a New Block}
+\textit{1) Proposing a New Block}
 
 In PoS Ethereum, blocks are "forged" by validators at a fixed pace. Every 12-second \textbf{'slot'}, a validator is randomly selected to forge a new block and broadcast it to the rest of the network. Validators can select which transactions from their mempool to include in the next block. Validator client software executes these transactions locally, proposing a state change (such as a change in account balances). Once the block is full, the validator proposes it to other validators over the consensus layer network. This block is also wrapped in other information such as rewards, slashings, and attestations, discussed later \cite{EthereumEthereum.org}.
 
-\textbf{2) Validation \& Attestations}
+\textit{2) Validation \& Attestations}
 \label{AttestationsLitRev}
 
 Every slot, a small committee of nodes is also randomly selected, whose \textbf{attestations} (votes) determine whether the block proposed is valid or not. Nodes verify the proposed block with their EL client by checking the block's data, ensuring the correct slot, parent, etc., and, most importantly, re-executing the transactions to confirm that the proposed state changes are valid \cite{EthereumEthereum.org}. If the new block passes all checks, validators in each voting committee are expected to create, sign and broadcast their attestations to the rest of the network over the \textbf{gossip} network. If enough nodes agree, the block is added to the blockchain,  illustrated in \fref{Figure:AttestationsDiragram}. 
@@ -128,17 +128,11 @@ Every slot, a small committee of nodes is also randomly selected, whose \textbf{
 \end{figure}
 
  % ---CAN BE REMOVED**
-\textbf{Staking ETH}
+\textit{Staking ETH}
 
-In Ethereum, an \textbf{epoch} is comprised of 32 slots ($\sim$6 minutes). The algorithm judges each validator's actions and dishes out rewards and penalties at the end of each epoch accordingly. Rewards for staking ETH and operating a Validator Node come in the form of transaction fees and tips paid by users. However, there are also some risks involved.
+In Ethereum, an \textbf{epoch} comprises 32 slots ($\sim$6 minutes). The algorithm judges each validator's actions and dishes out rewards and penalties at the end of each epoch accordingly. Validators staking ETH and running Validators earn transaction fees and tips but also risk losing part of their stake through \textbf{slashing} or incurring \textbf{offline penalties}.
 
-\textbf{Slashing :}
-This is when a portion of a validator's stake is destroyed for behaving maliciously or against the best interests of the network.
-
-\textbf{Offline Penalty :}
-A validator that goes offline for several days incurs losses approximately equal to the gains they would have made had they remained online. 
-% ----
-
+% CAN BE CUT**
 The Merge switched Ethereum's security model's reliance on  computational power to \textbf{economic power}. Malicious attackers now need 51\% of the economic power of the entire network instead of computational power to conduct a successful attack. The severe economic punishments mentioned earlier help to keep the network more secure than ever before while massively reducing its energy consumption. 
 
 
@@ -155,23 +149,23 @@ The Merge switched Ethereum's security model's reliance on  computational power 
 
 % By design, they don't need to store or process the same amount of information that full nodes do. PoW light nodes only used download the headers of each block and were able to trace back. PoS light nodes also has to keep track of validators and their balances to stay on the chain with the most stake. This small amount of information allows light nodes to operate in a trust-minimised manner.
 
+% CAN BE CUT**
+\subsection{Client Types}
 
-\subsection{Clients Types}
+Client software is software that facilitates inter-node communication in a peer-to-peer manner.
 
-Client software is software that facilitates communication between nodes in a peer-to-peer manner.
+\textit{Execution Layer Clients}
 
-\textbf{Execution Layer Clients}
-
-EL clients come in the form of community-maintained open-source software, formerly known as 'Eth 1' clients. Having a diverse share of client software being run on nodes participating in the network makes it more secure and reduces single points of failure.
+EL clients,  formerly known as 'Eth 1' clients, come in the form of open-source community-maintained software. A diverse share of client software being run on nodes across the network is favourable as it reduces single points of failure.
 
 Some popular EL clients include Geth, Nethermind, Besu and Erigon \cite{EthereumEthereum.org}. 
 
-\textbf{Consensus Layer Clients }
+\textit{Consensus Layer Clients }
 
 Following 'The Merge', CL clients, known as 'Eth 2' clients, facilitate the new PoS consensus-forming mechanism, securing the Ethereum blockchain.
 
 Some popular CL clients include Prysm, Lighthouse, Teku, Nimbus and Lodestar \cite{EthereumEthereum.org}. 
-
+% __
 \subsection{Synchronisation} 
 \label{SyncLitRev}
 
@@ -181,9 +175,9 @@ PoS Ethereum relies on the Consensus Layer for handling consensus logic and bloc
 
 There are different types of syncing modes, including Full, Snap, Fast and Light Sync.
 
-\textbf{Full Sync }independently verifies the block provenance by re-executing the transactions starting at the Genesis Block. However, in a Full Node, only the latest 128 blocks are actually stored, along with a few checkpoints representing older blocks \cite{EthereumEthereum.org}. 
+\textit{Full Sync }independently verifies the block provenance by re-executing the transactions starting at the Genesis Block. However, in a Full Node, only the latest 128 blocks are actually stored, along with a few checkpoints representing older blocks \cite{EthereumEthereum.org}. 
 
-\textbf{Snap Sync } works similarly to a Full Sync, except it starts at a much more recent checkpoint to start its verification up to the front of the chain \cite{2022DeveloperGo-ethereum}.
+\textit{Snap Sync} works similarly to a Full Sync, except it starts at a much more recent checkpoint to start its verification up to the front of the chain \cite{2022DeveloperGo-ethereum}.
 
 Synchronisation time varies depending on the client software chosen, as well as the node's hardware configuration. Syncing times can range from 12 hours up to 6 days or more (see Appendix B).
 % -_____________________________________________________________________________
@@ -292,7 +286,7 @@ However, newly established independent blockchains, for cryptocurrencies or prov
 
 Mathematical modelling simplifies complex systems and tests hypotheses by making some assumptions. There are various approaches for scientific model building, including descriptive and rule-based modelling \cite{SayamaINTRODUCTIONSYSTEMS}. This study employs the latter.
 
-\textbf{Rule-based modelling} focuses on formulating dynamic rules and limitations that can explain the behaviour of a system over time. This is usually done using quantitative methods.
+\textbf{Rule-Based Modelling} focuses on formulating dynamic rules and limitations that can explain the behaviour of a system over time. This is usually done using quantitative methods.
 
 Turning observations into mathematical equations can be challenging, especially when dealing with unique properties like large networks and nonlinearity. When modelling complex systems, according to \cite{SayamaINTRODUCTIONSYSTEMS}, it's crucial to remember the following four factors:
 
@@ -355,7 +349,7 @@ A study by Powell et al. \cite{Powell2021AWARENESSBLOCKCHAIN}, aimed at making r
    &\boldsymbol{\mathrm{* \text{ 24 hours } *\text{ 365 days }}} \nonumber
 \end{align}
 
-\textbf{UCL Model } 
+\textit{The UCL Model } 
 
 A recent study by the UCL Centre for Blockchain Technologies \cite{PlattDiscussionProof-of-Work} improved upon this equation by establishing a mathematical relationship between the number of validators, network load and hardware configurations to estimate the energy consumption of the PoS consensus protocol, in isolation. Their approach was to build upon past literature using new data sets from various sources, including empirical data from CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork} and other publicly available metrics, while avoiding time-consuming first-hand experimentation, just like this study aims to do. 
 
@@ -371,7 +365,7 @@ The original UCL study also relies on speculative assumptions as it was written 
 The future work mentioned by the researchers closely matches the focus of this study, which aims to build a more comprehensive model by incorporating additional factors like active validators.
 
 
-\textbf{CCRI Model } 
+\textit{The CCRI Model } 
 \label{CCRIModelLitRev}
 
 The state-of-the-art research conducted by Crypto Carbon Ratings Institute focuses specifically on the energy consumption of post-merge PoS Ethereum. It provided the most up-to-date empirical data that has been cited in other studies such as this one \cite{CryptoCarbonRatingsInstitute2022TheNetwork}. Its researchers decided on 6 commodity hardware configurations that were run idly for base power consumption figures. Then each major EL and CL client software was run separately, taking 48-hour electricity measurements. The data helped develop their equation (detailed in \sref{CCRIBaseEqnSection}), which was formulated using a combination of experimental and prior domain knowledge. The model's accuracy was confirmed by comparing the actual measurements from Full Nodes to the model's estimations, which were found to be highly precise.
