@@ -2,9 +2,9 @@
 \label{Modelling}
 
 % ____________________________________________________________________________
-\section{Summary}
+\section{Chapter Overview}
 
-This chapter constitutes the technical section of this study, comprising of creating our mathematical model to estimate the energy consumption of PoS Ethereum, called 'Model-A', and then gathering data to implement that model amongst others for comparative analysis. 
+This chapter constitutes the technical section of this study. It documents the development of the model being proposed, following the steps in \sref{MethodologySteps}. Next, this model and two others are implemented to obtain comparative results which are then evaluated. 
 % ____________________________________________________________________________
 
 % %  Model-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -291,12 +291,12 @@ First, 3 hardware configurations were chosen, including a low, medium and high t
 \begin{table}[htb!]
     \centering
     \includegraphics[width=10cm,center]{Figures/CCRIhardwareConfigEdit.png}
-    \caption{Table adapted from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, detailing hardware configurations 4-6  used in their experiment, representing a low, mid and high-tier node.}
+    \caption{Table adapted from the CCRI report \cite{CryptoCarbonRatingsInstitute2022TheNetwork}, details hardware configurations 4-6, representing a low, mid and high-tier node, used in their experiment.}
     \label{Table:CCRIhardwareConfig}
 \end{table}
 
 PoS Ethereum was aimed at being run on commodity hardware. Keeping this, as well as the hardware recommendations in \tref{Table:RecommendedHardware} in mind, 3 sets of hardware combinations need to be chosen for implementation of the model. Due to the limited availability of empirical data on hardware running PoS Ethereum, the hardware configurations 4,5 and 6 from \tref{Table:CCRIhardwareConfig} are used. Using this data also helped draw fairer comparisons when evaluating Model-A later on. 
-
+\clearpage
 \textit{Step 1 - Average Sync Energy of a Node}
 
 No empirical data was available for implementing the first part of 'Model-A', in \eref{eqn:FinalEqnShort}, denoted by $\boldsymbol{\mathrm{P}_{SNC}}$. Non-scientific data gathered on the synchronisation times $\boldsymbol{\mathrm{T}_{EL}}$ reported by users employing varying combinations of hardware and EL clients, can be found in Appendix B. This data is limited and thus insufficient to differentiate between the sync times for the 4 major EL clients. However, it is sufficient to estimate the average sync time of varying tiers of node hardware (relative to \tref{Table:CCRIhardwareConfig}), presented in \tref{Table:SyncEnergy}. Data collected on nodes running the Geth client was \textbf{assumed} to be more representative and given a higher weighting due to its high network share of $\sim$ 70\%. 
@@ -331,7 +331,7 @@ Given \tref{Table:SyncEnergy}, the $\boldsymbol{\mathrm{P}_{SNC}}$ for an averag
 The next part of \eref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}_{1}}}$ needs to be applied. \tref{Table:ClientShares} presents contemporary data on each EL and CL client's share of the Ethereum network, required to calculate $\boldsymbol{\phi_{EL,CL}}$.  
 
 % --------------------------------------
-\begin{table}[h]
+\begin{table}[htb]
     \centering
 
   \subcaptionbox{\textbf{Execution Clients} \cite{Sigp/blockprint:Metrics}}{
@@ -403,12 +403,23 @@ Lodestar(CL)         & \multicolumn{1}{l|}{3.14}       & \multicolumn{1}{l|}{3.8
 \label{Table:ConsumptionValues}
 \end{table}
 
-Given the data in \tref{Table:ConsumptionValues}, values in \tref{Table:EstimatesPerNode} were calculated. For example, the first row (Prysm,Geth) was calculated by summing the electricity usage when idle, running Pyrsm, and running Geth for each hardware configuration, multiplied by its hardware tier distribution across the network, shown below:
+% \clearpage
+Given the data in \tref{Table:ConsumptionValues}, values in \tref{Table:EstimatesPerNode} were calculated. The first row for example, (Prysm,Geth) was calculated by summing the electricity usage when idle, running Pyrsm, and running Geth for each hardware configuration, multiplied by its hardware tier distribution across the network, shown below:
 \begin{align}
     &\boldsymbol{0.25*(3.66 + 11.23 + 3.51) + 0.50 * (25.04 + 9.70 + 2.87) + 0.25} \nonumber\\
     &\boldsymbol{* (78.17 + 47.70 + 24.33) = 60.96}\text{Wh} \nonumber
 \end{align}
 
+
+% -----------------------------------
+Following \eref{eqn:CCRI}, best guess for an individual node =  \textbf{63.76 Wh}. This can be annualised, presuming 8760h per year = \textbf{558.55 kWh/year}.
+
+\textbf{Assuming} the node needs to perform a fresh synchronisation once a year, the annual total consumption of an average node (running 1 validator):
+
+\begin{align}
+    &\boldsymbol{ \mathrm{\overline{V}_{1}} + \mathrm{P}_{SNC} = \text{560.58 kWh/year or 63.99 Wh.}} \nonumber
+\end{align} 
+\clearpage
 % -----------------------------------------
 \begin{table}[!htb]
 \centering
@@ -440,19 +451,12 @@ Given the data in \tref{Table:ConsumptionValues}, values in \tref{Table:Estimate
 \label{Table:EstimatesPerNode}
 \end{table}
 
-% -----------------------------------
-Following \eref{eqn:CCRI}, best guess for an individual node =  \textbf{63.76 Wh}. This can be annualised, presuming 8760h per year = \textbf{558.55 kWh/year}.
-
-\textbf{Assuming} the node needs to perform a fresh synchronisation once a year, the annual total consumption of an average node (running 1 validator):
-
-\begin{align}
-    &\boldsymbol{ \mathrm{\overline{V}_{1}} + \mathrm{P}_{SNC} = \text{560.58 kWh/year or 63.99 Wh.}} \nonumber
-\end{align} 
 
 % --------------------------------------------------
 % STAGE 3 of implementation with multiple validators
 % --------------------------------------------------
 % \clearpage
+% \vskip
 \textit{ Step 3 - Operating additional validators on some nodes}
 
 The last part of \eref{eqn:FinalEqnShort}, $\boldsymbol{\mathrm{\overline{V}(\mathrm{x})}}$, accounts for some nodes running multiple validators. 
@@ -532,6 +536,7 @@ Using these metrics, results for each of the aforementioned models are presented
 % -----------------------------------------------
 % RESULTS  TABLEEEE
 % ----------------------------------------------------------------
+\clearpage
 \begin{table}[htb]
 \begin{tabular}{ll"ll"l"l|}
 \cline{3-6}
@@ -652,7 +657,7 @@ $\sim$156 transactions in the same amount of energy it takes PoS Ethereum to com
 
 \textbf{Lack of data:} Due to the innovative nature of the research being conducted, there was a paucity of data available for analysis. Some of the improvements made upon the base model come from modelling non-scientific data; hence the model was implemented on averaged values to obtain a 'best guess' estimation. Through further scientific experimentation, high and low estimates can be found to obtain a range that the final results should lie within. 
 
-\textbf{Energy inefficiencies: } Electricity consumption data came from monitoring software run on active nodes. Thus, these are not 'At-wall' values which truly show how much electricity is being drawn from the national grid, possibly due to voltage regulators that limit the power supply to the machine. This model could benefit from further work conducted by individuals well versed in electrical engineering that account for this dissipated energy, obtaining a more accurate estimation 'At-wall' \cite{Warkozek2012ACenters}.
+\textbf{Energy inefficiencies: } Electricity consumption data came from monitoring software run on active nodes. Thus, these are not 'At-Wall' values which truly show how much electricity is being drawn from the national grid, possibly due to voltage regulators that limit the power supply to the machine. This model could benefit from further work conducted by individuals well versed in electrical engineering that account for this dissipated energy, obtaining a more accurate estimation 'At-Wall' \cite{Warkozek2012ACenters}.
 
 \textbf{Simulation and Prediction: } There is potential for future work in creating a computer-based simulation of Model-A. A simple approach would be to use existing blockchain benchmarking software like Hyperledger Caliper or Blockbench \cite{Aldweesh2020BenchmarkingApplications}. A more ambitious goal would be predicting energy consumption,  given the different values for the factors included in the model, which would require curve-fitting \cite{IbanezTheExpansion}.
 

@@ -1,9 +1,10 @@
 \chapter{Literature Review}
 % -_____________________________________________________________________________
+\section{Chapter Overview}
 
-This section introduces the foundations of blockchain systems and Ethereum to the reader before acquainting them with the current state of research in the field.
+This section introduces the foundational concepts of blockchain technology and Ethereum. It then discusses the carbon emissions problem, the current state of research in the field, and finally analyses existing energy consumption models.
 
-The terms '\textbf{power}' and '\textbf{energy}' refer to \textbf{electrical energy} through this study. 
+The terms '\textbf{power}' and '\textbf{energy}' refer to \textbf{electrical energy} throughout this study. 
 
 % -_____________________________________________________________________________
 
@@ -127,12 +128,12 @@ Every slot, a small committee of nodes is also randomly selected, whose \textbf{
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=13cm,center]{Figures/AttestationsDiragram.png}
-    \caption{A flow diagram visualising the new block proposal and attestation process in PoS Ethereum}
+    \caption{A flow diagram visualising the new block proposal and attestation process in PoS Ethereum. [Created using \url{draw.io}]}
     \label{Figure:AttestationsDiragram}
 \end{figure}
 
  % ---CAN BE REMOVED**
-\textit{Staking ETH}
+\textit{Validator Trade-offs}
 
 In Ethereum, an \textbf{epoch} comprises 32 slots ($\sim$6 minutes). The algorithm judges each validator's actions and dishes out rewards and penalties at the end of each epoch accordingly. Validators staking ETH and running Validators earn transaction fees and tips but also risk losing part of their stake through \textbf{slashing} or incurring \textbf{offline penalties}.
 
@@ -154,7 +155,9 @@ In Ethereum, an \textbf{epoch} comprises 32 slots ($\sim$6 minutes). The algorit
 % By design, they don't need to store or process the same amount of information that full nodes do. PoW light nodes only used download the headers of each block and were able to trace back. PoS light nodes also has to keep track of validators and their balances to stay on the chain with the most stake. This small amount of information allows light nodes to operate in a trust-minimised manner.
 
 % % CAN BE CUT**
-% \subsection{Client Types}
+\subsection{Client Types}
+
+Open-source, community-maintained client software enables inter-node communication in a peer-to-peer manner. Execution Layer (EL) clients are now known as 'Eth 1' clients. Consensus Layer (CL) clients, known as 'Eth 2' clients, support the PoS consensus mechanism post-Merge. Popular EL clients include Geth, Nethermind, Besu, and Erigon; popular CL clients are Prysm, Lighthouse, Teku, and Nimbus \cite{EthereumEthereum.org}.
 
 % Client software is software that facilitates inter-node communication in a peer-to-peer manner.
 
@@ -179,9 +182,9 @@ PoS Ethereum relies on the Consensus Layer for handling consensus logic and bloc
 
 There are different types of syncing modes, including Full, Snap, Fast and Light Sync.
 
-\textit{Full Sync }independently verifies the block provenance by re-executing the transactions starting at the Genesis Block. However, in a Full Node, only the latest 128 blocks are actually stored, along with a few checkpoints representing older blocks \cite{EthereumEthereum.org}. 
+\textbf{Full Sync }independently verifies the block provenance by re-executing the transactions starting at the Genesis Block. However, in a Full Node, only the latest 128 blocks are actually stored, along with a few checkpoints representing older blocks \cite{EthereumEthereum.org}. 
 
-\textit{Snap Sync} works similarly to a Full Sync, except it starts at a much more recent checkpoint to start its verification up to the front of the chain \cite{2022DeveloperGo-ethereum}.
+\textbf{Snap Sync} works similarly to a Full Sync, except it starts at a much more recent checkpoint to start its verification up to the front of the chain \cite{2022DeveloperGo-ethereum}.
 
 Synchronisation time varies depending on the client software chosen, as well as the node's hardware configuration. Syncing times can range from 12 hours up to 6 days or more (see Appendix B).
 % -_____________________________________________________________________________
@@ -195,7 +198,7 @@ Synchronisation time varies depending on the client software chosen, as well as 
 
 Bitcoin, the world's largest cryptocurrency, currently holds a market cap of \$588 billion, with Ethereum trailing behind narrowly (\$242 billion market cap) \cite{BitcoinCoinMarketCap}. Most cryptocurrencies still rely on the Proof-of-Work mechanism, which by design uses energy-intensive processes to secure the network. Hence, it should not be surprising that they have huge adversarial effects on the environment. Empirical findings using the ARDL model (used to analyse the long-term relationship between variables) show that increasing the volume of trading all cryptocurrencies results in higher energy consumption, with long-term effects on the environment \cite{Schinckus2020Crypto-currenciesConsumption}. 
 
-While the benefits of using decentralised transactional systems appeal to many, it has become synonymous with inefficiency and disproportionate energy consumption \cite{DeVriesBitcoinsProblem}. Digiconomist's index suggests that if Bitcoin's energy was to be compared to that of entire countries, it would rank 38$\mathrm{^{th}}$ in the world, finishing ahead of large countries like Chile and Bangladesh \cite{BitcoinDigiconomist}. The high energy costs associated with the inherent have become hugely problematic, inhibiting the wider adoption of cryptocurrencies. 
+While the benefits of using decentralised transactional systems appeal to many, it has become synonymous with inefficiency and disproportionate energy consumption \cite{DeVriesBitcoinsProblem}. Digiconomist's index suggests that if Bitcoin's energy was to be compared to that of entire countries, it would rank 38$\mathrm{^{th}}$ in the world, finishing ahead of large countries like Chile and Bangladesh \cite{BitcoinDigiconomist}. The inherent energy costs associated with decentralisation have become hugely problematic, inhibiting the wider adoption of cryptocurrencies. 
 
 To put this in perspective, comparisons between cryptocurrencies and traditional centralised transactional systems, such as Visa, are often drawn \cite{Kohli2023AnSolutions}. However, due to their centralised nature, these systems will always be more efficient, as shown in \fref{Figure:CarbonEmissionsPlot}.
 
@@ -208,72 +211,73 @@ To put this in perspective, comparisons between cryptocurrencies and traditional
 
 These carbon emissions can be used as a proxy for environmental damage \cite{2022VisaReport}, which is associated with high energy consumption and makes PoW cryptocurrencies unsustainable.
 
-Besides cryptocurrencies, blockchain technology is experiencing significant growth in the drug-supply chain industry \cite{Labaran2021TheNigeria}. This sector features the adoption of large-scale blockchain solutions that boast low-energy usage, found in \tref{Table:DrugSupplyImplementations}. Consequently, the answer to reducing high energy consumption may be found in these innovative applications of blockchain technology, most of which employ non-PoW mechanisms.
+% % ****CAN BE CUT
+% Besides cryptocurrencies, blockchain technology is experiencing significant growth in the drug-supply chain industry \cite{Labaran2021TheNigeria}. This sector features the adoption of large-scale blockchain solutions that boast low-energy usage, found in \tref{Table:DrugSupplyImplementations}. Consequently, the answer to reducing high energy consumption may lie in these innovative applications of blockchain technology, most of which employ non-PoW mechanisms.
 
-\begin{table}[!htb]
-\centering
-\begin{tabular}{|l"l|l|l|l|l|}
-\hline
-\textbf{Topic} &
-  \textbf{\begin{tabular}[c]{@{}l@{}}Vaccine \\ Delivery \\ Solution\end{tabular}} &
-  \textbf{\begin{tabular}[c]{@{}l@{}}Medication \\ Anti-fraud \&\\ Traceability\end{tabular}} &
-  \textbf{\begin{tabular}[c]{@{}l@{}}‘Everyware’\\ Platform\end{tabular}} &
-  \textbf{\begin{tabular}[c]{@{}l@{}}Analysis of \\ Blockchain in \\ Healthcare\end{tabular}} &
-  \textbf{\begin{tabular}[c]{@{}l@{}}Drug \\ Traceability\\ Solution\end{tabular}} \\ \thickhline
-\textbf{\begin{tabular}[c]{@{}l@{}}Blockchain \\ Platform\end{tabular}} &
-  Ethereum 1.0 &
-  Ethereum 1.0&
-  Hedera &
-  \begin{tabular}[c]{@{}l@{}}Hyperledger\\ Fabric\end{tabular} &
-  Ethereum 1.0 \\ \hline
-\textbf{\begin{tabular}[c]{@{}l@{}}Consensus \\ Algorithm\end{tabular}} &
-  PoW &
-  \begin{tabular}[c]{@{}l@{}}practical\\ Byzantine\\ fault tolerance\end{tabular} &
-  \begin{tabular}[c]{@{}l@{}}Hashgraph\\ Consensus\end{tabular} &
-  \begin{tabular}[c]{@{}l@{}}Redundant\\ Byzantine \\ fault tolerance\end{tabular} &
-  PoW \\ \hline
-\textbf{\begin{tabular}[c]{@{}l@{}}Type of \\ Operations\end{tabular}} &
-  \begin{tabular}[c]{@{}l@{}}Public   \\ Permissioned\end{tabular} &
-  \begin{tabular}[c]{@{}l@{}}Public   \\ Permissioned\end{tabular} &
-  \begin{tabular}[c]{@{}l@{}}Public \\ Permissioned\end{tabular} &
-  \begin{tabular}[c]{@{}l@{}}Private   \\ Permissioned\end{tabular} &
-  \begin{tabular}[c]{@{}l@{}}Public\\ Permissioned\end{tabular} \\ \hline
-\textbf{Currency} &
-  Ether &
-  None &
-  None &
-  None &
-  Ether \\ \hline
-\textbf{\begin{tabular}[c]{@{}l@{}}Off-chain \\ storage\end{tabular}} &
-  Yes &
-  None &
-  Yes &
-  None &
-  Yes \\ \hline
-\textbf{\begin{tabular}[c]{@{}l@{}}Customisable \\ Component\end{tabular}} &
-  \begin{tabular}[c]{@{}l@{}}Ethereum\\ Smart \\ Contracts\end{tabular} &
-  \begin{tabular}[c]{@{}l@{}}Ethereum\\ Smart\\ Contracts\end{tabular} &
-  Yes &
-  \begin{tabular}[c]{@{}l@{}}Docker\\ Container\end{tabular} &
-  \begin{tabular}[c]{@{}l@{}}Ethereum\\ Smart \\ Contracts\end{tabular} \\ \hline
-\textbf{\begin{tabular}[c]{@{}l@{}}Energy \\ Consumption\end{tabular}} &
-  High &
-  Low &
-  Very Low &
-  Low &
-  High \\ \hline
-\textbf{Source} &
-  \cite{Musamih2021Blockchain-BasedVaccines} &
-  \cite{Zhu2020ATraceability} &
-  \cite{Platform}, \cite{TechnologyLtd} &
-  \cite{Mettler2016BlockchainHere} &
-  \cite{Musamih2021AChain} \\ \hline
-\end{tabular}
-\caption{Several implementations of drug-supply chain solutions that use blockchain technology, with 3 implementations using high-energy Ethereum 1.0.}
-\label{Table:DrugSupplyImplementations}
-\end{table}
+% \begin{table}[!htb]
+% \centering
+% \begin{tabular}{|l"l|l|l|l|l|}
+% \hline
+% \textbf{Topic} &
+%   \textbf{\begin{tabular}[c]{@{}l@{}}Vaccine \\ Delivery \\ Solution\end{tabular}} &
+%   \textbf{\begin{tabular}[c]{@{}l@{}}Medication \\ Anti-fraud \&\\ Traceability\end{tabular}} &
+%   \textbf{\begin{tabular}[c]{@{}l@{}}‘Everyware’\\ Platform\end{tabular}} &
+%   \textbf{\begin{tabular}[c]{@{}l@{}}Analysis of \\ Blockchain in \\ Healthcare\end{tabular}} &
+%   \textbf{\begin{tabular}[c]{@{}l@{}}Drug \\ Traceability\\ Solution\end{tabular}} \\ \thickhline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Blockchain \\ Platform\end{tabular}} &
+%   Ethereum 1.0 &
+%   Ethereum 1.0&
+%   Hedera &
+%   \begin{tabular}[c]{@{}l@{}}Hyperledger\\ Fabric\end{tabular} &
+%   Ethereum 1.0 \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Consensus \\ Algorithm\end{tabular}} &
+%   PoW &
+%   \begin{tabular}[c]{@{}l@{}}practical\\ Byzantine\\ fault tolerance\end{tabular} &
+%   \begin{tabular}[c]{@{}l@{}}Hashgraph\\ Consensus\end{tabular} &
+%   \begin{tabular}[c]{@{}l@{}}Redundant\\ Byzantine \\ fault tolerance\end{tabular} &
+%   PoW \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Type of \\ Operations\end{tabular}} &
+%   \begin{tabular}[c]{@{}l@{}}Public   \\ Permissioned\end{tabular} &
+%   \begin{tabular}[c]{@{}l@{}}Public   \\ Permissioned\end{tabular} &
+%   \begin{tabular}[c]{@{}l@{}}Public \\ Permissioned\end{tabular} &
+%   \begin{tabular}[c]{@{}l@{}}Private   \\ Permissioned\end{tabular} &
+%   \begin{tabular}[c]{@{}l@{}}Public\\ Permissioned\end{tabular} \\ \hline
+% \textbf{Currency} &
+%   Ether &
+%   None &
+%   None &
+%   None &
+%   Ether \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Off-chain \\ storage\end{tabular}} &
+%   Yes &
+%   None &
+%   Yes &
+%   None &
+%   Yes \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Customisable \\ Component\end{tabular}} &
+%   \begin{tabular}[c]{@{}l@{}}Ethereum\\ Smart \\ Contracts\end{tabular} &
+%   \begin{tabular}[c]{@{}l@{}}Ethereum\\ Smart\\ Contracts\end{tabular} &
+%   Yes &
+%   \begin{tabular}[c]{@{}l@{}}Docker\\ Container\end{tabular} &
+%   \begin{tabular}[c]{@{}l@{}}Ethereum\\ Smart \\ Contracts\end{tabular} \\ \hline
+% \textbf{\begin{tabular}[c]{@{}l@{}}Energy \\ Consumption\end{tabular}} &
+%   High &
+%   Low &
+%   Very Low &
+%   Low &
+%   High \\ \hline
+% \textbf{Source} &
+%   \cite{Musamih2021Blockchain-BasedVaccines} &
+%   \cite{Zhu2020ATraceability} &
+%   \cite{Platform}, \cite{TechnologyLtd} &
+%   \cite{Mettler2016BlockchainHere} &
+%   \cite{Musamih2021AChain} \\ \hline
+% \end{tabular}
+% \caption{Several implementations of drug-supply chain solutions that use blockchain technology, with 3 implementations using high-energy Ethereum 1.0.}
+% \label{Table:DrugSupplyImplementations}
+% \end{table}
 
-However, newly established independent blockchains, for cryptocurrencies or provenance purposes, often struggle with achieving decentralisation benefits, facing security breaches or centralisation issues. 51\% attacks occur when a malicious miner or group controls over 50\% of a network's computational power. Small blockchains with few participants are more vulnerable as it is easier for a malicious actor to acquire the necessary computational power, leaving the blockchain susceptible to tampering and theft \cite{Redman2021PrivacyErased}.
+% However, newly established independent blockchains, for cryptocurrencies or provenance purposes, often struggle with achieving decentralisation benefits, facing security breaches or centralisation issues. 51\% attacks occur when a malicious miner or group controls over 50\% of a network's computational power. Small blockchains with few participants are more vulnerable as it is easier for a malicious actor to acquire the necessary computational power, leaving the blockchain susceptible to tampering and theft \cite{Redman2021PrivacyErased}.
 
 
 
@@ -285,12 +289,10 @@ However, newly established independent blockchains, for cryptocurrencies or prov
 % __________________________________________________________________________________________-
 % -_____________________________________________________________________________
 
-\subsection{Mathematical Modelling}
+\section{Mathematical Modelling}
 \label{MathematicalModellingLitRev}
 
-Mathematical modelling simplifies complex systems and tests hypotheses by making some assumptions. There are various approaches for scientific model building, including descriptive and rule-based modelling \cite{SayamaINTRODUCTIONSYSTEMS}. This study employs the latter.
-
-\textbf{Rule-Based Modelling} focuses on formulating dynamic rules and limitations that can explain the behaviour of a system over time. This is usually done using quantitative methods.
+\textbf{Rule-Based Modelling} focuses on formulating dynamic rules and limitations that can explain the behaviour of a system over time. This is usually done using quantitative methods \cite{SayamaINTRODUCTIONSYSTEMS}.
 
 Turning observations into mathematical equations can be challenging, especially when dealing with unique properties like large networks and nonlinearity. When modelling complex systems, according to \cite{SayamaINTRODUCTIONSYSTEMS}, it's crucial to remember the following four factors:
 
@@ -301,7 +303,7 @@ Turning observations into mathematical equations can be challenging, especially 
     \item What are all the possible states of the system, and how it changes over time
 \end{itemize}
 
-This study will use the microscopic details of the Ethereum protocol (how attestations are handled) to model its macroscopic effects at scale (increase in overall energy usage) \cite{MarionAnModelling}. 
+% This study will use the microscopic details of the Ethereum protocol (how attestations are handled) to model its macroscopic effects at scale (increase in overall energy usage) \cite{MarionAnModelling}. 
 
 
 
@@ -334,7 +336,7 @@ Energy consumption in many PoW-focused papers is attributed to metrics like bloc
 % -_____________________________________________________________________________
 Another study combined publicly available data with a small number of direct measurements from a small testbed network to derive a joule per hash value based on \cite{Cole2018ModelingAlgorithms}. Using a LASSO (Least Absolute Shrinkage and Selection Operator) regression model, the researchers were able to estimate the energy usage of PoW cryptocurrencies with 92\% accuracy. The same cannot be done for PoS blockchains due to the lack of data availability and the vast range of factors affecting its energy consumption outside of the consensus protocol itself.
 
-Digiconomist \cite{BitcoinDigiconomist} and CBECI \cite{CambridgeCBECI} are two well-known real-time models used to estimate the energy consumption of Bitcoin. These are highly credible models and have been referenced many times in the wider literature, such as \cite{Cole2018ModelingAlgorithms}, \cite{Lei2021BestRecommendations}, and \cite{Erdogan2022AnalyzingSustainability}, \cite{Platt2022TheProof-of-Work}, respectively. Both models use live tracking of Bitcoin's price and mining hash rate to maintain accuracy but take different approaches to arrive at similar estimates. Digiconomist's top-down approach estimates the total revenue earned by USA-based Bitcoin miners. It assumes that 60\% of this revenue is spent on operational costs, primarily electricity, in the case of PoW. By using the global average electricity costs, the model is able to calculate Bitcoin's energy consumption. In contrast, CBECI uses a bottom-up approach, focusing on selecting contemporary mining equipment that maximises the number of hashes computed per Joule of energy used. The model then uses a profitability threshold to extrapolate Bitcoin's annual electricity consumption. This study will take a bottom-up approach to develop a model for non-PoW Ethereum.
+Digiconomist \cite{BitcoinDigiconomist} and CBECI \cite{CambridgeCBECI} are two well-known real-time models used to estimate the energy consumption of Bitcoin. These are highly credible models and have been referenced many times in the wider literature, such as \cite{Cole2018ModelingAlgorithms}, \cite{Lei2021BestRecommendations}, and \cite{Erdogan2022AnalyzingSustainability}, \cite{Platt2022TheProof-of-Work}, respectively. Both models use live tracking of Bitcoin's price and mining hash rate to maintain accuracy but take different approaches to arrive at similar estimates. Digiconomist's top-down approach estimates the total revenue earned by USA-based Bitcoin miners. It assumes that 60\% of this revenue is spent on operational costs, primarily electricity, in the case of PoW. By using the global average electricity costs, the model is able to calculate Bitcoin's energy consumption. In contrast, CBECI uses a bottom-up approach, focusing on selecting contemporary mining equipment that maximises the number of hashes computed per Joule of energy used. The model then uses a profitability threshold to extrapolate Bitcoin's annual electricity consumption. This study will take a bottom-up approach to develop a model for PoS Ethereum.
 
 
 % __________________________________________________________________________________________-
@@ -385,8 +387,6 @@ Assumptions and shortcomings of this study:
     \item The electricity measurements were collected using computer software rather than hardware meters, and no information was provided on the type of power supply and mainboard used in the experiment. Therefore, the software measurements only account for the electricity used by the computer itself and do not factor in the power drawn 'At-Wall' or any other electrical inefficiencies \cite{Warkozek2012ACenters}.
 \end{enumerate}
  
-
-
 % -_____________________________________________________________________________
 
 
