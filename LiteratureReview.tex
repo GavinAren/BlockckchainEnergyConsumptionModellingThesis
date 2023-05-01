@@ -59,7 +59,7 @@ Compared to PoW, PoS is a much less energy-intensive mechanism by design.
 
 \section{Introduction to Ethereum}
 
-Ethereum is an open-source blockchain platform that has grown to become the world's second largest blockchain (after Bitcoin) by market capitalisation. It was introduced in 2015 by Vitalik Buterin as a platform with capabilities beyond just cryptocurrency \cite{ButerinEthereum:Platform.}. It features smart contracts, which are self-executing programs that automatically activate when the specified criteria are met. The Ethereum blockchain forms the backbone for a variety of applications, including Decentralised Applications (DApps), thanks to the functionality of smart contracts.
+% Ethereum is an open-source blockchain platform that has grown to become the world's second largest blockchain (after Bitcoin) by market capitalisation. It was introduced in 2015 by Vitalik Buterin as a platform with capabilities beyond just cryptocurrency \cite{ButerinEthereum:Platform.}. It features smart contracts, which are self-executing programs that automatically activate when the specified criteria are met. The Ethereum blockchain forms the backbone for a variety of applications, including Decentralised Applications (DApps), thanks to the functionality of smart contracts.
 
 Nodes that communicate following the 'ETH' protocol make up the Ethereum network, also called the Ethereum 'mainnet'. These nodes all contribute to maintaining and securing a globally agreed state of the Ethereum Virtual Machine (EVM). This was also described as 'one computer for the entire planet" by Ethereum co-founder Gavin Wood in 2016 \cite{Ethereum:Industries}. 
 
@@ -79,7 +79,11 @@ The security of this network comes from a majority of nodes agreeing on a new ch
 % The ETH Execution client verifies the transaction request by checking things like whether the user has enough ETH to complete the transaction and if they have used the correct private key etc. \cite{EthereumEthereum.org}. 
 % This transaction request is then broadcasted to every other validator node over the execution layer 'gossip network'. Every validator adds this transaction to their local \textbf{'mempool'}. This is a collection of unverified transactions that are waiting to be processed and added to a new block.
 
-During the pre-merge PoW era of Ethereum, \textbf{miners} used to compete to solve a mathematical problem using their computational power, and the winner was rewarded with Ether and earned the right to add a block to the blockchain. As more miners joined the network, the difficulty of the problem proportionally increased, resulting in a computationally expensive and energy-intensive process.
+During the pre-merge PoW era of Ethereum, \textbf{miners} used to compete 
+% to solve a mathematical problem using their computational power, and the winner was rewarded with Ether and 
+to earn the right to add a block to the blockchain 
+% As more miners joined the network, the difficulty of the problem proportionally increased
+, resulting in a computationally expensive and energy-intensive process.
 % -_____________________________________________________________________________
 
 % ________________________________________________________________________________-
@@ -133,7 +137,7 @@ Every slot, a small committee of nodes is also randomly selected, whose \textbf{
 In Ethereum, an \textbf{epoch} comprises 32 slots ($\sim$6 minutes). The algorithm judges each validator's actions and dishes out rewards and penalties at the end of each epoch accordingly. Validators staking ETH and running Validators earn transaction fees and tips but also risk losing part of their stake through \textbf{slashing} or incurring \textbf{offline penalties}.
 
 % CAN BE CUT**
-The Merge switched Ethereum's security model's reliance on  computational power to \textbf{economic power}. Malicious attackers now need 51\% of the economic power of the entire network instead of computational power to conduct a successful attack. The severe economic punishments mentioned earlier help to keep the network more secure than ever before while massively reducing its energy consumption. 
+% The Merge switched Ethereum's security model's reliance on  computational power to \textbf{economic power}. Malicious attackers now need 51\% of the economic power of the entire network instead of computational power to conduct a successful attack. The severe economic punishments mentioned earlier help to keep the network more secure than ever before while massively reducing its energy consumption. 
 
 
 % ----------------------------------------------------------------------
@@ -149,23 +153,23 @@ The Merge switched Ethereum's security model's reliance on  computational power 
 
 % By design, they don't need to store or process the same amount of information that full nodes do. PoW light nodes only used download the headers of each block and were able to trace back. PoS light nodes also has to keep track of validators and their balances to stay on the chain with the most stake. This small amount of information allows light nodes to operate in a trust-minimised manner.
 
-% CAN BE CUT**
-\subsection{Client Types}
+% % CAN BE CUT**
+% \subsection{Client Types}
 
-Client software is software that facilitates inter-node communication in a peer-to-peer manner.
+% Client software is software that facilitates inter-node communication in a peer-to-peer manner.
 
-\textit{Execution Layer Clients}
+% \textit{Execution Layer Clients}
 
-EL clients,  formerly known as 'Eth 1' clients, come in the form of open-source community-maintained software. A diverse share of client software being run on nodes across the network is favourable as it reduces single points of failure.
+% EL clients,  formerly known as 'Eth 1' clients, come in the form of open-source community-maintained software. A diverse share of client software being run on nodes across the network is favourable as it reduces single points of failure.
 
-Some popular EL clients include Geth, Nethermind, Besu and Erigon \cite{EthereumEthereum.org}. 
+% Some popular EL clients include Geth, Nethermind, Besu and Erigon \cite{EthereumEthereum.org}. 
 
-\textit{Consensus Layer Clients }
+% \textit{Consensus Layer Clients }
 
-Following 'The Merge', CL clients, known as 'Eth 2' clients, facilitate the new PoS consensus-forming mechanism, securing the Ethereum blockchain.
+% Following 'The Merge', CL clients, known as 'Eth 2' clients, facilitate the new PoS consensus-forming mechanism, securing the Ethereum blockchain.
 
-Some popular CL clients include Prysm, Lighthouse, Teku, Nimbus and Lodestar \cite{EthereumEthereum.org}. 
-% __
+% Some popular CL clients include Prysm, Lighthouse, Teku, Nimbus and Lodestar \cite{EthereumEthereum.org}. 
+% % __
 \subsection{Synchronisation} 
 \label{SyncLitRev}
 
@@ -193,7 +197,7 @@ Bitcoin, the world's largest cryptocurrency, currently holds a market cap of \$5
 
 While the benefits of using decentralised transactional systems appeal to many, it has become synonymous with inefficiency and disproportionate energy consumption \cite{DeVriesBitcoinsProblem}. Digiconomist's index suggests that if Bitcoin's energy was to be compared to that of entire countries, it would rank 38$\mathrm{^{th}}$ in the world, finishing ahead of large countries like Chile and Bangladesh \cite{BitcoinDigiconomist}. The high energy costs associated with the inherent have become hugely problematic, inhibiting the wider adoption of cryptocurrencies. 
 
-To put this in perspective, comparisons between cryptocurrencies and traditional centralised transactional systems, such as Visa, are often drawn \cite{Kohli2023AnSolutions}. However, due to their centralised nature, these systems will always be more efficient, as shown in \fref{Figure:CarbonEmissionsPlot}, which uses a logarithmic scale.
+To put this in perspective, comparisons between cryptocurrencies and traditional centralised transactional systems, such as Visa, are often drawn \cite{Kohli2023AnSolutions}. However, due to their centralised nature, these systems will always be more efficient, as shown in \fref{Figure:CarbonEmissionsPlot}.
 
 \begin{figure}[!htb]
     \centering
